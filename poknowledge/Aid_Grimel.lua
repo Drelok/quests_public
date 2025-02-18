@@ -60,7 +60,7 @@ function event_say(e)
 					e.self:Say(
 						string.format(
 							"I appreciate the help %s. I need a new tunic made for Councilman Taldarius. Last trip through the Plane of Disease, one of those flies spit mucus on him and it dripped through his armor seams! The result was a gooey mess that ate away all the leather underneath. It was a blessing he was wearing something under all that metal! Combine three firesilk swatches, a vial of purified mana, an emblem of fire, a firestrand curing agent, a tunic pattern and the signet. Bring it to me when you have completed it.",
-							e.other:GetCleanName(),
+							e.other:GetCleanName()
 						)
 					)
 					e.other:SummonItem(16243) -- Item: Urn Patten
