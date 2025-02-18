@@ -54,7 +54,7 @@ function event_say(e)
 			local flag_name = string.gsub(flag, match_string, ""):upper()
 
 			if type == "Alternate Access" then
-				flag_name = eq.get_zone_long_name(flag_name)
+				flag_name = eq.get_zone_long_name_by_name(flag_name)
 			end
 
 			e.other:Message(
