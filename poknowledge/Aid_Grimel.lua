@@ -72,7 +72,7 @@ function event_say(e)
 					e.self:Say(
 						string.format(
 							"Aye I can see you are skilled with the fletching knife %s. It is good too, I need to replace Councilman Taldarius's bow from Plane of Air. Combine a planing tool, two wind metal bow cams, an air arachnid silk string, a featherwood staff and the signet. I hope the bow will be up to his standards, he sure loved his old bow.",
-							e.other:GetCleanName(),
+							e.other:GetCleanName()
 						)
 					)
 				else
