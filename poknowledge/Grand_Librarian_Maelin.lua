@@ -73,13 +73,13 @@ function event_say(e)
 				end
 			end
 		end
-	else if e.message:findi("tome") then
+	elseif e.message:findi("tome") then
 		if qglobals["shadowknight_epic"] == "1" then
 			e.self:Say("Yes, I seem to recall having such a tome. But evil it is. I don't hand out such dangerous knowledge to just anyone. However. . . I am curious about something and perhaps you can help me. A prominent professor of biology and I have a bet as to how a certain creature from the Realm of Discord, known as a murkglider breeds. He believes they give live birth, and I believe they are egg layers. Unfortunately, I have been so busy here, that I have not been able to make arrangements to travel there and observe the creatures more. If you could travel to the Realm of Discord and [" ..eq.say_link('find an egg', false, 'find an egg') .. "] for me, I will give you the book you seek.");
 		elseif e.message:findi("find an egg") then
 			e.self:Say("I appreciate your help with this! The creature I was supposed to study are most commonly known as murkgliders. The easiest way to describe them is that they look like large, floating octopuses. See if you can hunt down any breeding murkgliders and return an egg to me that I can study. You might want to bring some companions along, as this might be a dangerous task.");
 		end
-	else if e.message:findi("Jeb Lumsed sent me") then
+	elseif e.message:findi("Jeb Lumsed sent me") then
 		if (qglobals["ench_epic"] == "2") then
 			e.self:Say("This is from Jeb, you say? I will set my best researchers on it at once. We have recently made some discoveries that he should be aware of. Here, take this note down to Lobaen, she will retrieve them for you.");
 			e.other:SummonItem(52950); --Note to Lobaen
