@@ -20,7 +20,7 @@ function event_click_door(e)
 		},
 		[12] = {
 			flags = {
-				"alder", "elder", "grummus"
+				"adler", "elder", "grummus"
 			},
 			zones = {
 				Zone.codecay
@@ -30,7 +30,7 @@ function event_click_door(e)
 		},
 		[93] = {
 			flags = {
-				"alder", "bertox", "codecay", "construct",
+				"adler", "bertox", "codecay", "construct",
 				"grummus", "hedge", "poxbourne", "terris"
 			}, 
 			zones = {
@@ -87,7 +87,7 @@ function event_click_door(e)
 		},
 		[81] = {
 			flags = {
-				"aerin", "agnarr", "alder", "askr",
+				"aerin", "agnarr", "adler", "askr",
 				"bertox", "codecay", "construct", "elder",
 				"faye", "garn", "librarian", "grummus", "hedge", "marr",
 				"mavuin", "poxbourne", "saryrn",  "shadyglade",

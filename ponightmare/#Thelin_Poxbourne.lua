@@ -12,7 +12,7 @@ function event_timer(e)
 		e.self:Shout("Hedge trial is now open.")
 	elseif e.timer == "Reset Trigger" then
 		eq.stop_timer("Reset Trigger")
-		eq.set_timer("Reset", 7200)
+		eq.set_timer("Reset", 7200 * 1000) -- 2 Hours
 	end
 end
 
@@ -42,7 +42,7 @@ function event_say(e)
 			e.self:SetEntityVariable("Entries", entries_variable + 1)
 			if entries_variable == 0 then
 				eq.signal(204058, 5, 300) -- NPC: Hedge_Trigger
-				eq.set_timer("Ready Trigger", 600)
+				eq.set_timer("Ready Trigger", 600 * 1000) -- 10 Minutes
 			end
 		end
 	end

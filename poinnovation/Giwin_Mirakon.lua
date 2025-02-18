@@ -2,7 +2,7 @@ function event_signal(e)
 	if e.signal == 1 then
 		e.self:Shout("Quickly! Come see me!")
 		e.self:SetEntityVariable("Ready", "1")
-		eq.set_timer("Clear", 1800)
+		eq.set_timer("Clear", 1800 * 1000) -- 30 Minutes
 	elseif e.signal == 2 then
 		e.self:Shout("Fool! The machine cannot work outside of the room!")
 	end

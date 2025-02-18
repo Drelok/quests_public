@@ -1,6 +1,6 @@
 function event_spawn(e)
 	e.self:Shout("Clever ones you are!")
-	eq.set_timer("Depop", 600)
+	eq.set_timer("Depop", 600 * 1000) -- 10 Minutes
 end
 
 function event_timer(e)

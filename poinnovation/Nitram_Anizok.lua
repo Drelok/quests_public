@@ -73,7 +73,7 @@ function event_trade(e)
 	if item_lib.check_turn_in(e.trade, {item1 = 9426, item2 = 9295, item3 = 9439}) then
 		e.self:SetEntityVariable("Walking", "1")
 		eq.start(23)
-		eq.set_timer("Position", 1)
+		eq.set_timer("Position", 1 * 1000) -- 1 Second
 	end
 end
 
@@ -84,12 +84,12 @@ function event_timer(e)
 		eq.spawn2(206067, 0, 0, -735, 1580, -50, 251.6) -- Real Xanamech
 		eq.depop(206068) -- Fake Xanamech
 		eq.stop_timer("Position")
-		eq.set_timer("Win", 1)
-		eq.set_timer("Fail", 7200)
+		eq.set_timer("Win", 1 * 1000) -- 1 Second
+		eq.set_timer("Fail", 7200 * 1000) -- 2 Hours
 	elseif e.timer == "Win" and not entity_list:IsMobSpawnedByNpcTypeID(206067) then -- Real Xanamech
 		e.self:SetEntityVariable("Won", "1")
 		eq.stop_timer("Win")
-		eq.set_timer("Reset", 600)
+		eq.set_timer("Reset", 600 * 1000) -- 10 Minutes
 	elseif e.timer == "Reset" then
 		eq.depop_with_timer()
 	elseif e.timer == "Fail" then

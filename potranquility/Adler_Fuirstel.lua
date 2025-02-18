@@ -1,6 +1,6 @@
 function event_say(e)
-	local alder_bucket = tonumber(e.other:GetAccountBucket("pop.flags.adler")) or 0
-	if alder_bucket == 0 then
+	local adler_bucket = tonumber(e.other:GetAccountBucket("pop.flags.adler")) or 0
+	if adler_bucket == 0 then
 		if e.message:findi("Hail") then
 			local portal_to_the_plane_of_disease_link = eq.silent_say_link("portal to the Plane of Disease")
 			e.self:Say(
@@ -22,7 +22,7 @@ function event_say(e)
 			e.other:SetAccountBucket("pop.flags.adler", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
-	elseif alder_bucket == 1 then
+	elseif adler_bucket == 1 then
 		local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
 		if grummus_bucket == 1 then
 			e.self:Say("Please you must hurry! Take the ward that surrounds you back to my brother and lift the sickness that has come over him!")

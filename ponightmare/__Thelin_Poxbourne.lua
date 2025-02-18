@@ -1,8 +1,8 @@
 function event_spawn(e)
-	eq.set_timer("Depop", 600)
-	eq.set_timer("Emote 1", 6)
-	eq.set_timer("Emote 2", 12)
-	eq.set_timer("Emote 3", 18)
+	eq.set_timer("Depop", 600 * 1000) -- 10 Minutes
+	eq.set_timer("Emote 1", 6 * 1000) -- 6 Seconds
+	eq.set_timer("Emote 2", 12 * 1000) -- 12 Seconds
+	eq.set_timer("Emote 3", 18 * 1000) -- 18 Seconds
 end
 
 function event_timer(e)

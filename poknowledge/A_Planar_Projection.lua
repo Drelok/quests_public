@@ -17,7 +17,7 @@ function event_say(e)
 		},
 		["I will destroy the plaguebringer"] = {
 			check = {
-				"alder", "elder", "grummus"
+				"adler", "elder", "grummus"
 			},
 			zone = "codecay",
 			text = "Ruins of Lxanvom"
@@ -68,7 +68,7 @@ function event_say(e)
 		},
 		["I will defeat Saryrn"] = {
 			check = {
-				"alder", "bertox", "codecay", "construct", "elder",
+				"adler", "bertox", "codecay", "construct", "elder",
 				"grummus", "hedge", "poxbourne", "terris"
 			},
 			values = {
@@ -125,7 +125,7 @@ function event_say(e)
 		},
 		["I am worthy of the elemental planes"] = {
 			check = {
-				"aerin", "agnarr", "alder", "askr",
+				"aerin", "agnarr", "adler", "askr",
 				"bertox", "codecay",
 				"construct", "elder", "faye", "garn",
 				"librarian", "grummus", "hedge",

@@ -36,7 +36,7 @@ function event_say(e)
 					e.other:MovePCInstance(201, eq.get_zone_instance_id(), 937, -703, 53, 300)
 				end
 
-				eq.set_timer("Start", 30)
+				eq.set_timer("Start", 30 * 1000) -- 30 Seconds
 				eq.signal(201417, 1, 30) -- #Event_Burning_Control
 				e.self:SetEntityVariable("Active", "1")
 				eq.spawn2(201417, 0, 0, 880, -729, 55, 0)
@@ -93,7 +93,7 @@ function event_timer(e)
 	if e.timer == "Start" then
 		eq.stop_timer("Start")
 		e.self:SetEntityVariable("Active", 1)
-		eq.set_timer("Fail", 1200)
+		eq.set_timer("Fail", 1200 * 1000) -- 20 Minutes
 	elseif e.timer == "Fail" then
 		eq.stop_timer("Fail")
 		e.self:DeleteEntityVariable("Active")

@@ -33,7 +33,7 @@ function event_say(e)
 			if active_variable == 0 then
 				e.self:SetEntityVariable("Active", "1")
 				e.self:Say("Then begin.")
-				eq.set_timer("Start", 30)
+				eq.set_timer("Start", 30 * 1000) -- 30 Seconds
 				eq.signal(201425, 1, 0) -- #Event_Execution_Control
 
 				if e.other:IsGrouped() then
@@ -115,7 +115,7 @@ function event_signal(e)
 			eq.stop_timer("Reset")
 		elseif hold_variable == 1 then
 			eq.stop_timer("Reset")
-			eq.set_timer("Reset", 1800)
+			eq.set_timer("Reset", 1800 * 1000) -- 30 Minutes
 		end
 	elseif e.signal == 1 then
 		e.self:SetEntityVariable("Hold", "1")

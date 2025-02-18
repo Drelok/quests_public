@@ -1,9 +1,9 @@
 function event_say(e)
-	local alder_bucket = tonumber(e.other:GetAccountBucket("pop.flags.adler")) or 0
+	local adler_bucket = tonumber(e.other:GetAccountBucket("pop.flags.adler")) or 0
 	local elder_bucket = tonumber(e.other:GetAccountBucket("pop.flags.elder")) or 0
 	local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
 	if (
-		alder_bucket == 1 and
+		adler_bucket == 1 and
 		elder_bucket == 1 and
 		grummus_bucket == 1
 	) then

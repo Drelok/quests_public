@@ -18,11 +18,7 @@ function event_click_door(e)
 end
 
 function event_loot(e)
-<<<<<<< Updated upstream
-	if(e.self:Class() == "Magician" and e.item:GetID() == 19544 and e.corpse:GetNPCTypeID()==200060) then
-=======
 	if (e.self:HasClass(Class.MAGICIAN) and e.item:GetID() == 19544 and e.corpse:GetNPCTypeID()==200060) then
->>>>>>> Stashed changes
 		local qglobals = eq.get_qglobals(e.self);
 		if(qglobals["mage_epic"] == "10") then
 			return 0;
