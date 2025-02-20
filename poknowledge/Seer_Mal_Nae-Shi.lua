@@ -51,7 +51,7 @@ function event_say(e)
 
 			local type = (flag:findi("pop.flags")) and "Flag" or "Alternate Access"
 			local match_string = (flag:findi("pop.flags.")) and "pop.flags." or "pop.alt."
-			local flag_name = string.gsub(flag, match_string, ""):upper()
+			local flag_name = string.gsub(flag, match_string, "")
 
 			if type == "Alternate Access" then
 				flag_name = eq.get_zone_long_name_by_name(flag_name)
