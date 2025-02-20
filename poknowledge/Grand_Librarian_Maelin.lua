@@ -76,8 +76,8 @@ function event_say(e)
 			else
 				e.self:Say("You lack the necessary requirements for me to speak with you.")
 				e.other:Message(MT.Yellow, "Your missing flags are as follows:")
-				for missing_flag, _ in pairs(missing_flags) do
-					local flag_name = string.gsub(missing_flag, "pop.flags.", "")
+				for flag, _ in pairs(flags_missing) do
+					local flag_name = string.gsub(flag, "pop.flags.", "")
 					e.other:Message(MT.Yellow, flag_name)
 				end
 			end
