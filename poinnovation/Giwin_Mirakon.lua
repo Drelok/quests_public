@@ -46,7 +46,7 @@ function event_say(e)
 			local test_the_machine_link = eq.silent_say_link("test the machine")
 			e.self:Say(
 				string.format(
-					"Ya, you see Rallos sent me here to contract the machines to work on a mana powered piece of machinery that could test all on the eternal battlefield. This weapon of ultimate destruction is taking quite a long time to be completed. You know.. If you were to go [%s] and it were to fail against you I could be on my way back to tell Rallos that it was defeated by mere mortals. Help me to get back to the battlefield and out of this rusted out junkheap."
+					"Ya, you see Rallos sent me here to contract the machines to work on a mana powered piece of machinery that could test all on the eternal battlefield. This weapon of ultimate destruction is taking quite a long time to be completed. You know.. If you were to go [%s] and it were to fail against you I could be on my way back to tell Rallos that it was defeated by mere mortals. Help me to get back to the battlefield and out of this rusted out junkheap.",
 					test_the_machine_link
 				)
 			)
