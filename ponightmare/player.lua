@@ -1,5 +1,5 @@
 function event_click_door(e)
-	local door_id = 
+	local door_id = e.door:GetDoorID()
 	if door_id == 59 then
 		local construct_bucket = tonumber(e.self:GetAccountBucket("pop.flags.construct")) or 0
 		local hedge_bucket = tonumber(e.self:GetAccountBucket("pop.flags.hedge")) or 0

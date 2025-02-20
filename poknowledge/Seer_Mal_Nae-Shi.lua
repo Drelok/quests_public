@@ -1,7 +1,7 @@
 function event_say(e)
 	local flags = {
 		["pop.alt.codecay"] = 1,
-		["pop.alt.hedge"] = 1,
+		["pop.alt.hedge"] = 3,
 		["pop.alt.hohonora"] = 1,
 		["pop.alt.potactics"] = 1,
 		["pop.alt.solrotower"] = 1,
