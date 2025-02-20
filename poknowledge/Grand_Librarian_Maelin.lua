@@ -49,7 +49,7 @@ function event_say(e)
 			for flag, required_value in pairs(flags) do
 				local current_bucket = tonumber(e.other:GetAccountBucket(flag)) or 0
 				if current_bucket ~= required_value then
-					flags_missing[flag] = required_value
+					flags_missing[flag] = {current_bucket, required_value}
 					all_requirements_met = false
 				end
 			end
@@ -78,7 +78,17 @@ function event_say(e)
 				e.other:Message(MT.Yellow, "Your missing flags are as follows:")
 				for flag, _ in pairs(flags_missing) do
 					local flag_name = string.gsub(flag, "pop.flags.", "")
-					e.other:Message(MT.Yellow, flag_name)
+					local current_value = flags_missing[flag][1]
+					local required_value = flags_missing[flag][2]
+					e.other:Message(
+						MT.Yellow,
+						string.format(
+							"Flag: %s Current: %d Required: %d",
+							flag_name,
+							current_value,
+							required_value
+						)
+					)
 				end
 			end
 		end
