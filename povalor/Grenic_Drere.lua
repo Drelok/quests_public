@@ -49,13 +49,16 @@ function event_trade(e)
 					local member = group:GetMember(i)
 					if member ~= nil and member:IsClient() then
 						member:SummonItem(29214) -- Item: Ring of Marr
-						member:SetZoneFlag(211) -- hohonora
+						member:SetZoneFlag(Zone.hohonora)
 						member:CastToClient():SetAccountBucket("pop.alt.hohonora", "!")
 						member:Message(MT.LightBlue, "You receive a character flag!")
 					end
 				end
 			end
 		else
+			e.other:SetZoneFlag(Zone.hohonora)
+			e.other:SetAccountBucket("pop.alt.hohonora", "!")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
 	end
 

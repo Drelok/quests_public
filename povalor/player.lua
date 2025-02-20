@@ -20,6 +20,29 @@ function event_click_door(e)
 				e.self:SetZoneFlag(Zone.hohonora)
 				e.self:Message(MT.LightBlue, "You receive a character flag!")
 			end
+		else
+			e.self:Message(MT.Yellow, "For alternate access you will need to speak with Grenic Drere.")
+			e.self:Message(MT.Yellow, "The flags required to enter Halls of Honor are as follows:")
+			
+			local flags_required = {
+				"pop.flags.aerin",
+				"pop.flags.mavuin",
+				"pop.flags.tribunal",
+				"pop.flags.valor"
+			}
+
+			for flag, _ in pairs(flags_required) do
+				local flag_name = string.gsub(flag, "pop.flags.", "")
+				local flag_value = tonumber(e.other:GetAccountBucket(flag)) or 0
+				e.other:Message(
+					MT.Yellow,
+					string.format(
+						"Flag: %s Current: %d Required: 1",
+						flag_name,
+						flag_value
+					)
+				)
+			end
 		end
 	end
 end
