@@ -20,8 +20,8 @@ function event_say(e)
 		else
 			local flags = {
 				["pop.flags.aerin"] = 1,
-				["pop.flags.agnarr"] = 1,
 				["pop.flags.adler"] = 1,
+				["pop.flags.agnarr"] = 1,
 				["pop.flags.askr"] = 4,
 				["pop.flags.bertox"] = 1,
 				["pop.flags.codecay"] = 2,
@@ -42,13 +42,15 @@ function event_say(e)
 				["pop.flags.valor"] = 1,
 				["pop.flags.rallos"] = 1
 			}
+
+			local flags_missing = {}
 			
 			local all_requirements_met = true
 			for flag, required_value in pairs(flags) do
 				local current_bucket = tonumber(e.other:GetAccountBucket(flag)) or 0
 				if current_bucket ~= required_value then
+					flags_missing[flag] = required_value
 					all_requirements_met = false
-					break
 				end
 			end
 			if all_requirements_met then --Elemental Pre-Flagging
@@ -70,6 +72,13 @@ function event_say(e)
 					e.self:Say("I can see now that he was not joking at all. Let us suppose that you travelers could venture into the Elemental Planes and retrieve this essence; and form it into one powerful conglomeration. You could open a tear into the period of time before Zebuxoruk was imprisoned. There is no way you can free him from his stasis now, but if you were to halt the Pantheon at the time of imprisonment. Hah! It could work I do believe. Forgive me, but my old gnomish heart is alive with the excitement of possibilities. Gather up your strength friends, travel into the deep elements. You will need all of your wits about you. Find the very essence of the elementals, and fuse them into one. How to combine them I do not know, and can only wish you luck on finding that information. If you can accomplish this please come get me. I would like to record the events as they take place!");
 					e.other:SetAccountBucket("pop.flags.librarian", "1");
 					e.other:Message(MT.LightBlue, "You receive a character flag!");
+				end
+			else
+				e.self:Say("You lack the necessary requirements for me to speak with you.")
+				e.other:Message(MT.Yellow, "Your missing flags are as follows:")
+				for flag, _ in pairs(missing_flags) do
+					local flag_name = string.gsub(flag, "pop.flags.", "")
+					e.other:Message(MT.Yellow, flag_name)
 				end
 			end
 		end
