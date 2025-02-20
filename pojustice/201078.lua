@@ -128,7 +128,7 @@ function event_trade(e)
 		}
 
 		for item_id, flag in pairs(trials) do
-			if item_lib.check_turn_in(e.trade, {item1 = item_id})
+			if item_lib.check_turn_in(e.trade, {item1 = item_id}) then
 				e.other:Message(MT.LightBlue, "You have completed a trial - impressive for mortals. You can tell Mavuin that we will hear his plea. We will seek him out as time befits us.")
 				e.other:SetAccountBucket("pop.flags.tribunal", "1")
 				e.other:SetAccountBucket(string.format("pop.flags.%s", flag), "1")
