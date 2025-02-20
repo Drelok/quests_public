@@ -29,7 +29,8 @@ function event_say(e)
 	elseif e.message:findi("plea your case") then
 		if mavuin_bucket == 0 then
 			e.self:Say("Thank you! I wish you luck.")
-			e.self:SetAccountBucket("pop.flags.mavuin", "1")
+			e.other:SetAccountBucket("pop.flags.mavuin", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
 	end
 end
