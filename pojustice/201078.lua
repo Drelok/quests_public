@@ -10,14 +10,16 @@ function event_say(e)
 			local prepared_link = eq.silent_say_link("prepared")
 			e.self:Say(
 				string.format(
-					" fixes you with a dark, peircing gaze. 'What do you want, mortal? Are you [%s]?"
+					" fixes you with a dark, peircing gaze. 'What do you want, mortal? Are you [%s]?",
+						prepared_link
 				)
 			)
 		elseif e.message:findi("prepared") then
 			local begin_the_trial_of_execution_link = eq.silent_say_link("begin the trial of execution")
 			e.self:Say(
 				string.format(
-					"Very well. When you are ready, you may [%s]. The victim will perish should the hooded executioner reach him. Its life will end only when all of the nemeses which accompany it also perish. We shall judge the mark of your success."
+					"Very well. When you are ready, you may [%s]. The victim will perish should the hooded executioner reach him. Its life will end only when all of the nemeses which accompany it also perish. We shall judge the mark of your success.",
+					begin_the_trial_of_execution_link
 				)
 			)
 		elseif e.message:findi("begin the trial of execution") then
