@@ -446,7 +446,11 @@ sub EVENT_SAY {
 		quest::message(315, "Your Planes of Power flags are as follows:");
 
 		foreach my $flag (sort {$a cmp $b} @flags) {
-			my $current_value = $client->GetAccountBucket($flag) // 0;
+			my $current_value = $client->GetAccountBucket($flag);
+			if ($current_value eq "") {
+				$current_value = 0;
+			}
+
 			quest::message(315, "Flag: $flag Current: $current_value");
 		}
 	}
