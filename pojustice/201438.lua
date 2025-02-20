@@ -30,7 +30,7 @@ function event_say(e)
 					begin_the_trial_of_torture_link
 				)
 			)
-		elseif (e.message:findi("ready to begin the trial of torture")) then
+		elseif (e.message:findi("begin the trial of torture")) then
 			local active_variable = tonumber(e.self:GetEntityVariable("Active")) or 0
 			if active_variable == 0 then
 				e.self:Say("Then begin.");
