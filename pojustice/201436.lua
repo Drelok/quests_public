@@ -180,7 +180,7 @@ function MoveGroup(trial_group, src_x, src_y, src_z, distance, tgt_x, tgt_y, tgt
 					-- check the distance and port them up if close enough
 					if (client_v:CalculateDistance(src_x, src_y, src_z) <= distance) then
 						-- port the player up
-						client_v:MovePCInstance(201, instance_id, tgt_x, tgt_y, tgt_z, tgt_h); -- Zone: pojustice
+						client_v:MovePCInstance(201, eq.get_zone_instance_id(), tgt_x, tgt_y, tgt_z, tgt_h); -- Zone: pojustice
 
 						if (msg) then
 							client_v:Message(3, msg);
