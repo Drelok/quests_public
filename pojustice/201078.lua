@@ -48,22 +48,18 @@ function event_say(e)
 		if e.message:findi("Hail") then
 			e.self:Say("I'm sorry, the Trial of Execution is currently unavailable to you.")
 		elseif e.message:findi("what evidence of Mavuin") then
-			local trials = {
-				[31842] = "execution",
-				[31796] = "flame",
-				[31960] = "lashing",
-				[31845] = "stoning",
-				[31844] = "torture",
-				[31846] = "hanging"
-			}
-
-			for item_id, flag in pairs(trials) do
-				if e.other:CountItem(item_id) > 0 then
-					e.other:Message(MT.LightBlue, "You have completed a trial - impressive for mortals. You can tell Mavuin that we will hear his plea. We will seek him out as time befits us.")
-					e.other:SetAccountBucket("pop.flags.tribunal", "1")
-					e.other:SetAccountBucket(string.format("pop.flags.%s", flag), "1")
-					e.other:Message(MT.LightBlue, "You receive a character flag!")
-				end
+			if e.other:HasItem(31842) then
+				e.other:SetAccountBucket("pop.flags.tribunal", "1")
+				e.other:SetAccountBucket("pop.flags.execution", "1")
+				e.other:Message(MT.LightBlue, "You receive a character flag!");
+			else
+				local mark_link = eq.item_link(31842)
+				e.self:Say(
+					string.format(
+						"You seem to be missing a %s, return to me when you acquire it.",
+						mark_link
+					)
+				)
 			end
 		elseif e.message:findi("I seek knowledge") then
 			if (
