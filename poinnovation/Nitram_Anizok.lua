@@ -70,7 +70,7 @@ end
 function event_trade(e)
 	local item_lib = require("items")
 
-	if item_lib.check_turn_in(e.trade, {item1 = 9426, item2 = 9295, item3 = 9439}) then
+	if item_lib.check_turn_in(e.trade, {item1 = 9426, item2 = 9295, item3 = 9434}) then
 		e.self:SetEntityVariable("Walking", "1")
 		eq.start(23)
 		eq.set_timer("Position", 1 * 1000) -- 1 Second
