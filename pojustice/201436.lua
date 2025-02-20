@@ -44,7 +44,7 @@ function event_say(e)
 					trial_group_id = trial_group:GetID();
 				else
 					client_id = e.other:CharacterID();
-					e.other:MovePCInstance(201, instance_id, 490, -1094, 73, 360); -- Zone: pojustice
+					e.other:MovePCInstance(201, eq.get_zone_instance_id(), 490, -1094, 73, 360); -- Zone: pojustice
 				end
 
 				-- Move To: 201, 500, -1045, 73.1
