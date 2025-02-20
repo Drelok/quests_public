@@ -24,7 +24,7 @@ function event_click_door(e)
 			"pop.flags.mavuin",
 			"pop.flags.trell",
 			"pop.flags.tribunal",
-			"pop.flags.valor
+			"pop.flags.valor"
 		}
 
 		local all_requirements_met = true
