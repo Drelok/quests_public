@@ -1,11 +1,3 @@
-my $hold_event = 0;
-my $group = undef;
-my $count = undef;
-my $pc = undef;
-
-$instanceid = quest::GetInstanceID();
-
-
 function event_spawn(e)
 	eq.depop_all(201425)
 	eq.spawn2(201425, 0, 0, 194, -1120, 72, 0) -- #Event_Execution_Control
