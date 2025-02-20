@@ -66,6 +66,14 @@ function event_say(e)
 				e.other:SetAccountBucket("pop.flags.tribunal", "1");
 				e.other:SetAccountBucket("pop.flags.stoning", "1");
 				e.other:Message(4, "You receive a character flag!");
+			else
+				local mark_link = eq.item_link(31845)
+				e.self:Say(
+					string.format(
+						"You seem to be missing a %s, return to me when you acquire it.",
+						mark_link
+					)
+				)
 			end
 		elseif (e.message:findi("i seek knowledge") ) then
 			local marks = { 31796, 31842, 31844, 31845, 31846 , 31960 }
