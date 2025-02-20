@@ -22,6 +22,14 @@ function event_click_door(e)
 			end
 		else
 			e.self:Message(MT.Yellow, "For alternate access you will need to speak with Grenic Drere.")
+			e.self:Message(
+				MT.Yellow,
+				string.format(
+					"Flag: Halls of Honor A Alternate Access Current: %d Required: 1",
+					alt_access_hohonora_bucket
+				)
+			)
+
 			e.self:Message(MT.Yellow, "The flags required to enter Halls of Honor are as follows:")
 			
 			local flags_required = {
