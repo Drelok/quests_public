@@ -6,7 +6,7 @@ function event_click_door(e)
 			e.self:Message(MT.Yellow, "You remember Nitram's words - 'three small turns to the right on the bottommost rivet should open the door'.")
 			door:ForceOpen(e.self)
 		end
-	elseif door_id = 145 then
+	elseif door_id == 145 then
 		local maelin_bucket = tonumber(e.self:GetAccountBucket("pop.flags.maelin")) or 0
 		if maelin_bucket == 1 then
 			e.self:SetZoneFlag(Zone.potimea)
