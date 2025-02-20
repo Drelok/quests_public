@@ -395,7 +395,24 @@ sub EVENT_SAY {
             } else {
                 $client->Message(13, "You must target a client to issue this command.");
             }
-        }
+        } elsif ($text=~/#setpopflag\s*(.*)/i) {
+            my $arguments = $1;
+
+            my $tar_client = $client->GetTarget();
+            if ($tar_client->IsClient()) {
+                $tar_client = $tar_client->CastToClient();
+            }
+
+            if ($tar_client && $tar_client->IsClient()) {
+                # Validate that there is exactly one argument which is not a number
+                if ($arguments !~ /^\s*(\d+)\s*$/) {
+                    my $flag = $1; # Captures the number
+
+					$tar_client->SetAccountBucket("pop.flags.$flag", "1");
+					$tar_client->Message(4, "You receive a character flag!");
+				}
+			}
+		}
     }
 
 	if ($text=~/#pop/i) {
