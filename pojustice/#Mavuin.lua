@@ -6,7 +6,8 @@ function event_say(e)
 			local what_information_link = eq.silent_say_link("what information", "this information")
 			e.self:Say(
 				string.format(
-					"I have been locked away, shamed for a reason that is not my own! Take [%s] to the Tribunal, I beg of you! It may be the only chance to prove that I am truly innocent!"
+					"I have been locked away, shamed for a reason that is not my own! Take [%s] to the Tribunal, I beg of you! It may be the only chance to prove that I am truly innocent!",
+					what_information_link
 				)
 			)
 		elseif mavuin_bucket == 1 and tribunal_bucket == 1 then
