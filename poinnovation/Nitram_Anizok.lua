@@ -14,7 +14,12 @@ function event_say(e)
 	local walking_variable = tonumber(e.self:GetEntityVariable("Walking")) or 0
 	local won_variable = tonumber(e.self:GetEntityVariable("Won")) or 0
 
-	if walking_variable == 1 then
+	if won_variable == 1 then
+		if e.message:findi("Hail") then
+			e.other:SetAccountBucket("pop.flags.xanamech", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
+	elseif walking_variable == 1 then
 		if e.message:findi("Hail") then
 			local advanced_tinkering_link = eq.silent_say_link("advanced tinkering")
 			e.self:Say(
@@ -59,11 +64,6 @@ function event_say(e)
 		elseif e.message:findi("collecting materials") then
 			e.self:Say("Let us see here. I have some of the base parts for the power source. If you could collect a copper node, a bundle of super conductive wires, and an intact power cell I could power up the machine. Good luck to you $name, I hope that we can work together on this.")
 		end
-	elseif won_variable == 1 then
-		if e.message:findi("Hail") then
-			e.other:SetAccountBucket("pop.flags.xanamech", "1")
-			e.other:Message(MT.LightBlue, "You receive a character flag!")
-		end
 	elseif walking_variable == 0 and won_variable == 0 then
 		local bundle_link = eq.item_link(9295)
 		local node_link = eq.item_link(9426)
@@ -100,6 +100,7 @@ function event_timer(e)
 		eq.set_timer("Fail", 7200 * 1000) -- 2 Hours
 	elseif e.timer == "Win" and not entity_list:IsMobSpawnedByNpcTypeID(206067) then -- Real Xanamech
 		e.self:SetEntityVariable("Won", "1")
+		e.self:SetEntityVariable("Walking", "0")
 		eq.stop_timer("Win")
 		eq.set_timer("Reset", 600 * 1000) -- 10 Minutes
 	elseif e.timer == "Win" and entity_list:IsMobSpawnedByNpcTypeID(206067) then
