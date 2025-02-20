@@ -92,7 +92,7 @@ end
 function event_timer(e)
 	if e.timer == "Start" then
 		eq.stop_timer("Start")
-		e.self:SetEntityVariable("Active", 1)
+		e.self:SetEntityVariable("Active", "1")
 		eq.set_timer("Fail", 1200 * 1000) -- 20 Minutes
 	elseif e.timer == "Fail" then
 		eq.stop_timer("Fail")

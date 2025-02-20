@@ -11,7 +11,7 @@ function event_say(e)
 			e.self:Say(
 				string.format(
 					" fixes you with a dark, peircing gaze. 'What do you want, mortal? Are you [%s]?",
-						prepared_link
+					prepared_link
 				)
 			)
 		elseif e.message:findi("prepared") then
