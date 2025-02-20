@@ -8,7 +8,7 @@ function event_say(e)
 	if mavuin_bucket == 1 then
 		if e.message:findi("Hail") then
 			local prepared_link = eq.silent_say_link("prepared")
-			e.self:Say(
+			e.self:Emote(
 				string.format(
 					" fixes you with a dark, peircing gaze. 'What do you want, mortal? Are you [%s]?",
 					prepared_link
