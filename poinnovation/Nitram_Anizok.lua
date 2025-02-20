@@ -64,6 +64,18 @@ function event_say(e)
 			e.other:SetAccountBucket("pop.flags.xanamech", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
+	elseif walking_variable == 0 and won_variable == 0 then
+		local bundle_link = eq.item_link(9295)
+		local node_link = eq.item_link(9426)
+		local cell_link = eq.item_link(9434)
+		e.self:Say(
+			string.format(
+				"I need a %s, %s, and an %s before I can begin.",
+				bundle_link,
+				node_link,
+				cell_link
+			)
+		)
 	end
 end
 
@@ -90,6 +102,9 @@ function event_timer(e)
 		e.self:SetEntityVariable("Won", "1")
 		eq.stop_timer("Win")
 		eq.set_timer("Reset", 600 * 1000) -- 10 Minutes
+	elseif e.timer == "Win" and entity_list:IsMobSpawnedByNpcTypeID(206067) then
+		eq.stop_timer("Win")
+		eq.set_timer("Win", 1 * 1000) -- 1 Second
 	elseif e.timer == "Reset" then
 		eq.depop_with_timer()
 	elseif e.timer == "Fail" then
