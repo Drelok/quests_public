@@ -5,7 +5,7 @@ function event_spawn(e)
 		eq.depop(206067) -- Real Xanamech
 	end
 
-	if not entity_list:IsMobSpawnedbyNpcTypeID(206068) then
+	if not entity_list:IsMobSpawnedByNpcTypeID(206068) then
 		eq.spawn2(206068, 0, 0, -735, 1500, -50, 251.6) -- Fake Xanamech
 	end
 end
