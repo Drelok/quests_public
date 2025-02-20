@@ -451,6 +451,8 @@ sub EVENT_SAY {
 				$current_value = 0;
 			}
 
+			$flag =~ s/pop\.flags\.//ig;
+
 			quest::message(315, "Flag: $flag Current: $current_value");
 		}
 	}
