@@ -1,12 +1,11 @@
 function event_say(e)
-	local has_item = 
 	if (
-		e.other:CountItem(29165) > 0 or
-		e.other:CountItem(1029165) > 0 or
-		e.other:CountItem(2029165) > 0 or
-		e.other:CountItem(18637) > 0 or
-		e.other:CountItem(1018637) > 0 or
-		e.other:CountItem(2018637) > 0
+		e.other:HasItem(29165) or
+		e.other:HasItem(1029165) or
+		e.other:HasItem(2029165) or
+		e.other:HasItem(18637) or
+		e.other:HasItem(1018637) or
+		e.other:HasItem(2018637)
 	) then
 		if e.message:findi("Hail") then
 			local researched_link = eq.silent_say_link("researched")
