@@ -8,7 +8,7 @@ function event_say(e)
 		if (
 			newleaf_bucket == 1 and
 			saryrn_bucket == 1 and
-			shadyglade_bucket == 1 and
+			shadyglade_bucket == 1
 		) then
 			if e.message:findi("Hail") then
 				e.self:Say("Oh thank you for helping Tylis! We will be forever in your debt")
