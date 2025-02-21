@@ -376,89 +376,56 @@ sub EVENT_SAY {
             my $arguments = $1; # Captures everything after #awardtitle
             
             my $tar_client = $client->GetTarget();
-            if ($tar_client->IsClient()) {
-                $tar_client = $tar_client->CastToClient();
-            }
             if ($tar_client && $tar_client->IsClient()) {
-                # Validate that there is exactly one argument which is a number
-                if ($arguments =~ /^\s*(\d+)\s*$/) {
-                    my $number = $1; # Captures the number
-                    # Proceed with awarding the title using $number
-                    
-                    $client->Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
-                    plugin::AddTitleFlag($number, $tar_client->CastToClient());
-                    plugin::CommonCharacterUpdate($tar_client->CastToClient());
-                    $tar_client->Signal(1);
-                } else {
-                    $client->Message(13, "Invalid input. Please provide a single numeric argument.");
-                }
+                $tar_client = $tar_client->CastToClient();
             } else {
-                $client->Message(13, "You must target a client to issue this command.");
-            }
+				return;
+			}
+
+			# Validate that there is exactly one argument which is a number
+            if ($arguments =~ /^\s*(\d+)\s*$/) {
+				my $number = $1; # Captures the number
+				# Proceed with awarding the title using $number
+                    
+				$client->Message(13, "Awarding TitleSet $number to " . $tar_client->GetName());
+				plugin::AddTitleFlag($number, $tar_client->CastToClient());
+				plugin::CommonCharacterUpdate($tar_client->CastToClient());
+				$tar_client->Signal(1);
+			} else {
+				$client->Message(13, "Invalid input. Please provide a single numeric argument.");
+			}
         } elsif ($text=~/#setpopflag\s*(.*)/i) {
             my $arguments = $1;
 
             my $tar_client = $client->GetTarget();
-            if ($tar_client->IsClient()) {
-                $tar_client = $tar_client->CastToClient();
-            }
-
             if ($tar_client && $tar_client->IsClient()) {
-                # Validate that there is exactly one argument which is not a number
-                if ($arguments !~ /^\s*(\d+)\s*$/) {
-                    my $flag = $1; # Captures the number
-
-					$tar_client->SetAccountBucket("pop.flags.$flag", "1");
-					$tar_client->Message(4, "You receive a character flag!");
-				}
+                $tar_client = $tar_client->CastToClient();
+            } else {
+				return;
 			}
-		}
+
+			if ($arguments !~ /^\s*(\d+)\s*$/) {
+				my $flag = $1;
+
+				my $client_name = $tar_client->GetCleanName();
+				$tar_client->SetAccountBucket("pop.flags.$flag", "1");
+				$tar_client->Message(4, "You receive a character flag!");
+				$client->Message(4, "$client_name has had their '$flag' flag set to '1'.");
+			}
+		} elsif ($text=~/#resetpopflags/i) {
+       		my $tar_client = $client->GetTarget();
+			if ($tar_client && $tar_client->IsClient()) {
+              	$tar_client = $tar_client->CastToClient();
+  			} else {
+				return;
+			}
+  
+       		$tar_client->DeleteAccountBucket("pop");
+   		}
     }
 
 	if ($text=~/#pop/i) {
-		my @flags = (
-			"pop.alt.codecay",
-			"pop.alt.hedge",
-			"pop.alt.hohonora",
-			"pop.alt.potactics",
-			"pop.alt.solrotower",
-			"pop.flags.aerin",
-			"pop.flags.adler",
-			"pop.flags.agnarr",
-			"pop.flags.anthone",
-			"pop.flags.arbitor",
-			"pop.flags.arlyxir",
-			"pop.flags.askr",
-			"pop.flags.behemoth",
-			"pop.flags.bertox",
-			"pop.flags.codecay",
-			"pop.flags.coirnav",
-			"pop.flags.construct",
-			"pop.flags.dresolik",
-			"pop.flags.elder",
-			"pop.flags.faye",
-			"pop.flags.fennin",
-			"pop.flags.garn",
-			"pop.flags.grummus",
-			"pop.flags.hedge",
-			"pop.flags.jiva",
-			"pop.flags.karana",
-			"pop.flags.librarian",
-			"pop.flags.maelin",
-			"pop.flags.marr",
-			"pop.flags.mavuin",
-			"pop.flags.newleaf",
-			"pop.flags.poxbourne",
-			"pop.flags.rallos",
-			"pop.flags.rathe",
-			"pop.flags.saryrn",
-			"pop.flags.shadyglade",
-			"pop.flags.terris",
-			"pop.flags.tribunal",
-			"pop.flags.trell",
-			"pop.flags.valor",
-			"pop.flags.xanamech"
-		);
+		my @flags = POPFlags();
 
 		quest::message(315, "Your Planes of Power flags are as follows:");
 
@@ -473,4 +440,52 @@ sub EVENT_SAY {
 			quest::message(315, "Flag: $flag Current: $current_value");
 		}
 	}
+}
+
+sub POPFlags {
+	my @flags = (
+		"pop.alt.codecay",
+		"pop.alt.hedge",
+		"pop.alt.hohonora",
+		"pop.alt.potactics",
+		"pop.alt.solrotower",
+		"pop.flags.aerin",
+		"pop.flags.adler",
+		"pop.flags.agnarr",
+		"pop.flags.anthone",
+		"pop.flags.arbitor",
+		"pop.flags.arlyxir",
+		"pop.flags.askr",
+		"pop.flags.behemoth",
+		"pop.flags.bertox",
+		"pop.flags.codecay",
+		"pop.flags.coirnav",
+		"pop.flags.construct",
+		"pop.flags.dresolik",
+		"pop.flags.elder",
+		"pop.flags.faye",
+		"pop.flags.fennin",
+		"pop.flags.garn",
+		"pop.flags.grummus",
+		"pop.flags.hedge",
+		"pop.flags.jiva",
+		"pop.flags.karana",
+		"pop.flags.librarian",
+		"pop.flags.maelin",
+		"pop.flags.marr",
+		"pop.flags.mavuin",
+		"pop.flags.newleaf",
+		"pop.flags.poxbourne",
+		"pop.flags.rallos",
+		"pop.flags.rathe",
+		"pop.flags.saryrn",
+		"pop.flags.shadyglade",
+		"pop.flags.terris",
+	 	"pop.flags.tribunal",
+		"pop.flags.trell",
+	  	"pop.flags.valor",
+		"pop.flags.xanamech"
+	);
+
+ 	return @flags;
 }
