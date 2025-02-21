@@ -10,7 +10,7 @@ function event_say(e)
 				)
 			)
 		elseif e.message:findi("poverty and ruin") then
-			local jeweled_dagger_link = eq.silent_say_link("poverty and ruin")
+			local jeweled_dagger_link = eq.silent_say_link("jeweled dagger")
 			e.self:Say(
 				string.format(
 					"Aye, he lived in the streets of Eastern Freeport, begging from those passing through the port. He sat quivering, propped up against a wall with one hand out as he watched the travelers pass by. None of them even gave him a second glance. Several years would pass before a female dwarf would arrive to trade some of her family's armor and weapons. She saw and took pity on Thelin. She knelt down, scratched her beard then began to rummage through her backpack. She then placed a [%s] in his hand, smiled and returned to her former business.",
