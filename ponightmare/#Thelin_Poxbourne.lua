@@ -23,7 +23,7 @@ function event_say(e)
 		if hedge_bucket == 0 then
 			e.self:Emote("screams loudly, and then falls asleep once again.")
 		elseif hedge_bucket == 1 then
-			if entries_variable >= 1 and entries_variable <= 18 then
+			if entries_variable >= 0 and entries_variable <= 18 then
 				local ready_link = eq.silent_say_link("ready")
 				e.self:Say(
 					string.format(

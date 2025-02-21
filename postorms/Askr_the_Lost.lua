@@ -61,7 +61,7 @@ end
 function event_trade(e)
 	local item_lib = require("items")
 	local valor_bucket = tonumber(e.other:GetAccountBucket("pop.flags.valor")) or 0
-	if valor_bucket == 2 then
+	if valor_bucket == 1 then
 		local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
 		if askr_bucket == 0 then
 			if (
