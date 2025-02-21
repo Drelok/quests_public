@@ -11,6 +11,17 @@ function event_say(e)
 			)
 		elseif e.message:findi("what problem") then
 			e.self:Say("Askr points drunkenly towards the exit of the cave. 'Have you not seen the foul denizens of destruction outside? Hrmph! Going everywhere they please, pillaging, plundering. . . I'm lucky to have survived this long. Bah, it doesn't matter, there's nothing that anyone can do to stop them, and that is why I'm still stuck here with my *hic* potions.'")
+		elseif e.message:findi("yes") then
+			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
+			local continue_link = eq.silent_say_link("continue")
+			if askr_bucket == 1 then
+				e.self:Say(
+					string.format(
+					"Truly, I am amazed that someone of your caliber was able to do what I could not. I have been stuck in these desolate caves for so long, I had almost lost hope that I would ever find a way to get rid of those accursed giants. But you...  you have been able to best at least one of them. It is reasonable to suggest that if you are able to dispatch one, you may be able to dispatch others. I need to know for sure if you are as capable an individual as it appears you are.'This place was once beautiful and serene, with the great Karana's showers falling day and night soothing the lands and the creatures that inhabit it. Alas, there was an invasion of a superior force -- the storm giants which you have encountered. They laid waste to the lands, burned down trees, and have caused so much havoc I don't even know what is to become of it. Originally, they came as one group and crossed the breadth of the land pillaging and plundering all that they could find. Over time, though, they grew apart and distinct factions grew around Mount Grenidor.[%s] '",
+					continue_link
+				)
+			)
+			end
 		elseif e.message:findi("continue") then
 			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
 			if askr_bucket == 1 then
