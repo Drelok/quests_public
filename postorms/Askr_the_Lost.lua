@@ -5,7 +5,8 @@ function event_say(e)
 			local problem_link = eq.silent_say_link("what problem", "problem")
 			e.self:Emote(
 				string.format(
-					"looks up at you, and when he does, you take note of the scraggly beard on his weather-worn face; the scent of ale permeates your senses and pushes you to look away slightly. In an apparent drunken stupor, Askr begins to speak with surprising clarity. 'Here to wash the windows and clean the flooring, are you? No? Well, you can't be much help then. And the likes of you obviously wouldn't be able to get rid of the massive [%s] we're having. Bah, says I. You can help me no more than any of these other vagrants. Leave me alone to my ale and my misery.'"
+					"looks up at you, and when he does, you take note of the scraggly beard on his weather-worn face; the scent of ale permeates your senses and pushes you to look away slightly. In an apparent drunken stupor, Askr begins to speak with surprising clarity. 'Here to wash the windows and clean the flooring, are you? No? Well, you can't be much help then. And the likes of you obviously wouldn't be able to get rid of the massive [%s] we're having. Bah, says I. You can help me no more than any of these other vagrants. Leave me alone to my ale and my misery.'",
+					problem_link
 				)
 			)
 		elseif e.message:findi("what problem") then
