@@ -12,7 +12,7 @@ end
 
 function event_say(e)
 	local trell_bucket = tonumber(e.other:GetAccountBucket("pop.flags.trell")) or 0
-	if e.message:findi("Hail") && trell_bucket ~= 1 then
+	if e.message:findi("Hail") and trell_bucket ~= 1 then
 		e.self:Say("Congratulations... Two other trials and you may have proven yourself worthy to stand before Lord Marr.")
 		e.other:SetAccountBucket("pop.flags.trell", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
