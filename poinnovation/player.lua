@@ -1,5 +1,5 @@
 function event_click_door(e)
-	local door_id = door:GetDoorID()
+	local door_id = e.door:GetDoorID()
 	if door_id == 7 then
 		local xanamech_bucket = tonumber(e.self:GetAccountBucket("pop.flags.xanamech")) or 0
 		if xanamech_bucket == 1 then
