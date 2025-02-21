@@ -43,7 +43,7 @@ function event_click_door(e)
 end
 
 function event_loot(e)
-	if e.self:HasClass(Class.MAGICIAN) and item:GetID() == 19547 then -- Item: Element of Order
+	if e.self:HasClass(Class.MAGICIAN) and e.item:GetID() == 19547 then -- Item: Element of Order
 		local qglobals = eq.get_qglobals(e.self)
 		if tonumber(qglobals["mage_epic"]) == 10 and qglobals["mage_chest_hoh"] == nil then
 			eq.set_global("mage_chest_hoh", "1", 5, "F")
