@@ -67,7 +67,7 @@ function event_trade(e)
 				item_lib.check_turn_in(e.trade, {item1 = 11486}) or
 				item_lib.check_turn_in(e.trade, {item1 = 28749}) or
 				item_lib.check_turn_in(e.trade, {item1 = 28781}) or
-				item_lib.check_turn_in(e.trade, {item1 = 28782}) or
+				item_lib.check_turn_in(e.trade, {item1 = 28782})
 			) then
 				e.self:Say("The drunken stupor that Askr had been in earlier appears to vanish in an instant; a glimmer of hope now flashes in the depths of his eyes. 'This is the head of a giant. . . a storm giant from outside the caves.' Askr ponders what this revelation could mean. He mutters to himself, 'If it is possible that someone has indeed bested a giant here in the planes, then perhaps it is possible. . .' He looks back at you very sternly and asks, 'Tell me now and be truthful, was it you who severed the head of this giant from his body?'")
 				e.other:SetAccountBucket("pop.flags.askr", "1")
