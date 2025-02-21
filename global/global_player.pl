@@ -410,7 +410,7 @@ sub EVENT_SAY {
 				my $client_name = $tar_client->GetCleanName();
 				$tar_client->SetAccountBucket("pop.flags.$flag", "1");
 				$tar_client->Message(4, "You receive a character flag!");
-				$client->Message(4, "$client_name has had their '$flag' flag set to '1'.");
+				$client->Message(4, "'$flag' flag set to '1' for $client_name.");
 			}
 		} elsif ($text=~/#resetpopflags/i) {
        		my $tar_client = $client->GetTarget();
@@ -420,7 +420,10 @@ sub EVENT_SAY {
 				return;
 			}
   
+			my $client_name = $tar_client->GetCleanName();
        		$tar_client->DeleteAccountBucket("pop");
+		 	$tar_client->Message(4, "Your Planes of Power flags have been reset.");
+			$client->Message(4, "Planes of Power flags reset for $client_name.");
    		}
     }
 
