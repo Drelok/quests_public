@@ -11,7 +11,7 @@ function event_say(e)
 		local temple_link = eq.silent_say_link("Mithaniel's Temple")
 		e.self:Say(
 			string.format(
-				"Not that it is your business, but this is where I call home. I have lost track of the years that I have spent here. This valley is my home, for I was exiled from [%s]. It is not a story that I am proud of and do not wish to share with you. So be one with you."
+				"Not that it is your business, but this is where I call home. I have lost track of the years that I have spent here. This valley is my home, for I was exiled from [%s]. It is not a story that I am proud of and do not wish to share with you. So be one with you.",
 				temple_link
 			)
 		)
@@ -50,14 +50,14 @@ function event_trade(e)
 					if member ~= nil and member:IsClient() then
 						member:SummonItem(29214) -- Item: Ring of Marr
 						member:SetZoneFlag(Zone.hohonora)
-						member:CastToClient():SetAccountBucket("pop.alt.hohonora", "!")
+						member:CastToClient():SetAccountBucket("pop.alt.hohonora", "1")
 						member:Message(MT.LightBlue, "You receive a character flag!")
 					end
 				end
 			end
 		else
 			e.other:SetZoneFlag(Zone.hohonora)
-			e.other:SetAccountBucket("pop.alt.hohonora", "!")
+			e.other:SetAccountBucket("pop.alt.hohonora", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
 	end
