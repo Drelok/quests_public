@@ -1,6 +1,6 @@
 function event_click_door(e)
 	local door_id = e.door:GetDoorID()
-	if door_id = 4 then
+	if door_id == 4 then
 		local askr_bucket = tonumber(e.self:GetAccountBucket("pop.flags.askr")) or 0
 		local mavuin_bucket = tonumber(e.self:GetAccountBucket("pop.flags.mavuin")) or 0
 		local tribunal_bucket = tonumber(e.self:GetAccountBucket("pop.flags.tribunal")) or 0
