@@ -4,7 +4,7 @@ function event_say(e)
 	local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
 	if (
 		adler_bucket == 1 and
-		elder_bucket == 1 and
+		elder_bucket == 0 and
 		grummus_bucket == 1
 	) then
 		e.self:Message(MT.LightBlue, "Elder Fuirstel slowly turns towards you. You can feel the heat radiating from his face. The warding that envelopes your body reaches out and begins to surround him. You immediately see improvement in his condition. The pus filled sores covering his face and his burning fever start to vanish.")
