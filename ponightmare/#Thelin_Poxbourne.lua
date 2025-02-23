@@ -43,7 +43,7 @@ function event_say(e)
 				eq.set_timer("Ready Trigger", 600 * 1000) -- 10 Minutes
 			end
 			e.other:MovePCInstance(Zone.ponightmare, eq.get_zone_instance_id(), -4774, 5198, 4, 0)
-			e.self:SetEntityVariable("Entries", entries_variable + 1)
+			e.self:SetEntityVariable("Entries", tostring(entries_variable + 1))
 		end
 	end
 end
