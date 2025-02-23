@@ -4,7 +4,7 @@ function event_click_door(e)
 		local xanamech_bucket = tonumber(e.self:GetAccountBucket("pop.flags.xanamech")) or 0
 		if xanamech_bucket == 1 then
 			e.self:Message(MT.Yellow, "You remember Nitram's words - 'three small turns to the right on the bottommost rivet should open the door'.")
-			door:ForceOpen(e.self)
+			e.door:ForceOpen(e.self)
 		end
 	elseif door_id == 145 then
 		local maelin_bucket = tonumber(e.self:GetAccountBucket("pop.flags.maelin")) or 0
