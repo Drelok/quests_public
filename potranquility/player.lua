@@ -100,18 +100,17 @@ function event_click_door(e)
 		[83] = { same_as = 81 },
 		[84] = { same_as = 81 }
 	}
-	
+
 	local door_id = e.door:GetDoorID()
 	local req = door_requirements[door_id]
 	if not req then
 		return
 	end
-	
+
 	if req.same_as then
 		req = door_requirements[req.same_as]
 	end
-	
-	local has_alt_access = req.alt_access and tonumber(e.self:GetAccountBucket(string.format("pop.alt.%s", req.alt_access))) == 1
+
 	local has_all_flags = true
 	for _, flag in ipairs(req.flags or {}) do
 		local current_flag = string.format("pop.flags.%s", flag)
@@ -132,8 +131,8 @@ function event_click_door(e)
 			break
 		end
 	end
-	
-	if has_alt_access or has_all_flags or (req.level and e.self:GetLevel() >= req.level) then
+
+	if has_all_flags then
 		for _, zone in ipairs(req.zones) do
 			if not e.self:HasZoneFlag(zone) then
 				e.self:SetZoneFlag(zone)
