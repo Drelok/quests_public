@@ -93,7 +93,7 @@ end
 function setup(ev)
 	eq.stop_all_timers();
 	wave = 0;
-	eq.set_proximity(ev.self:GetX()-50,ev.self:GetX()+50,ev.self:GetY()-100,ev.self:GetY()+150);
+	eq.set_proximity(ev.self:GetX() - 100,ev.self:GetX() + 100,ev.self:GetY() - 100,ev.self:GetY() + 150);
 end
 
 function player_check()
@@ -101,7 +101,7 @@ function player_check()
 	local player_list = eq.get_entity_list():GetClientList();
 	if player_list ~= nil then
 		for player in player_list.entries do
-			if player:GetX() > 1650 and player:GetX() < 1860 and player:GetY() > 150 and player:GetY() < 360 and not player:GetFeigned() then
+			if player:GetX() > 1550 and player:GetX() < 1900 and player:GetY() > -150 and player:GetY() < 360 and not player:GetFeigned() then
 				return true; -- if player in event area and not FD
 			end
 		end
