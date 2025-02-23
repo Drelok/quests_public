@@ -13,7 +13,12 @@ function event_say(e)
 	else
 		local bertox_bucket = tonumber(e.other:GetAccountBucket("pop.flags.bertox")) or 0
 		if bertox_bucket == 1 then
-			e.self:Emote("Elder Fuirstel looks surprisingly better than when you last saw him. Elder Fuirstel says 'You actually did it! You defeated Bertoxxulous! I could feel it the moment he fell. Thank you very much, $name. You have done this world a great service.'")
+			e.self:Emote(
+				string.format(
+					"Elder Fuirstel looks surprisingly better than when you last saw him. Elder Fuirstel says 'You actually did it! You defeated Bertoxxulous! I could feel it the moment he fell. Thank you very much, %s. You have done this world a great service.'",
+					e.other:GetCleanName()
+				)
+			)
 			e.other:SetAccountBucket("pop.flags.codecay", "2")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
