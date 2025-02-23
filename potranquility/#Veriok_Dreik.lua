@@ -46,7 +46,8 @@ function event_say(e)
 				local mylik_link = eq.silent_say_link("Mylik")
 				e.self:Say(
 					string.format(
-						"Excellent work $name, but there is no time to waste. [%s] needs our help.",
+						"Excellent work %s, but there is no time to waste. [%s] needs our help.",
+						e.other:GetCleanName(),
 						mylik_link
 					)
 				)
@@ -90,7 +91,8 @@ function event_say(e)
 		local you_link = eq.silent_say_link("me", "you")
 		e.self:Say(
 			string.format(
-				"$name, look at these people. Their minds are being tormented, they are diseased and their souls are decaying more and more each day. You only see four in front of you but tomorrow it might be eight and the day after it could be hundreds. Who knows, it might even be [%s] on your sick bed.",
+				"%s, look at these people. Their minds are being tormented, they are diseased and their souls are decaying more and more each day. You only see four in front of you but tomorrow it might be eight and the day after it could be hundreds. Who knows, it might even be [%s] on your sick bed.",
+				e.other:GetCleanName(),
 				you_link
 			)
 		)
@@ -98,12 +100,18 @@ function event_say(e)
 		local help_me_link = eq.silent_say_link("help you", "help me")
 		e.self:Say(
 			string.format(
-				"Yes $name even you. You have to believe that I can help these people. You need to believe that I can help you. You need to believe that you can help me. I believe you can help me. Will you [%s] save these people?",
+				"Yes %s even you. You have to believe that I can help these people. You need to believe that I can help you. You need to believe that you can help me. I believe you can help me. Will you [%s] save these people?",
+				e.other:GetCleanName(),
 				help_me_link
 			)
 		)
 	elseif e.message:findi("help you") then
-		e.self:Say("Then let's get started! This man Tylis suffers from mental torment. Look at him $name he is in pain. His illness is no ordinary illness. Someone is controlling his mind and we need to stop the source ofthis torment. You can find the one who controls his mind inside the Plane of Torment. We want to learn more about how his brain works. Destroy the source and bring me back his brain so we can set those under his spell free.")
+		e.self:Say(
+			string.format(
+				"Then let's get started! This man Tylis suffers from mental torment. Look at him %s he is in pain. His illness is no ordinary illness. Someone is controlling his mind and we need to stop the source ofthis torment. You can find the one who controls his mind inside the Plane of Torment. We want to learn more about how his brain works. Destroy the source and bring me back his brain so we can set those under his spell free.",
+				e.other:GetCleanName()
+			)
+		)
 	elseif e.message:findi("Mylik") then
 		local understand_link = eq.silent_say_link("understand")
 		e.self:Say(
@@ -113,7 +121,13 @@ function event_say(e)
 			)
 		)
 	elseif e.message:findi("understand") then
-		e.self:Say("Ok then pay attention $name. I have already sent in an old friend of mine to handle what needs to be done inside the Plane of Disease. What he doesn't know is that Bertoxxulous is aware that he has breached the portal and is planning on sending four guardians to eliminate him. Enter the Crypt of Decay and destroy the guardians. Bring me back proof of their death and I'll give you further instructions. Hurry $name, this task is vital to saving Milyk.")
+		e.self:Say(
+			string.format(
+				"Ok then pay attention %s. I have already sent in an old friend of mine to handle what needs to be done inside the Plane of Disease. What he doesn't know is that Bertoxxulous is aware that he has breached the portal and is planning on sending four guardians to eliminate him. Enter the Crypt of Decay and destroy the guardians. Bring me back proof of their death and I'll give you further instructions. Hurry %s, this task is vital to saving Milyk.",
+				e.other:GetCleanName(),
+				e.other:GetCleanName()
+			)
+		)
 	end
 end
 
