@@ -38,16 +38,5 @@ end
 
 function event_trade(e)
 	local item_lib = require("items")
-	if item_lib.check_turn_in(e.trade, {item1 = 36568}) then -- Banished Efreeti Heart
-		e.self:Say(
-			string.format(
-				"Very good %s. With this I can create an enchantment powerful enough to protect you from the searing heat within Solusek's Tower.' Ronar plunges the heart into the nearby pool of water and begins to chant in a low monotonous tone. The water around his claw begins to boil and swirl faster and faster as his chanting grows louder till he finally pulls out his now-empty claw. He gently touches your forehead and though you hear your flesh sizzle as he inscribes a rune upon it, you feel nothing. 'Now you may freely enter Solusek's Tower and complete your task.",
-				e.other:GetCleanName()
-			)
-		)
-		e.other:SetAccountBucket("pop.alt.solrotower", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
-	end
-
 	item_lib.return_items(e.self, e.other, e.trade)
 end
