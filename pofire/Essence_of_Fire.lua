@@ -13,7 +13,7 @@ end
 function event_say(e)
 	if e.message:findi("Hail") then
 		e.other:SummonItem(29147) -- Item: Globe of Dancing Flame
-		e.other:SetAccountBucket("pop.flags.fennin")
+		e.other:SetAccountBucket("pop.flags.fennin", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	end
 end
