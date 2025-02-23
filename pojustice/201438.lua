@@ -102,8 +102,8 @@ function event_timer(e)
 		else
             local client_e = eq.get_entity_list():GetClientByCharID(client_id);
             if (client_e ~= nil and client_e.valid) then
-                client_e.other:MovePCInstance( 201, eq.get_zone_instance_id(), 456, 825, 9, 360 ); -- Zone: pojustice
-                client_e.other:Message(3, "A mysterious force translocates you.");
+                client_e:MovePCInstance( 201, eq.get_zone_instance_id(), 456, 825, 9, 360 ); -- Zone: pojustice
+                client_e:Message(3, "A mysterious force translocates you.");
             end
 		end
 		HandleCorpses(772, -1148, 76, 175);
