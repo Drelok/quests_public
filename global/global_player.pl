@@ -394,24 +394,24 @@ sub EVENT_SAY {
 			} else {
 				$client->Message(13, "Invalid input. Please provide a single numeric argument.");
 			}
-        } elsif ($text=~/#setpopflag\s*(.*)/i) {
-            my $arguments = $1;
+        } elsif ($text=~/#setpopflag\s+(\S+)(?:\s+(\d))?/i) {
+            my ($flag, $number) = ($1, $2 // 1);  # Default $number to 1 if not provided
 
             my $tar_client = $client->GetTarget();
             if ($tar_client && $tar_client->IsClient()) {
                 $tar_client = $tar_client->CastToClient();
             } else {
-				return;
-			}
+                return;
+            }
 
-			if ($arguments !~ /^\s*(\d+)\s*$/) {
-				my $flag = $1;
-
-				my $client_name = $tar_client->GetCleanName();
-				$tar_client->SetAccountBucket("pop.flags.$flag", "1");
-				$tar_client->Message(4, "You receive a character flag!");
-				$client->Message(4, "'$flag' flag set to '1' for $client_name.");
-			}
+            if ($number >= 0 && $number <= 9) {
+                my $client_name = $tar_client->GetCleanName();
+                $tar_client->SetAccountBucket("pop.flags.$flag", "$number");
+                $tar_client->Message(4, "You receive a character flag!");
+                $client->Message(4, "'$flag' flag set to '$number' for $client_name.");
+            } else {
+                $client->Message(13, "Invalid number. Please provide a number between 0 and 9.");
+            }
 		} elsif ($text=~/#resetpopflags/i) {
        		my $tar_client = $client->GetTarget();
 			if ($tar_client && $tar_client->IsClient()) {

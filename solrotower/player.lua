@@ -23,6 +23,6 @@ function event_click_door(e)
 			end
 		end
 
-		e.self:MovePCInstance(Zone.solrotower, eq.get_zone_instance_id(), 0, -847, 244)
+		e.self:MovePCInstance(Zone.solrotower, eq.get_zone_instance_id(), 0, -847, 244, 0)
 	end
 end

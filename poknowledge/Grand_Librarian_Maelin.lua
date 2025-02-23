@@ -1,6 +1,7 @@
 --poknowledge/librarian_Maelin.lua NPCID 202125
 -- items: 84091, 84092, 84093, 84087, 52950, 55900, 20520
 function event_say(e)
+	local qglobals = eq.get_qglobals(e.other);
 	if eq.is_task_active(500220) then
 		if e.message:findi("trick or treat") then
 			e.self:Say("Ah, here you go. Fresh from the Sugar Assembalage 2000.");
