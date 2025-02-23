@@ -93,7 +93,9 @@ function event_say(e)
 				)
 			end
 		end
-	elseif e.message:findi("tome") then
+	end
+
+	if e.message:findi("tome") then
 		if qglobals["shadowknight_epic"] == "1" then
 			e.self:Say("Yes, I seem to recall having such a tome. But evil it is. I don't hand out such dangerous knowledge to just anyone. However. . . I am curious about something and perhaps you can help me. A prominent professor of biology and I have a bet as to how a certain creature from the Realm of Discord, known as a murkglider breeds. He believes they give live birth, and I believe they are egg layers. Unfortunately, I have been so busy here, that I have not been able to make arrangements to travel there and observe the creatures more. If you could travel to the Realm of Discord and [" ..eq.say_link('find an egg', false, 'find an egg') .. "] for me, I will give you the book you seek.");
 		elseif e.message:findi("find an egg") then
