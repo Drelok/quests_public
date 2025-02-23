@@ -3,7 +3,8 @@ function event_say(e)
 		local they_link = eq.silent_say_link("they")
 		e.self:Say(
 			string.format(
-				"Shhh $name, [%s] can hear and see every move that you make.",
+				"Shhh %s, [%s] can hear and see every move that you make.",
+				e.other:GetCleanName(),
 				they_link
 			)
 		)
