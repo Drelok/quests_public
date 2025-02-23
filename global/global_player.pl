@@ -419,6 +419,11 @@ sub EVENT_SAY {
   			} else {
 				return;
 			}
+
+            my @zoneflags = POPZoneFlags();
+            foreach my $zoneflag (@zoneflags) {
+                $client->ClearZoneFlag($zoneflag);
+            }
   
 			my $client_name = $tar_client->GetCleanName();
        		$tar_client->DeleteAccountBucket("pop");
@@ -491,4 +496,28 @@ sub POPFlags {
 	);
 
  	return @flags;
+}
+
+sub POPZoneFlags {
+    my @zoneflags = (
+        200,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223
+    );
+
+    return @zoneflags;
 }
