@@ -20,23 +20,20 @@ Hail Tarkil for Flag.
 local carp_add=0;
 local carp_fake=false;
 
-
-
-
 function Carp_Combat(e)
 	if (e.joined == true) and carp_fake == false then
-	eq.spawn2(200037,0,0,385.41, -127.15, -60.25, 384.3):AddToHateList(e.self:GetHateRandom(),1); -- Spawn Breddan_Rutyl
-	eq.spawn2(200036,0,0,393.25, -107.67, -60.25, 391.3):AddToHateList(e.self:GetHateRandom(),1); -- Spawn Fran Prisoal
-	eq.spawn2(200038,0,0,385.17, -98.43, -60.25, 384.8):AddToHateList(e.self:GetHateRandom(),1); -- Spawn Abroan Drian
-	eq.set_next_hp_event(90); -- Go Invulnerable to Melee/Magic @ 90%.
-	carp_fake=true;
+		eq.spawn2(200037,0,0,385.41, -127.15, -60.25, 384.3):AddToHateList(e.self:GetHateRandom(),1); -- Spawn Breddan_Rutyl
+		eq.spawn2(200036,0,0,393.25, -107.67, -60.25, 391.3):AddToHateList(e.self:GetHateRandom(),1); -- Spawn Fran Prisoal
+		eq.spawn2(200038,0,0,385.17, -98.43, -60.25, 384.8):AddToHateList(e.self:GetHateRandom(),1); -- Spawn Abroan Drian
+		eq.set_next_hp_event(90); -- Go Invulnerable to Melee/Magic @ 90%.
+		carp_fake=true;
 	end
 end
 
 function Carp_HP(e)
 	if (e.hp_event == 90) then
-	e.self:SetSpecialAbility(SpecialAbility.immune_magic, 1); -- Go Invulnerable
-	e.self:SetSpecialAbility(SpecialAbility.immune_melee, 1); -- Go Invulnerable
+		e.self:SetSpecialAbility(SpecialAbility.immune_magic, 1); -- Go Invulnerable
+		e.self:SetSpecialAbility(SpecialAbility.immune_melee, 1); -- Go Invulnerable
 	end
 end
 
@@ -45,13 +42,8 @@ function Add_Death(e)
 	carp_add=carp_add+1
 	eq.debug("Trash Dead: " .. carp_add);
 	if carp_add == 3 and carp_fake == true and ( el:IsMobSpawnedByNpcTypeID(200007) == true) then
-	eq.depop_all(200007);  -- Depop myself
-	eq.spawn2(200007,0,0,384.00,-113.00,-53.78,386.0):AddToHateList(e.self:GetHateRandom(),1); -- Pop my true self // No adds this time // No Invulnerable State  // Auto Agro Myself
-	end
-	if carp_add == 5 then
-	eq.depop_all(200067); --Depop fake HP
-	eq.spawn2(200032,0,0,306.97,314.78,-70.25,259.0); -- Respawn Real HP
-	carp_add=0; -- Set add kill back to 0 for future spawns.
+		eq.depop_all(200007);  -- Depop myself
+		eq.spawn2(200007,0,0,384.00,-113.00,-53.78,386.0):AddToHateList(e.self:GetHateRandom(),1); -- Pop my true self // No adds this time // No Invulnerable State  // Auto Agro Myself
 	end
 end
 
@@ -87,8 +79,8 @@ end
 
 function Bishop_Timer(e)
 	if e.timer == "Bishop" then  -- Despawn myself if 1 hour is up.
-	eq.stop_timer('Bishop');
-	eq.depop_all(200039);
+		eq.stop_timer('Bishop');
+		eq.depop_all(200039);
 	end
 end
 
@@ -98,8 +90,8 @@ end
 
 function Vindor_Timer(e)
 	if e.timer == "Vindor" then -- Despawn myself if 1 hour is up.
-	eq.stop_timer('Vindor');
-	eq.depop_all(200034);
+		eq.stop_timer('Vindor');
+		eq.depop_all(200034);
 	end
 end
 
@@ -109,8 +101,8 @@ end
 
 function Raex_Timer(e)
 	if e.timer == "Raex" then  -- Despawn myself if 1 hour is up
-	eq.stop_timer('Raex');
-	eq.depop_all(200033);
+		eq.stop_timer('Raex');
+		eq.depop_all(200033);
 	end
 end
 
@@ -120,16 +112,16 @@ end
 
 function HP_Timer(e)
 	if e.timer == "HP" then -- Despawn myself if 1 hour is up
-	eq.stop_timer('HP');
-	eq.depop_all(200032);
+		eq.stop_timer('HP');
+		eq.depop_all(200032);
 	end
 end
 
 function Avhi_Timer(e)
 	if e.timer == "Avhi" then
-	eq.stop_timer('Avhi');
-	eq.depop_all(200035); -- Depop myself
-	eq.depop_all(200066); -- Depop any adds that were activated by event.
+		eq.stop_timer('Avhi');
+		eq.depop_all(200035); -- Depop myself
+		eq.depop_all(200066); -- Depop any adds that were activated by event.
 	end
 end
 
@@ -140,10 +132,25 @@ end
 
 
 function Bishop_Death(e)
-	eq.spawn2(200032,0,0,306.97,314.78,-70.25,259.0); -- Spawn Untargetable Version of High Priest.
 	eq.spawn2(200034,33,0,325,325,-71.5,277.2); -- Spawn Vindor on their grid.
 	eq.spawn2(200033,34,0,290,325,-71.5,277.2); -- Spawn Raex on their grid.
 end
+
+function Raex_Death(e)
+	local el = eq.get_entity_list();
+  	-- If both Raex and Vindor are dead, then spawn the High Priest
+  	if (not el:IsMobSpawnedByNpcTypeID(200034)) then
+		eq.spawn2(200032,0,0,306.97,314.78,-70.25,259.0); -- Spawn High Priest
+  	end
+end
+
+function Vindor_Death(e)
+	local el = eq.get_entity_list();
+	-- If both Raex and Vindor are dead, then spawn the High Priest
+	if (not el:IsMobSpawnedByNpcTypeID(200033)) then
+		eq.spawn2(200032,0,0,306.97,314.78,-70.25,259.0); -- Spawn High Priest
+	end
+end  
 
 function HP_Death(e)
 	eq.spawn2(200040,0,0,309.17,332.99,-70.25,265.5); -- Spawn Tarkil for  flag to lower codecay.
@@ -184,7 +191,5 @@ function event_encounter_load(e)
 	eq.register_npc_event('Carp', Event.death_complete, 200037, 			Add_Death);
 	eq.register_npc_event('Carp', Event.death_complete, 200036, 			Add_Death);
 	eq.register_npc_event('Carp', Event.death_complete, 200038, 			Add_Death);
-	eq.register_npc_event('Carp', Event.death_complete, 200034,				Add_Death);
-	eq.register_npc_event('Carp', Event.death_complete, 200033,				Add_Death);
 
 end
