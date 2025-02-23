@@ -44,21 +44,5 @@ function event_trade(e)
 		e.self:Say("Yuuz dun guud! But Grimror keent geeve you anyting, but Grimror have dis. Grimror also have seekret information. Krypt of Deekay in in here. Dunt tink yuuz wanna go in dere. Dere be mean old rotten keengs in dere, yuuz dunt want ta mess wif dem, dere also be udder sortz uf baddies in dere, be carefuul if yuuz goin dat way. I hurd stories dat Bertoshulus es in dere too, Grimror even saw him in here one time. In dis place yuuz only gots ta worry about Grummus, him fatter dan Grimror, got theek skin too. Him have key ta get inna de Krypt,but Grimror knew da seekret way een. Dat bracer keen make da portil into de Krypt tink dat yuuz belongz dere. Guud barshin!")
 
 		e.other:SummonItem(9294) -- Item: Bangle of Disease Warding
-
-		if e.other:IsGrouped() then
-			local group = e.other:GetGroup()
-			local member_count = group:GroupCount()
-
-			for i = 0, member_count - 1 do
-				local client = group:GetMember(i)
-				client:SetZoneFlag(200)
-				client:SetAccountBucket("pop.alt.codecay", "1")
-				client:Message(MT.LightBlue, "You receive a character flag!")
-			end
-		else
-			e.other:SetZoneFlag(200)
-			e.other:SetAccountBucket("pop.alt.codecay", "1")
-			e.other:Message(MT.LightBlue, "You receive a character flag!")
-		end
 	end
 end
