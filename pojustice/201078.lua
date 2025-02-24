@@ -1,3 +1,6 @@
+-- 201078 Trial of Execution
+-- Trial of Execution
+
 function event_spawn(e)
 	eq.depop_all(201425)
 	eq.spawn2(201425, 0, 0, 194, -1120, 72, 0) -- #Event_Execution_Control
@@ -10,7 +13,7 @@ function event_say(e)
 			local prepared_link = eq.silent_say_link("prepared")
 			e.self:Emote(
 				string.format(
-					" fixes you with a dark, peircing gaze. 'What do you want, mortal? Are you [%s]?",
+					" fixes you with a dark, piercing gaze. 'What do you want, mortal? Are you [%s]?",
 					prepared_link
 				)
 			)
@@ -43,10 +46,6 @@ function event_say(e)
 					e.other:MovePCInstance(201, eq.get_zone_instance_id(), 254, -1053, 73, 300)
 				end
 			end
-		end
-	else
-		if e.message:findi("Hail") then
-			e.self:Say("I'm sorry, the Trial of Execution is currently unavailable to you.")
 		elseif e.message:findi("what evidence of Mavuin") then
 			if e.other:HasItem(31842) then
 				e.other:SetAccountBucket("pop.flags.tribunal", "1")
@@ -81,6 +80,10 @@ function event_say(e)
 			) then
 				e.self:Say("You have done well, mortal, but there are more trials yet for you to complete.")
 			end
+		end
+	else
+		if e.message:findi("Hail") then
+			e.self:Say("I'm sorry, the Trial of Execution is currently unavailable to you.")
 		end
 	end
 end

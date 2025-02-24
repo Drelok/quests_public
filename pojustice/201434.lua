@@ -1,3 +1,6 @@
+-- 201434 Trial of Flame
+-- Trial of Flame
+
 function event_say(e)
 	local mavuin_bucket = tonumber(e.other:GetAccountBucket("pop.flags.mavuin")) or 0
 	if mavuin_bucket == 1 then
@@ -5,7 +8,7 @@ function event_say(e)
 			local prepared_link = eq.silent_say_link("prepared")
 			e.self:Emote(
 				string.format(
-					" fixes you with a dark, peircing gaze. 'What do you want, mortal? Are you [%s]?",
+					" fixes you with a dark, piercing gaze. 'What do you want, mortal? Are you [%s]?",
 					prepared_link
 				)
 			)
@@ -43,10 +46,6 @@ function event_say(e)
 			else
 				e.self:Say("I'm sorry, the Trial of Flame is currently unavailable to you.")
 			end
-		end
-	else
-		if e.message:findi("Hail") then
-			e.self:Say("I'm sorry, the Trial of Flame is currently unavailable to you.")
 		elseif e.message:findi("what evidence of Mavuin") then
 			if e.other:HasItem(31796) then
 				e.other:SetAccountBucket("pop.flags.tribunal", "1")
@@ -81,6 +80,10 @@ function event_say(e)
 			) then
 				e.self:Say("You have done well, mortal, but there are more trials yet for you to complete.")
 			end
+		end
+	else
+		if e.message:findi("Hail") then
+			e.self:Say("I'm sorry, the Trial of Flame is currently unavailable to you.")
 		end
 	end
 end

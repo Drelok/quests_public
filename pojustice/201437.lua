@@ -23,7 +23,7 @@ function event_say(e)
 			local prepared_link = eq.silent_say_link("prepared")
 			e.self:Emote(
 				string.format(
-					" fixes you with a dark, peircing gaze. 'What do you want, mortal? Are you [%s]?",
+					" fixes you with a dark, piercing gaze. 'What do you want, mortal? Are you [%s]?",
 					prepared_link
 				)
 			);
