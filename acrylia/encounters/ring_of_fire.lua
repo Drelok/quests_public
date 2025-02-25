@@ -58,7 +58,7 @@ end
 
 function evt_add_timer(e)
     if e.timer == 'depop' then
-        e.self:Say("The tresspassers have been slain. Glory to the master!");
+        e.self:Say("The trespassers have been slain. Glory to the master!");
         eq.depop();
     end
 end
@@ -163,16 +163,18 @@ function reset_event()
 end
 
 function setup_event()
-	eq.local_emote({-120, 80, -25}, 15, 150, "As you step into the grimlings' ring of fire, a hot breeze blows into the cavern and begins swirling about you. The grimlings' constant chanting seems to grow louder...")
+	if not eq.has_timer("main") then
+		eq.local_emote({-120, 80, -25}, 15, 150, "As you step into the grimlings' ring of fire, a hot breeze blows into the cavern and begins swirling about you. The grimlings' constant chanting seems to grow louder...")
 
-	for _,v in pairs(grim_locs) do -- Spawn untargettable grims
-		local mob = eq.ChooseRandom(unpack(grims));
-		eq.spawn2(mob, 0, 0, unpack(v));
+		for _,v in pairs(grim_locs) do -- Spawn untargettable grims
+			local mob = eq.ChooseRandom(unpack(grims));
+			eq.spawn2(mob, 0, 0, unpack(v));
+		end
+		eq.spawn2(warder, 0, 0, unpack(warder_loc));
+
+		eq.set_timer('main', 1000); -- Initial timer is short!
+		started = true;
 	end
-	eq.spawn2(warder, 0, 0, unpack(warder_loc));
-
-	eq.set_timer('main', 1000); -- Initial timer is short!
-	started = true;
 end
 
 function cleanup()
