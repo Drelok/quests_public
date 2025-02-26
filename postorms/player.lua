@@ -6,7 +6,6 @@ function event_click_door(e)
 		local tribunal_bucket = tonumber(e.self:GetAccountBucket("pop.flags.tribunal")) or 0
 		local valor_bucket = tonumber(e.self:GetAccountBucket("pop.flags.valor")) or 0
 		if (
-			e.self:GetLevel() >= 62 or
 			(
 				askr_bucket == 4 and
 				mavuin_bucket == 1 and

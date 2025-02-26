@@ -1,6 +1,6 @@
 function event_say(e)
 	if e.message:findi("Hail") then
-		local situation_link = eq.silent_say_link("")
+		local situation_link = eq.silent_say_link("situation")
 		e.self:Say(
 			string.format(
 				"Mortals, this far into the planes? Something that I never thought that I would see. Regardless that does not help my [%s] any does it?",
@@ -39,7 +39,7 @@ end
 function event_trade(e)
 	local item_lib = require("items")
 	if item_lib.check_turn_in(e.trade, {item1 = 29281, item2 = 29292, item3 = 29293, item4 = 29294}) then
-		e.self:Say("Hmm, this is minor vindication, but vindication nonetheless. I will never again fight with my old compatriots, but now I know the punishment of those responsible for my exile is fitting for their crime. We did have an agreement, and while stripped of my rank I still have my honor. This ring is what all Soldiers of Marr wear to enter the Halls of Honor, it serves no use for me any longer, it is yours now.")
+		e.self:Say("Hmm, this is minor vindication, but vindication nonetheless. I will never again fight with my old compatriots, but now I know the punishment of those responsible for my exile is fitting for their crime. We did have an agreement, and while stripped of my rank I still have my honor. This ring is what all Soldiers of Marr wear, it serves no use for me any longer, it is yours now.")
 
 		if e.other:IsGrouped() then
 			local group = e.other:GetGroup()
@@ -49,16 +49,9 @@ function event_trade(e)
 					local member = group:GetMember(i)
 					if member ~= nil and member:IsClient() then
 						member:SummonItem(29214) -- Item: Ring of Marr
-						member:SetZoneFlag(Zone.hohonora)
-						member:CastToClient():SetAccountBucket("pop.alt.hohonora", "1")
-						member:Message(MT.LightBlue, "You receive a character flag!")
 					end
 				end
 			end
-		else
-			e.other:SetZoneFlag(Zone.hohonora)
-			e.other:SetAccountBucket("pop.alt.hohonora", "1")
-			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
 	end
 
