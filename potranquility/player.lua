@@ -78,7 +78,7 @@ function event_click_door(e)
 		},
 		[82] = {
 			flags = {
-				"behemoth", "marr", "saryrn", "tallon", "vallon"
+				"solusek"
 			}, 
 			zones = {
 				Zone.pofire
