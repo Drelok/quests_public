@@ -41,12 +41,13 @@ function event_say(e)
 		["pop.flags.trell"] = 1,
 		["pop.flags.valor"] = 1,
 		["pop.flags.xanamech"] = 1
+		["pop.flags.story"] = 7
 	}
 
 	if e.message:findi("Hail") then
 		for flag, required_value in pairs(flags) do
 			local flag_value = tonumber(e.other:GetAccountBucket(flag)) or 0
-			local status_message = (flag == required_value) and "Complete" or "Incomplete"
+			local status_message = (flag_value == required_value) and "Complete" or "Incomplete"
 			local status_link = eq.silent_say_link(status_message)
 
 			local type = (flag:findi("pop.flags")) and "Flag" or "Alternate Access"
