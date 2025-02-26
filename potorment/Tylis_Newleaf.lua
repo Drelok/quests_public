@@ -10,7 +10,6 @@ function event_say(e)
 					)
 				)
 			end
-		end
 		elseif e.message:findi("will assist you") then
 		if (e.other:HasItem(22954) && shadyglade_bucket == 1 ) then
 			e.self:Say("I do not know if I have enough energy to channel all of you, but I can try. I will channel you into my pain.")
@@ -27,7 +26,6 @@ function event_say(e)
 				e.other:MovePCInstance(207, eq.get_zone_instance_id(), -175, 815, -955,0)
 			end
 		end
-	)
 end
 
 function event_signal(e)
