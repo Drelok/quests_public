@@ -16,6 +16,6 @@ function event_say(e)
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	elseif e.message:findi("ready") then
 		e.other:Message(MT.LightBlue, "Your tormented visions have ended.")
-		e.other:MovePCInstance(207, eq.get_zone_instance_id(), -16, -49, 452)
+		e.other:MovePCInstance(207, eq.get_zone_instance_id(), -16, -49, 452, 0)
 	end
 end

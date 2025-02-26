@@ -29,6 +29,6 @@ function event_say(e)
 		e.other:SetAccountBucket("pop.flags.construct", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	elseif e.message:findi("return") then
-		e.other:MovePCInstance(204, eq.get_zone_instance_id(), -1520, 1104, 125)
+		e.other:MovePCInstance(204, eq.get_zone_instance_id(), -1520, 1104, 125, 0)
 	end
 end
