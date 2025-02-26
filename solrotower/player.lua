@@ -26,3 +26,20 @@ function event_click_door(e)
 		e.self:MovePCInstance(Zone.solrotower, eq.get_zone_instance_id(), 0, -847, 244, 0)
 	end
 end
+
+function event_zone(e)
+	if e.zone_id == Zone.pofire then
+		local solusek_bucket = tonumber(e.self:GetAccountBucket("pop.flags.solusek")) or 0
+		if (
+			not e.self:HasZoneFlag(Zone.pofire) and
+			(
+				(
+					solusek_bucket == 1
+				)
+			)
+		) then
+			e.self:SetZoneFlag(Zone.pofire)
+                        e.self:Message(MT.LightBlue, "You receive a character flag!")
+		end
+	end
+end
