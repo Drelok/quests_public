@@ -1,16 +1,16 @@
 function event_say(e)
-		local shadyglade_bucket = tonumber(e.other:GetAccountBucket("pop.flags.shadyglade")) or 0
-		if e.message:findi("Hail") then
-			if shadyglade_bucket == 1 then
-				local will_assist_you = eq.silent_say_link("will assist you", "will you assist")
-				e.self:Say(
-					string.format(
-						"...help ...end this torment ...will you come? I can show you the pain... it moves in the shadows of my mind... [%s] me?",
-						will_assist_you
-					)
+	local shadyglade_bucket = tonumber(e.other:GetAccountBucket("pop.flags.shadyglade")) or 0
+	if e.message:findi("Hail") then
+		if shadyglade_bucket == 1 then
+			local will_assist_you = eq.silent_say_link("will assist you", "will you assist")
+			e.self:Say(
+				string.format(
+					"...help ...end this torment ...will you come? I can show you the pain... it moves in the shadows of my mind... [%s] me?",
+					will_assist_you
 				)
-			end
-		elseif e.message:findi("will assist you") then
+			)
+		end
+	elseif e.message:findi("will assist you") then
 		if (e.other:HasItem(22954) && shadyglade_bucket == 1 ) then
 			e.self:Say("I do not know if I have enough energy to channel all of you, but I can try. I will channel you into my pain.")
 			if e.other:IsGrouped() then
@@ -19,13 +19,14 @@ function event_say(e)
 				for i = 0, member_count - 1 do
 					local member = group:GetMember(i)
 					if member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 100 then
-						member:MovePCInstance(207, eq.get_zone_instance_id(), -175, 815, -955,0)
+					        member:MovePCInstance(207, eq.get_zone_instance_id(), -175, 815, -955,0)
 					end
 				end
 			else
 				e.other:MovePCInstance(207, eq.get_zone_instance_id(), -175, 815, -955,0)
 			end
 		end
+	end
 end
 
 function event_signal(e)
