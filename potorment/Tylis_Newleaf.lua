@@ -11,15 +11,17 @@ function event_say(e)
 			)
 		end
 	elseif e.message:findi("will assist you") then
-		if (e.other:HasItem(22954) && shadyglade_bucket == 1 ) then
+		if e.other:HasItem(22954) and shadyglade_bucket == 1 then
 			e.self:Say("I do not know if I have enough energy to channel all of you, but I can try. I will channel you into my pain.")
 			if e.other:IsGrouped() then
 				local group = e.other:GetGroup()
-				local member_count = group:GroupCount()
-				for i = 0, member_count - 1 do
-					local member = group:GetMember(i)
-					if member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 100 then
-					        member:MovePCInstance(207, eq.get_zone_instance_id(), -175, 815, -955,0)
+				if group then
+					local member_count = group:GroupCount()
+					for i = 0, member_count - 1 do
+						local member = group:GetMember(i)
+						if member and member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 100 then
+						    member:MovePCInstance(207, eq.get_zone_instance_id(), -175, 815, -955,0)
+						end
 					end
 				end
 			else
