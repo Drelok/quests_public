@@ -40,7 +40,7 @@ function event_say(e)
 		["pop.flags.tribunal"] = 1,
 		["pop.flags.trell"] = 1,
 		["pop.flags.valor"] = 1,
-		["pop.flags.xanamech"] = 1
+		["pop.flags.xanamech"] = 1,
 		["pop.flags.story"] = 7
 	}
 
