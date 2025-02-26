@@ -69,7 +69,7 @@ function event_click_door(e)
 		},
 		[22] = {
 			flags = {
-				"behemoth", "marr", "saryrn", "tallon", "vallon"
+				"agnarr", "behemoth", "marr", "rallos", "saryrn", "tallon", "vallon"
 			}, 
 			zones = {
 				Zone.solrotower
