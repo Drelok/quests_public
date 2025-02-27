@@ -13,7 +13,7 @@ function event_click_door(e)
 end
 
 function event_loot(e)
-	local item_id = item:GetID()
+	local item_id = e.item:GetID()
 	if e.self:HasClassID(Class.PALADIN) and item_id == 69951 then
 		local qglobals = eq.get_qglobals(e.self)
 		local paladin_epic_qglobal = tonumber(qglobals["paladin_epic"]) or 0
