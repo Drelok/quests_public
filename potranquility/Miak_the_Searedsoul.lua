@@ -6,7 +6,7 @@ function event_say(e)
 			e.self:Say("Ahh the eternal search for knowledge, both bane and blessing to mortals. So, you seek the Elemental Essence of Fire? I have heard very little of it in many years, although, come to think of it, I have heard rumors of a powerful elemental trapped in the personal forge of Tagrin. I suspect that might be a good place to begin your search at the very least, but you'll need to find someone there willing to speak with you. Good luck seeker.")
 			eq.set_global("mage_epic_fire1", "1", 5, "F")
 		end
-	else if e.message:findi("hail") then
+	elseif e.message:findi("hail") then
 			local solusek_bucket = tonumber(e.other:GetAccountBucket("pop.flags.solusek")) or 0
 			if solusek_bucket == 1 then
 				e.self:Say(
