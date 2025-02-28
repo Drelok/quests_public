@@ -32,3 +32,14 @@ function event_say(e)
 		e.other:MovePCInstance(204, eq.get_zone_instance_id(), -1520, 1104, 125, 0)
 	end
 end
+
+function event_item(e)
+	local item_lib = require("items");
+	if(item_lib.check_turn_in(e.trade, {item1 = 9258})) then -- # Handin: Dagger Blade Shard 
+		e.self:Emote("takes the shard from you and places all of the pieces on the ground. The pieces reassemble and fuse back together into a completed dagger. Thelin picks the dagger up and hands it to you.")
+		e.other:SummonItem(9259) #Thelin's Dagger
+		eq.spawn2(204065,0,0,-4554,5018,5,260); # NPC: #Terris_Thule
+	end
+
+	item_lib.return_items(e.self, e.other, e.trade);
+end
