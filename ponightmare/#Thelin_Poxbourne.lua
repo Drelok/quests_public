@@ -27,7 +27,7 @@ function event_say(e)
 				local ready_link = eq.silent_say_link("ready")
 				e.self:Say(
 					string.format(
-						"You there! You have talked to Adroha Jezith? Then I assume you are here to help me! ... Tell me when you are [%s] to begin, I will lead you through the maze and we, together, will end this endless torment!",
+						"You there! You have talked to Adroha Jezith? Then I assume you are here to help me! ... Tell me when you are [%s] to begin. I will plunge you into my nightmare, please end my torment by slaying the construct! Return to me any parts of my dagger that you may find.",
 						ready_link
 					)
 				)
