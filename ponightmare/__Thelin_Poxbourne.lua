@@ -33,7 +33,7 @@ function event_say(e)
 	end
 end
 
-function event_item(e)
+function event_trade(e)
 	local item_lib = require("items");
 	if(item_lib.check_turn_in(e.trade, {item1 = 9258})) then -- # Handin: Dagger Blade Shard 
 		e.self:Emote("takes the shard from you and places all of the pieces on the ground. The pieces reassemble and fuse back together into a completed dagger. Thelin picks the dagger up and hands it to you.")
