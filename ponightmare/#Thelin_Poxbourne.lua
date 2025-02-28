@@ -39,10 +39,9 @@ function event_say(e)
 		if hedge_bucket == 1 then
 			e.self:Emote("closes his eyes and falls asleep immediately.  He looks peaceful for a moment and then screams in agony!")
 			if entries_variable == 0 then
-				eq.signal(204058, 5, 300) -- NPC: Hedge_Trigger
 				eq.set_timer("Ready Trigger", 600 * 1000) -- 10 Minutes
 			end
-			e.other:MovePCInstance(Zone.ponightmare, eq.get_zone_instance_id(), -4774, 5198, 4, 0)
+			e.other:MovePCInstance(Zone.ponightmare, eq.get_zone_instance_id(), -4549, 5284, 2, 258)
 			e.self:SetEntityVariable("Entries", tostring(entries_variable + 1))
 		end
 	end
