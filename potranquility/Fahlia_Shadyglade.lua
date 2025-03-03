@@ -7,7 +7,7 @@ function event_say(e)
 	if bertox_bucket == 1 and terris_bucket == 1 then
 		if (
 			newleaf_bucket == 1 and
-			saryrn_bucket == 1 and
+			saryrn_bucket >= 1 and
 			shadyglade_bucket == 1
 		) then
 			if e.message:findi("Hail") then
