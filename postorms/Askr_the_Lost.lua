@@ -66,6 +66,8 @@ function event_say(e)
 				e.other:SummonItem(17192) -- Askr's Bag of Verity
 			end
 		end
+	else
+		e.self:Say("You must complete the Planes of Valor before I can help you.")
 	end
 end
 
