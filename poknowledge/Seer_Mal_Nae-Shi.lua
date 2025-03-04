@@ -1,14 +1,8 @@
 function event_say(e)
 	local flags = {
-		-- ["pop.alt.codecay"] = 1,
-		-- ["pop.alt.hedge"] = 3,
-		-- ["pop.alt.hohonora"] = 1,
-		-- ["pop.alt.potactics"] = 1,
-		-- ["pop.alt.solrotower"] = 1,
 		["pop.flags.aerin"] = 1,
 		["pop.flags.agnarr"] = 1,
 		["pop.flags.adler"] = 1,
-		["pop.flags.anthone"] = 1,
 		["pop.flags.arbitor"] = 1,
 		["pop.flags.arlyxir"] = 1,
 		["pop.flags.askr"] = 4,
@@ -36,9 +30,11 @@ function event_say(e)
 		["pop.flags.rathe"] = 1,
 		["pop.flags.saryrn"] = 2,
 		["pop.flags.shadyglade"] = 1,
+		["pop.flags.tallon"] = 1,
 		["pop.flags.terris"] = 1,
 		["pop.flags.tribunal"] = 1,
 		["pop.flags.trell"] = 1,
+		["pop.flags.vallon"] = 1,
 		["pop.flags.valor"] = 1,
 		["pop.flags.xanamech"] = 1,
 		["pop.flags.story"] = 7

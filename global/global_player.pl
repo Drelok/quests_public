@@ -438,7 +438,7 @@ sub EVENT_SAY {
         quest::message(315, "Your Planes of Power flags are as follows:");
 
         foreach my $flag (sort {$a cmp $b} @flags) {
-            my $current_value = $client->GetAccountBucket($flag);
+            my $current_value = $client->GetAccountBucket("pop.flags.$flag");
             if ($current_value eq "") {
                 $current_value = 0;
             }
@@ -453,47 +453,43 @@ sub EVENT_SAY {
 
 sub POPFlags {
 	my @flags = (
-		"pop.alt.codecay",
-		"pop.alt.hedge",
-		"pop.alt.hohonora",
-		"pop.alt.potactics",
-		"pop.alt.solrotower",
-		"pop.flags.aerin",
-		"pop.flags.adler",
-		"pop.flags.agnarr",
-		"pop.flags.anthone",
-		"pop.flags.arbitor",
-		"pop.flags.arlyxir",
-		"pop.flags.askr",
-		"pop.flags.behemoth",
-		"pop.flags.bertox",
-		"pop.flags.codecay",
-		"pop.flags.coirnav",
-		"pop.flags.construct",
-		"pop.flags.dresolik",
-		"pop.flags.elder",
-		"pop.flags.faye",
-		"pop.flags.fennin",
-		"pop.flags.garn",
-		"pop.flags.grummus",
-		"pop.flags.hedge",
-		"pop.flags.jiva",
-		"pop.flags.karana",
-		"pop.flags.librarian",
-		"pop.flags.maelin",
-		"pop.flags.marr",
-		"pop.flags.mavuin",
-		"pop.flags.newleaf",
-		"pop.flags.poxbourne",
-		"pop.flags.rallos",
-		"pop.flags.rathe",
-		"pop.flags.saryrn",
-		"pop.flags.shadyglade",
-		"pop.flags.terris",
-	 	"pop.flags.tribunal",
-		"pop.flags.trell",
-	  	"pop.flags.valor",
-		"pop.flags.xanamech"
+		"aerin",
+		"adler",
+		"agnarr",
+		"arbitor",
+		"arlyxir",
+		"askr",
+		"behemoth",
+		"bertox",
+		"codecay",
+		"coirnav",
+		"construct",
+		"dresolik",
+		"elder",
+		"faye",
+		"fennin",
+		"garn",
+		"grummus",
+		"hedge",
+		"jiva",
+		"karana",
+		"librarian",
+		"maelin",
+		"marr",
+		"mavuin",
+		"newleaf",
+		"poxbourne",
+		"rallos",
+		"rathe",
+		"saryrn",
+		"shadyglade",
+		"tallon",
+		"terris",
+	 	"tribunal",
+		"trell",
+		"vallon",
+	  	"valor",
+		"xanamech"
 	);
 
  	return @flags;

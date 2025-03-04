@@ -1,6 +1,6 @@
 function event_enter_zone(e)
 	if e.self:HasClassID(Class.CLERIC) and e.self:CountItem(52963) > 0 then -- Item: Sullied Gold Filigree
-		local anthone_bucket = tonumber(e.self:GetAccountBucket("pop.flags.anthone")) or 0
+		local anthone_bucket = tonumber(e.self:GetBucket("anthone")) or 0
 		if not eq.get_entity_list():IsMobSpawnedByNpcTypeID(211047) and anthone_bucket == 1 then
 			eq.spawn2(211047, 0, 0, -1853, 2479, -110, 40) -- NPC: ##Anthone_Chapin
 		end

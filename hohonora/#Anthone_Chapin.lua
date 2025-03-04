@@ -10,7 +10,7 @@ function event_trade(e)
 	if item_lib.check_turn_in(e.trade, {item1 = 54286, item2 = 52963}) then
 		e.self:Say("This filigree now shines from within with the holy light of Marr.")
 		e.other:SummonItem(52953) -- Item: Purified Gold Filigree
-		e.other:SetAccountBucket("pop.flags.anthone", "1")
+		e.other:SetBucket("anthone", "1")
 		eq.depop()
 	end
 
