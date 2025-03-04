@@ -89,7 +89,9 @@ function event_say(e)
 		for class_id = 1, 16 do
 			if e.other:HasClassID(class_id) then
 				local item_id = 2035000 + class_id
-				if not e.other:HasItem(item_id) then
+				if e.other:HasItem(item_id) then
+					e.self:say("It looks like you already have a figurine.")
+				else
 					e.other:SummonFixedItem(item_id)
 				end
 			end
