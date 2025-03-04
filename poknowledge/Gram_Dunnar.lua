@@ -4,10 +4,12 @@ function event_say(e)
 	end
 
 	if e.message:findi("Hail") then
+		local craft_link = eq.silent_say_link("craft")
 		local stories_link = eq.silent_say_link("stories")
 		e.self:Say(
 			string.format(
-				"The old dwarf looks up at you slowly, his wrinkled hands continuing to carve a small wooden object. He grins as he eyes your dust-covered outfit and well-used equipment. 'Ahh, a young adventurer,' he says. 'Warms my heart to see the spirit I once had still going strong. Got too old, you see. He strokes his beard. 'Tried taking up a [craft], but it just isn't the same. Sure would be nice to hear some [%s] about those new places I'll never get to see.",
+				"The old dwarf looks up at you slowly, his wrinkled hands continuing to carve a small wooden object. He grins as he eyes your dust-covered outfit and well-used equipment. 'Ahh, a young adventurer,' he says. 'Warms my heart to see the spirit I once had still going strong. Got too old, you see. He strokes his beard. 'Tried taking up a [%s], but it just isn't the same. Sure would be nice to hear some [%s] about those new places I'll never get to see.",
+				craft_link,
 				stories_link
 			)
 		)
