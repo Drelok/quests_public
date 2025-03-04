@@ -75,10 +75,10 @@ function event_say(e)
 				e.other:AddAAPoints(1)
 				e.other:Message(MT.White, "You've earned an AA Point!")
 				e.other:SetAccountBucket(current_story.reward_flag, "1")
-				e.other:SetAccountBucket("pop.flags.story", tostring(story_bucket + 1), "S20")
+				e.other:SetAccountBucket("pop.flags.story", tostring(story_bucket + 1))
 			else
 				e.self:Say("Please tell me another story!")
-				e.other:SetAccountBucket("pop.flags.story", tostring(story_bucket + 1), "S20")
+				e.other:SetAccountBucket("pop.flags.story", tostring(story_bucket + 1))
 			end
 		else
 			e.self:Say("I've already heard all of those stories!")
