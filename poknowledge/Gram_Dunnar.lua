@@ -63,7 +63,7 @@ function event_say(e)
 					break
 				end
 
-				local reward_flag_value = tonumber(e.other:GetAccountBucket(current_story.reward_flag))
+				local reward_flag_value = tonumber(e.other:GetAccountBucket(current_story.reward_flag)) or 0
 				if reward_flag_value ~= 0 then
 					all_requirements_met = false
 					break
