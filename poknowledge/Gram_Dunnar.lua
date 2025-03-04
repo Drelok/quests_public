@@ -15,7 +15,7 @@ function event_say(e)
 		)
 	elseif e.message:findi("stories") then
 		local story_bucket = tonumber(e.other:GetAccountBucket("pop.flags.story")) or 0
-	
+
 		local stories = {
 			[0] = {
 				required = { mavuin = 1, tribunal = 1, valor = 1 },
@@ -53,7 +53,7 @@ function event_say(e)
 				message = "Gram Dunnar strokes his beard thoughtfully as you tell him of the Tower of Solusek Ro. 'The burning prince himself. A worthy opponent, I'm sure,' he says."
 			}
 		}
-	
+
 		local current_story = stories[story_bucket]
 		if current_story then
 			local all_requirements_met = true
@@ -84,7 +84,7 @@ function event_say(e)
 			end
 		else
 			e.self:Say("I've already heard all of those stories!")
-		end	
+		end
 	elseif e.message:findi("craft") then
 		for class_id = 1, 16 do
 			if e.other:HasClassID(class_id) then

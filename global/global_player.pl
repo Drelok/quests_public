@@ -483,6 +483,7 @@ sub POPFlags {
 		"rathe",
 		"saryrn",
 		"shadyglade",
+		"story",
 		"tallon",
 		"terris",
 	 	"tribunal",
