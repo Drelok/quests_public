@@ -109,6 +109,7 @@ function event_signal(e)
 		local hold_variable = tonumber(e.self:GetEntityVariable("Hold")) or 0
 		if active_variable == 1 and hold_variable == 0 then
 			e.self:Shout("The Trial of Execution is now available.")
+			e.self:SetEntityVariable("Active", "0");
 			eq.stop_timer("Start")
 			eq.stop_timer("Reset")
 		elseif hold_variable == 1 then
