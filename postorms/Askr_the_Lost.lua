@@ -1,14 +1,22 @@
 function event_say(e)
 	local valor_bucket = tonumber(e.other:GetAccountBucket("pop.flags.valor")) or 0
+	local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
+
 	if valor_bucket == 1 then
 		if e.message:findi("Hail") then
-			local problem_link = eq.silent_say_link("what problem", "problem")
-			e.self:Emote(
-				string.format(
-					"gazes at you with a rough beard and reeking of ale. 'Not here to clean? You wouldn't handle this [%s] anyway. Leave me to my drink.'",
-					problem_link
+			if askr_bucket == 2 then
+				e.self:Say("Prove your strength: slay one giant from each faction. Return a Srerendi beard, a Krendic bone, and a Kelek`Vor sash in the bag.")
+			elseif askr_bucket == 3 then
+				e.self:Say("The giants are fierce. Each tribe leader holds a piece to open the Bastion of Thunder. Seal two pieces in the bag, and I'll forge your medallion.")
+			else
+				local problem_link = eq.silent_say_link("what problem", "problem")
+				e.self:Emote(
+					string.format(
+						"gazes at you with a rough beard and reeking of ale. 'Not here to clean? You wouldn't handle this [%s] anyway. Leave me to my drink.'",
+						problem_link
+					)
 				)
-			)
+			end
 		elseif e.message:findi("what problem") then
 			e.self:Say("Askr gestures toward the cave exit. 'Can't you see the monsters outside, pillaging at will? If you want to help, bring me one of their heads. Until then, I'm doomed with my *hic* potions.'")
 		elseif e.message:findi("yes") then
@@ -23,7 +31,6 @@ function event_say(e)
 				)
 			end
 		elseif e.message:findi("continue") then
-			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
 			if askr_bucket == 1 then
 				local continue_link = eq.silent_say_link("continue")
 				e.self:Say(
@@ -38,7 +45,6 @@ function event_say(e)
 				e.other:SummonItem(17192) -- Askr's Bag of Verity
 			end
 		elseif e.message:findi("It was me") then
-			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
 			if askr_bucket == 1 then
 				local paying_attention_link = eq.silent_say_link("I am paying attention", "paying attention")
 				e.self:Say(
@@ -49,7 +55,6 @@ function event_say(e)
 				)
 			end
 		elseif e.message:findi("I am paying attention") then
-			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
 			if askr_bucket == 1 then
 				local continue_link = eq.silent_say_link("continue")
 				e.self:Say(
@@ -60,7 +65,6 @@ function event_say(e)
 				)
 			end
 		elseif e.message:findi("Bastion of Thunder") then
-			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
 			if askr_bucket == 3 then
 				e.self:Say("The giants are fierce. Each tribe leader holds a piece to open the Bastion of Thunder. Seal two pieces in this bag, and I'll forge your medallion.")
 				e.other:SummonItem(17192) -- Askr's Bag of Verity
