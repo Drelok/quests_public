@@ -10,7 +10,7 @@ function event_say(e)
 				)
 			)
 		elseif e.message:findi("what problem") then
-			e.self:Say("Askr gestures toward the cave exit. 'Can't you see the monsters outside, pillaging at will? I'm doomed with my *hic* potions.'")
+			e.self:Say("Askr gestures toward the cave exit. 'Can't you see the monsters outside, pillaging at will? If you want to help, bring me one of their heads. Until then, I'm doomed with my *hic* potions.'")
 		elseif e.message:findi("yes") then
 			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0
 			local continue_link = eq.silent_say_link("continue")
@@ -34,7 +34,7 @@ function event_say(e)
 				)
 				e.other:SetAccountBucket("pop.flags.askr", "2")
 			elseif askr_bucket == 2 then
-				e.self:Say("Prove your strength: slay one giant from each faction. Return a Srerendi beard, a Krendic stone, and a Kelek`Vor crest in this bag.")
+				e.self:Say("Prove your strength: place medallions from two of the factions in this bag. Return the bag to me when it is ready.")
 				e.other:SummonItem(17192) -- Askr's Bag of Verity
 			end
 		elseif e.message:findi("It was me") then
