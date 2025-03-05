@@ -12,6 +12,7 @@ function event_zone(e)
 			)
 		) then
 			e.self:SetZoneFlag(Zone.codecay)
+			e.self:Message(MT.LightBlue, "You receive a character flag!")
 		end
 	end
 end
