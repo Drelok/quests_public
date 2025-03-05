@@ -16,8 +16,13 @@ function event_say(e)
 
 	if won_variable == 1 then
 		if e.message:findi("Hail") then
-			e.other:SetAccountBucket("pop.flags.xanamech", "1")
-			e.other:Message(MT.LightBlue, "You receive a character flag!")
+			local xanamech_bucket = tonumber(e.other:GetAccountBucket("pop.flags.xanamech")) or 0
+			if xanamech_bucket == 0 then
+				e.other:SetAccountBucket("pop.flags.xanamech", "1")
+				e.other:Message(MT.LightBlue, "You receive a character flag!")
+			else
+				e.self:Say("It looks like we've already spoken.")
+			end
 		end
 	elseif walking_variable == 1 then
 		if e.message:findi("Hail") then
