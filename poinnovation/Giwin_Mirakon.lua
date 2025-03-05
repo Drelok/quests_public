@@ -28,8 +28,12 @@ function event_say(e)
 				)
 			)
 		else
-			e.other:SetAccountBucket("pop.flags.behemoth", "2")
-			e.other:Message(MT.LightBlue, "You receive a character flag!")
+			if behemoth_bucket == 1 then
+				e.other:SetAccountBucket("pop.flags.behemoth", "2")
+				e.other:Message(MT.LightBlue, "You receive a character flag!")
+			else
+				e.self:Say("It looks like we've already spoken.")
+			end
 		end
 	elseif e.message:findi("great warrior") then
 		if behemoth_bucket == 0 then
@@ -52,8 +56,12 @@ function event_say(e)
 			)
 		end
 	elseif e.message:findi("test the machine") then
-		e.self:Say("Haha! I knew I sensed the warring spirit within you. Go through over there. Ignore those steam powered soldiers and their talk of perimeters. Go into the main construction area. You will know you are there when you see power carriers taking energy to power up the machine. If you can stop the energy carriers from releasing their energy the machine will activate to see what has happened. I shall come to check on you and take a full report when you have destroyed it. Long live Rallos!")
-		e.other:SetAccountBucket("pop.flags.behemoth", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		if behemoth_bucket == 0 then
+			e.self:Say("Haha! I knew I sensed the warring spirit within you. Go through over there. Ignore those steam powered soldiers and their talk of perimeters. Go into the main construction area. You will know you are there when you see power carriers taking energy to power up the machine. If you can stop the energy carriers from releasing their energy the machine will activate to see what has happened. I shall come to check on you and take a full report when you have destroyed it. Long live Rallos!")
+			e.other:SetAccountBucket("pop.flags.behemoth", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			e.self:Say("It looks like we've already spoken.")
+		end
 	end
 end
