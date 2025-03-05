@@ -88,8 +88,9 @@ function event_trade(e)
 			end
 		elseif askr_bucket == 2 then
 			if item_lib.check_turn_in(e.trade, {item1 = 11487}) then
-				e.self:Emote("examines the remains and then says, 'It's true—you can push back the giants. Now head to the Bastion of Thunder and finish what you've started.'")
+				local bastion_of_thunder_link = eq.silent_say_link("Bastion of Thunder")
 				e.other:SetAccountBucket("pop.flags.askr", "3")
+				e.self:Emote(string.format("examines the remains and then says, 'It's true—you can push back the giants. You're ready to explore the [%s] and finish what you've started.'", bastion_of_thunder_link))
 			end
 		elseif askr_bucket == 3 then
 			if item_lib.check_turn_in(e.trade, {item1 = 11488}) then
