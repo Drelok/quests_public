@@ -60,7 +60,7 @@ function event_say(e)
 			else
 				e.self:Say("I'm sorry, the Trial of Lashing is currently unavilable to you.");
 			end
-		elseif (e.message:findi("what evidence of mavuin") ) then
+		elseif (e.message:findi("mavuin") ) then
 			if e.other:HasItem(31960) then
 				local lashing_bucket = tonumber(e.other:GetAccountBucket("pop.flags.lashing")) or 0
 				if lashing_bucket == 0 then

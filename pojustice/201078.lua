@@ -46,7 +46,7 @@ function event_say(e)
 					e.other:MovePCInstance(201, eq.get_zone_instance_id(), 254, -1053, 73, 300)
 				end
 			end
-		elseif e.message:findi("what evidence of Mavuin") then
+		elseif e.message:findi("mavuin") then
 			local execution_bucket = tonumber(e.other:GetAccountBucket("pop.flags.execution")) or 0
 			if e.other:HasItem(31842) then
 				if execution_bucket == 0 then

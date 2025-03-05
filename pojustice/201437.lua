@@ -61,7 +61,7 @@ function event_say(e)
 			else
 				e.self:Say("I'm sorry, the Trial of Stoning is currently unavilable to you.");
 			end
-		elseif (e.message:findi("what evidence of mavuin") ) then
+		elseif (e.message:findi("mavuin") ) then
 		 	if e.other:HasItem(31845) then
 				local stoning_bucket = tonumber(e.other:GetAccountBucket("pop.flags.stoning")) or 0
 				if stoning_bucket == 0 then

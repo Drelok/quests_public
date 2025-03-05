@@ -55,7 +55,7 @@ function event_say(e)
 			else
 				e.self:Say("I'm sorry, the Trial of Hanging is currently unavilable to you.");
 			end
-		elseif (e.message:findi("what evidence of mavuin") ) then
+		elseif (e.message:findi("mavuin") ) then
 			if e.other:HasItem(31846) then
 				local hanging_bucket = tonumber(e.other:GetAccountBucket("pop.flags.hanging")) or 0
 				if hanging_bucket == 0 then

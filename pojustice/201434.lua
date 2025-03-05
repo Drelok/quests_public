@@ -46,7 +46,7 @@ function event_say(e)
 			else
 				e.self:Say("I'm sorry, the Trial of Flame is currently unavailable to you.")
 			end
-		elseif e.message:findi("what evidence of Mavuin") then
+		elseif e.message:findi("mavuin") then
 			local flame_bucket = tonumber(e.other:GetAccountBucket("pop.flags.flame")) or 0
 			if e.other:HasItem(31796) then
 				if flame_bucket == 0 then
