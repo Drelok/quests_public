@@ -24,10 +24,21 @@ function event_timer(e)
 end
 
 function event_say(e)
+	local construct_bucket = tonumber(e.other:GetAccountBucket("pop.flags.construct")) or 0
 	if e.message:findi("Hail") then
-		e.other:Message(MT.White, "Thelin Poxbourne tells you, 'Please destroy her for subjecting me to her hideous visions.'  Thelin closes his eyes and is swept away from his nightmare.  The land of pure thought begins to vanish from around you.")
-		e.other:SetAccountBucket("pop.flags.construct", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		if construct_bucket == 0 then
+			e.other:Message(MT.White, "Thelin Poxbourne tells you, 'Please destroy her for subjecting me to her hideous visions.'  Thelin closes his eyes and is swept away from his nightmare.  The land of pure thought begins to vanish from around you.")
+			e.other:SetAccountBucket("pop.flags.construct", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			local return_link = eq.silent_say_link("return")
+			e.self:Say(
+				string.format(
+					"It looks like we've already spoken, would you like to [%s]?",
+					return_link
+				)
+			)
+		end
 	elseif e.message:findi("return") then
 		e.other:MovePCInstance(204, eq.get_zone_instance_id(), -1520, 1104, 125, 0)
 	end

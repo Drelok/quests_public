@@ -10,7 +10,8 @@ function event_timer(e)
 end
 
 function event_say(e)
-	if e.message:findi("Hail") then
+	local terris_bucket = tonumber(e.other:GetAccountBucket("pop.flags.terris")) or 0
+	if e.message:findi("Hail") and terris_bucket == 0 then
 		e.other:SetAccountBucket("pop.flags.terris", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	end
