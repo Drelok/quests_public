@@ -94,7 +94,7 @@ end
 
 function event_trade(e)
 	local item_lib = require("items")
-	if item_lib.check_turn_in(e.trade {item1 = 15985}) then -- Item: Imbued Breastplate
+	if item_lib.check_turn_in(e.trade, {item1 = 15985}) then -- Item: Imbued Breastplate
 		local brewing_skill_link = eq.silent_say_link("brewing skill")
 		e.self:Say(
 			string.format(
@@ -103,7 +103,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16249) -- Item: Hardened Leather Signet
-	elseif item_lib.check_turn_in(e.trade {item1 = 15993, item2 = 17179}) then -- Item: Portable Drink, Portable Drink Barrel
+	elseif item_lib.check_turn_in(e.trade, {item1 = 15993, item2 = 17179}) then -- Item: Portable Drink, Portable Drink Barrel
 		local put_my_jewel_craft_skills_to_the_test_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
 		e.self:Emote(
 			string.format(
@@ -112,7 +112,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16250) -- Item: Clay Signet
-	elseif item_lib.check_turn_in(e.trade {item1 = 15991}) then -- Item: Velium Blue Diamond Ring
+	elseif item_lib.check_turn_in(e.trade, {item1 = 15991}) then -- Item: Velium Blue Diamond Ring
 		local ready_to_use_some_clay_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
 		e.self:Emote(
 			string.format(
@@ -122,7 +122,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16251) -- Item: Wooden Signet
-	elseif item_lib.check_turn_in(e.trade {item1 = 16246}) then -- Item: Filled Sacred Urn
+	elseif item_lib.check_turn_in(e.trade, {item1 = 16246}) then -- Item: Filled Sacred Urn
 		local skilled_with_the_needle_link = eq.silent_say_link("skilled with the needle")
 		e.self:Say(
 			string.format(
@@ -132,7 +132,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16252) -- Item: Metal Signet
-	elseif item_lib.check_turn_in(e.trade {item1 = 15986}) then -- Item: Fire Undergarment Tunic
+	elseif item_lib.check_turn_in(e.trade, {item1 = 15986}) then -- Item: Fire Undergarment Tunic
 		local skills_with_a_fletching_knife_link = eq.silent_say_link("skills with a fletching knife")
 		e.self:Say(
 			string.format(
@@ -142,7 +142,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(32800) -- Item: Marked Signet
-	elseif item_lib.check_turn_in(e.trade {item1 = 16247}) then -- Item: Signet Featherwood Bow
+	elseif item_lib.check_turn_in(e.trade, {item1 = 16247}) then -- Item: Signet Featherwood Bow
 		local master_chef_link = eq.silent_say_link("master chef")
 		e.self:Say(
 			string.format(
@@ -152,7 +152,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16254) -- Item: Runed Signet
-	elseif item_lib.check_turn_in(e.trade {item1 = 16248}) then -- Item: Food Satchel
+	elseif item_lib.check_turn_in(e.trade, {item1 = 16248}) then -- Item: Food Satchel
 		e.self:Say("Truly amazing! Now the Councilman and I can be off on our expedition to the Elemental Planes!' He takes out a tool and marks his signet before handing it to you, 'Before we depart you may want to ask the Councilman about the signet.")
 		e.other:SummonItem(16256) -- Item: Marked Runed Signet
 	end
