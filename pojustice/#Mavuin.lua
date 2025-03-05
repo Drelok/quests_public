@@ -2,6 +2,7 @@ function event_say(e)
 	local mavuin_bucket = tonumber(e.other:GetAccountBucket("pop.flags.mavuin")) or 0
 	local tribunal_bucket = tonumber(e.other:GetAccountBucket("pop.flags.tribunal")) or 0
 	if e.message:findi("Hail") then
+		local valor_bucket = tonumber(e.other:GetAccountBucket("pop.flags.valor")) or 0
 		if mavuin_bucket == 0 then
 			local what_information_link = eq.silent_say_link("what information", "this information")
 			e.self:Say(
@@ -11,9 +12,13 @@ function event_say(e)
 				)
 			)
 		elseif mavuin_bucket == 1 and tribunal_bucket == 1 then
-			e.self:Say("So you have pleaded my case to the Tribunal, I am most thankful. I hope that they will listen to my case soon and release me. The knowledge that I promised you is this. The followers in the Plane of Tranquility are trying to find information on what has happened to Zebuxoruk. What I know is that he has been captured for a second time. If you want to find out more information I believe you should seek an audience with Karana and Mithaniel Marr. I can only assume that they were present at the time of his capture and know why this has taken place. Also seek from Marr a way to translate the divine language. Only with it can you understand the writing of the gods. There is no more that I can tell you, but thank you once again for your attempt in returning my freedom.")
-			e.other:SetAccountBucket("pop.flags.valor", "1")
-			e.other:Message(MT.LightBlue, "You receive a character flag!")
+			if valor_bucket == 0 then
+				e.self:Say("So you have pleaded my case to the Tribunal, I am most thankful. I hope that they will listen to my case soon and release me. The knowledge that I promised you is this. The followers in the Plane of Tranquility are trying to find information on what has happened to Zebuxoruk. What I know is that he has been captured for a second time. If you want to find out more information I believe you should seek an audience with Karana and Mithaniel Marr. I can only assume that they were present at the time of his capture and know why this has taken place. Also seek from Marr a way to translate the divine language. Only with it can you understand the writing of the gods. There is no more that I can tell you, but thank you once again for your attempt in returning my freedom.")
+				e.other:SetAccountBucket("pop.flags.valor", "1")
+				e.other:Message(MT.LightBlue, "You receive a character flag!")
+			else
+				e.self:Say("It looks like we've already spoken.")
+			end
 		end
 	elseif e.message:findi("what information") then
 		if mavuin_bucket == 0 then
