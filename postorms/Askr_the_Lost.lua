@@ -34,7 +34,7 @@ function event_say(e)
 				)
 				e.other:SetAccountBucket("pop.flags.askr", "2")
 			elseif askr_bucket == 2 then
-				e.self:Say("Prove your strength: place medallions from two of the factions in this bag. Return the bag to me when it is ready.")
+				e.self:Say("Prove your strength: slay one giant from each faction. Return a Srerendi beard, a Krendic bone, and a Kelek`Vor sash in this bag.")
 				e.other:SummonItem(17192) -- Askr's Bag of Verity
 			end
 		elseif e.message:findi("It was me") then
