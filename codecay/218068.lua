@@ -11,7 +11,10 @@ end
 
 function event_say(e)
 	if e.message:findi("Hail") then
-		e.other:SetAccountBucket("pop.flags.bertox", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		local bertox_bucket = tonumber(e.other:GetAccountBucket("pop.flags.bertox")) or 0
+		if bertox_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.bertox", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
