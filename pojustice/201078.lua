@@ -47,10 +47,15 @@ function event_say(e)
 				end
 			end
 		elseif e.message:findi("what evidence of Mavuin") then
+			local execution_bucket = tonumber(e.other:GetAccountBucket("pop.flags.execution")) or 0
 			if e.other:HasItem(31842) then
-				e.other:SetAccountBucket("pop.flags.tribunal", "1")
-				e.other:SetAccountBucket("pop.flags.execution", "1")
-				e.other:Message(MT.LightBlue, "You receive a character flag!");
+				if execution_bucket == 0 then
+					e.other:SetAccountBucket("pop.flags.tribunal", "1")
+					e.other:SetAccountBucket("pop.flags.execution", "1")
+					e.other:Message(MT.LightBlue, "You receive a character flag!");
+				else
+					e.self:Say("It looks like we've already spoken.")
+				end
 			else
 				local mark_link = eq.item_link(31842)
 				e.self:Say(

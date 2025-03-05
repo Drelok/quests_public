@@ -56,10 +56,15 @@ function event_say(e)
 				e.self:Say("I'm sorry, the Trial of Hanging is currently unavilable to you.");
 			end
 		elseif (e.message:findi("what evidence of mavuin") ) then
-			if ( e.other:HasItem(31846) ) then
-				e.other:SetAccountBucket("pop.flags.tribunal", "1");
-				e.other:SetAccountBucket("pop.flags.hanging", "1");
-				e.other:Message(MT.LightBlue, "You receive a character flag!");
+			if e.other:HasItem(31846) then
+				local hanging_bucket = tonumber(e.other:GetAccountBucket("pop.flags.hanging")) or 0
+				if hanging_bucket == 0 then
+					e.other:SetAccountBucket("pop.flags.tribunal", "1");
+					e.other:SetAccountBucket("pop.flags.hanging", "1");
+					e.other:Message(MT.LightBlue, "You receive a character flag!");
+				else
+					e.self:Say("It looks like we've already spoken.")
+				end
 			else
 				local mark_link = eq.item_link(31846)
 				e.self:Say(

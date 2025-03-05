@@ -47,10 +47,15 @@ function event_say(e)
 				e.self:Say("I'm sorry, the Trial of Flame is currently unavailable to you.")
 			end
 		elseif e.message:findi("what evidence of Mavuin") then
+			local flame_bucket = tonumber(e.other:GetAccountBucket("pop.flags.flame")) or 0
 			if e.other:HasItem(31796) then
-				e.other:SetAccountBucket("pop.flags.tribunal", "1")
-				e.other:SetAccountBucket("pop.flags.flame", "1")
-				e.other:Message(MT.LightBlue, "You receive a character flag!");
+				if flame_bucket == 0 then
+					e.other:SetAccountBucket("pop.flags.tribunal", "1")
+					e.other:SetAccountBucket("pop.flags.flame", "1")
+					e.other:Message(MT.LightBlue, "You receive a character flag!");
+				else
+					e.self:Say("It looks like we've already spoken.")
+				end
 			else
 				local mark_link = eq.item_link(31796)
 				e.self:Say(

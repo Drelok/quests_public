@@ -57,10 +57,15 @@ function event_say(e)
 				e.self:Say("I'm sorry, the Trial of Torture is currently unavilable to you.");
 			end
 		elseif (e.message:findi("what evidence of mavuin") ) then
-			if ( e.other:HasItem(31844) ) then
-				e.other:SetAccountBucket("pop.flags.tribunal", "1");
-				e.other:SetAccountBucket("pop.flags.torture", "1");
-				e.other:Message(4, "You receive a character flag!");
+			if e.other:HasItem(31844) then
+				local stoning_bucket = tonumber(e.other:GetAccountBucket("pop.flags.stoning")) or 0
+				if stoning_bucket == 0 then
+					e.other:SetAccountBucket("pop.flags.tribunal", "1");
+					e.other:SetAccountBucket("pop.flags.torture", "1");
+					e.other:Message(4, "You receive a character flag!");
+				else
+					e.self:Say("It looks like we've already spoken.")
+				end
 			else
 				local mark_link = eq.item_link(31844)
 				e.self:Say(
