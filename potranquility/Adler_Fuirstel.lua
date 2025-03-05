@@ -26,6 +26,8 @@ function event_say(e)
 		local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
 		if grummus_bucket == 1 then
 			e.self:Say("Please you must hurry! Take the ward that surrounds you back to my brother and lift the sickness that has come over him!")
+		else
+			e.self:Say("You must defeat Grummus!")
 		end
 	end
 end
