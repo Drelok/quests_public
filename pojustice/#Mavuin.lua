@@ -25,7 +25,7 @@ function event_say(e)
 			local plea_your_case_link = eq.silent_say_link("plea your case", "plea my case")
 			e.self:Say(
 				string.format(
-					"Oh, excuse me... The Tribunal is not a being who deals with parchment and quills, he will test you to allow me to [%s].  When you tell him of my request, be prepared, %s.",
+					"Oh, excuse me... The Tribunal is not a being who deals with parchment and quills, he will test you to allow me to [%s]. When you tell him of my request you must mention my name, be prepared, %s.",
 					plea_your_case_link,
 					e.other:GetCleanName()
 				)
