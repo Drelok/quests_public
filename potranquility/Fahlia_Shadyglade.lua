@@ -49,9 +49,13 @@ function event_say(e)
 					)
 				)
 			elseif e.message:findi("go") then
-				e.self:Say("Wonderful. I did not think that an outsider was one that I could trust to aid me in this. One name that Tylis has mentioned in agony is that of Maareq. I do not know whom this is, but he must be instrumental in Tylis' suffering. You must find Maareq and do what you must to release Tylis from this torture.'")
-				e.other:SetAccountBucket("pop.flags.shadyglade", "1")
-				e.other:Message(MT.LightBlue, "You receive a character flag!")
+				if shadyglade_bucket == 0 then
+					e.self:Say("Wonderful. I did not think that an outsider was one that I could trust to aid me in this. One name that Tylis has mentioned in agony is that of Maareq. I do not know whom this is, but he must be instrumental in Tylis' suffering. You must find Maareq and do what you must to release Tylis from this torture.'")
+					e.other:SetAccountBucket("pop.flags.shadyglade", "1")
+					e.other:Message(MT.LightBlue, "You receive a character flag!")
+				else
+					e.self:Say("It looks like we've already spoken.")
+				end
 			end
 		end
 	else
