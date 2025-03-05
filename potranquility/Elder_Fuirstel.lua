@@ -26,6 +26,8 @@ function event_say(e)
 			else
 				e.self:Say("It looks like I've helped you all I can.")
 			end
+		else
+			e.other:Say("You must defeat Bertoxxulous!")
 		end
 	end
 end
