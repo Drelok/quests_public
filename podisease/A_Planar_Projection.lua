@@ -10,7 +10,8 @@ function event_timer(e)
 end
 
 function event_say(e)
-	if e.message:findi("Hail") then
+	local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
+	if e.message:findi("Hail") and grummus_bucket == 0 then
 		e.other:SetAccountBucket("pop.flags.grummus", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	end
