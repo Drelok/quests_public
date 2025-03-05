@@ -1,7 +1,7 @@
 function event_say(e)
 	if e.message:findi("hail") then
 		local rallos_bucket = tonumber(e.other:GetAccountBucket("pop.flags.rallos")) or 0
-		local plane_of_air_link =  eq.silent_saylink("Plane of Air")
+		local plane_of_air_link =  eq.silent_say_link("Plane of Air")
 		if rallos_bucket == 1 then
 			e.self:Say(
 				string.format(
