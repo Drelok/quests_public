@@ -11,7 +11,10 @@ end
 
 function event_say(e)
 	if e.message:findi("Hail") then
-		e.other:SetAccountBucket("pop.flags.tallon", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		local tallon_bucket = tonumber(e.other:GetAccountBucket("pop.flags.tallon")) or 0
+		if tallon_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.tallon", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
