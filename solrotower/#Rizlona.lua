@@ -33,7 +33,7 @@ function event_death_complete(e)
 	eq.spawn2(212076, 0, 0, -1101, 1978, -920, 258) --a_warder_of_Rizlona (212076)
 	eq.spawn2(212076, 0, 0, -1086, 2024, -908, 258) --a_warder_of_Rizlona (212076)
 end
-	
+
 function event_killed_merit(e)
 	local rizlona_bucket = tonumber(e.other:GetAccountBucket("pop.flags.rizlona")) or 0
 	if rizlona_bucket == 0 then
