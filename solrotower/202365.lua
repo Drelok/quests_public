@@ -11,7 +11,10 @@ end
 
 function event_say(e)
 	if e.message:findi("Hail") then
-		e.other:SetAccountBucket("pop.flags.jiva", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		local jiva_bucket = tonumber(e.other:GetAccountBucket("pop.flags.jiva")) or 0
+		if jiva_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.jiva", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
