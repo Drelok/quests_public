@@ -119,8 +119,8 @@ end
 function event_killed_merit(e)
 	local xegony_bucket = tonumber(e.other:GetAccountBucket("pop.flags.xegony")) or 0
 	if xegony_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.xegony", "1")
 		e.other:SummonItem(29164) -- Item: Amorphous Cloud of Air
+		e.other:SetAccountBucket("pop.flags.xegony", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	end
 end
