@@ -122,5 +122,5 @@ function event_killed_merit(e)
 		e.other:SetAccountBucket("pop.flags.xegony", "1")
 		e.other:SummonItem(29164) -- Item: Amorphous Cloud of Air
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
-	end=
+	end
 end
