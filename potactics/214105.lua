@@ -11,8 +11,11 @@ end
 
 function event_say(e)
 	if e.message:findi("Hail") then
-		e.self:Emote("Maelin Starpyre's thoughts enter into your own. 'The singed parchment of Rallos lies in his dead hand. Bring it back to me I will translate them using the Cipher of Druzzil.'")
-		e.other:SetAccountBucket("pop.flags.rallos", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		local rallos_bucket = tonumber(e.other:GetAccountBucket("pop.flags.rallos")) or 0
+		if rallos_bucket == 0 then
+			e.self:Emote("Maelin Starpyre's thoughts enter into your own. 'The singed parchment of Rallos lies in his dead hand. Bring it back to me I will translate them using the Cipher of Druzzil.'")
+			e.other:SetAccountBucket("pop.flags.rallos", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
