@@ -37,3 +37,11 @@ function event_death_complete(e)
 	--tell vallon_controller I died
 	eq.signal(214112,3); -- NPC: #vallon_controller
 end
+
+function event_killed_merit(e)
+	local vallon_bucket = tonumber(e.other:GetAccountBucket("pop.flags.vallon")) or 0
+	if vallon_bucket == 0 then
+		e.other:SetAccountBucket("pop.flags.vallon", "1")
+		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	end
+end
