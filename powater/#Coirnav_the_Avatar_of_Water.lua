@@ -11,8 +11,8 @@ end
 function event_killed_merit(e)
 	local coirnav_bucket = tonumber(e.other:GetAccountBucket("pop.flags.coirnav")) or 0
 	if coirnav_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.coirnav", "1")
 		e.other:SummonItem(29163) -- Item: Sphere of Coalesced Water
+		e.other:SetAccountBucket("pop.flags.coirnav", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	end
 end
