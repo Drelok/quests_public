@@ -11,7 +11,10 @@ end
 
 function event_say(e)
 	if e.message:findi("Hail") then
-		e.other:SetAccountBucket("pop.flags.arlyxir", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		local arlyxir_bucket = tonumber(e.other:GetAccountBucket("pop.flags.arlyxir")) or 0
+		if arlyxir_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.arlyxir", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
