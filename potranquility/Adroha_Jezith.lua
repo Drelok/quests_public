@@ -33,8 +33,8 @@ function event_say(e)
 		)
 	elseif e.message:findi("tortured by nightmares") then
 		local hedge_bucket = tonumber(e.other:GetAccountBucket("pop.flags.hedge")) or 0
-		e.self:Say("It is our belief that Terris-Thule is punishing him for allowing entrance into her plane. She seems to have an exceedingly strong tie to him. Since her father has already punished him, she likely found that he was easily tormented by her own powers. Sometimes he talks while tossing and turning. We have taken note of everything he has said. He has said 'I accept your offer Terris-Thule', 'I must find the pieces', and 'It never ends'. You must help him. Go through the portal that he has helped to create. Try to find his planar projection in Terris' plane. Help him wake from this torment. Please, I beg you. I cannot stand to watch him suffer any longer.")
 		if hedge_bucket == 0 then
+			e.self:Say("It is our belief that Terris-Thule is punishing him for allowing entrance into her plane. She seems to have an exceedingly strong tie to him. Since her father has already punished him, she likely found that he was easily tormented by her own powers. Sometimes he talks while tossing and turning. We have taken note of everything he has said. He has said 'I accept your offer Terris-Thule', 'I must find the pieces', and 'It never ends'. You must help him. Go through the portal that he has helped to create. Try to find his planar projection in Terris' plane. Help him wake from this torment. Please, I beg you. I cannot stand to watch him suffer any longer.")
 			e.other:SetAccountBucket("pop.flags.hedge", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		end
