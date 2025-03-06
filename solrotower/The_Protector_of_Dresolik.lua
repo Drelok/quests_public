@@ -14,7 +14,7 @@ end
 
 
 function event_timer(e)
-	if e.timer=="Out of Bounds" then
+	if e.timer == "Out of Bounds" then
 		eq.stop_timer("Out of Bounds")
 		if e.self:GetX() < 546 or e.self:GetX() > 994 then
 			e.self:Say("Dresolik must not be disturbed!")
