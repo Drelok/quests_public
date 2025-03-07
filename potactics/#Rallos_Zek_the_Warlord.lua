@@ -147,10 +147,10 @@ function event_timer(e)
 		end
 	elseif e.timer == "Out of Arena" then
 		if e.self:GetHateListCount() > 0 then
-			local hate_entries = e.self:GetHateList().entries()
+			local hate_entries = e.self:GetHateList().entries
 			for hate_entry in hate_entries do
-				if ent.ent:IsClient() and ent.ent:GetX() > 950 then
-					e.self:CastSpell(982, ent.ent:GetID()) -- Spell: Cazic Touch
+				if hate_entry.ent:IsClient() and hate_entry.ent:GetX() > 950 then
+					e.self:CastSpell(982, hate_entry.ent:GetID()) -- Spell: Cazic Touch
 				end
 			end
 
