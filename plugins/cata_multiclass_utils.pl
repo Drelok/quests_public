@@ -96,6 +96,7 @@ sub OnLoginUpdate {
             # Calcualted Top 10
             if ($val > 293) {
                 plugin::AddTitleFlag(238, $client);
+                $client->SummonItem(2009555);
             }
         }
 
@@ -110,10 +111,11 @@ sub OnLoginUpdate {
             # Calcualted Top 10
             if ($val > 196) {
                 plugin::AddTitleFlag(220, $client);
+                $client->SummonItem(2009616);
             }
         }
 
-        $val = $client->GetAccountBucket("event.event.emarr.2025.violence");
+        $val = $client->GetAccountBucket("event.event.emarr.2025.eat_chocolate");
         if ($val) {
             plugin::AddTitleFlag(222, $client);
 
@@ -123,6 +125,7 @@ sub OnLoginUpdate {
 
             if ($val >= 100) {
                 plugin::AddTitleFlag(224, $client);
+                $client->SummonItem(17668);
             }
 
             # Calcualted Top 1
