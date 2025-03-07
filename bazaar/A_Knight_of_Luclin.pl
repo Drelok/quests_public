@@ -34,10 +34,10 @@ sub EVENT_SAY {
             plugin::list_stage_prereq($client, $stage_key);            
         }
         if (($text =~/explorer/i)){
-            my $item1_flag = $client->GetBucket("$item1-flag") || 0;
-            my $item2_flag = $client->GetBucket("$item2-flag") || 0;
-            my $item3_flag = $client->GetBucket("$item3-flag") || 0;
-            my $item4_flag = $client->GetBucket("$item4-flag") || 0;
+            my $item1_flag = $client->GetAccountBucket("$item1-flag") || 0;
+            my $item2_flag = $client->GetAccountBucket("$item2-flag") || 0;
+            my $item3_flag = $client->GetAccountBucket("$item3-flag") || 0;
+            my $item4_flag = $client->GetAccountBucket("$item4-flag") || 0;
 
             my $item1_link = quest::varlink($item1);
             my $item2_link = quest::varlink($item2);
@@ -90,10 +90,10 @@ sub EVENT_ITEM {
         plugin::CommonCharacterUpdate($client);
         return;
     } elsif (!plugin::is_stage_complete($client, $stage_key)) {
-        my $item1_flag = $client->GetBucket("$item1-flag") || 0;
-        my $item2_flag = $client->GetBucket("$item2-flag") || 0;
-        my $item3_flag = $client->GetBucket("$item3-flag") || 0;
-        my $item4_flag = $client->GetBucket("$item4-flag") || 0;
+        my $item1_flag = $client->GetAccountBucket("$item1-flag") || 0;
+        my $item2_flag = $client->GetAccountBucket("$item2-flag") || 0;
+        my $item3_flag = $client->GetAccountBucket("$item3-flag") || 0;
+        my $item4_flag = $client->GetAccountBucket("$item4-flag") || 0;
 
         my $item1_link = quest::varlink($item1);
         my $item2_link = quest::varlink($item2);
@@ -102,25 +102,25 @@ sub EVENT_ITEM {
 
         if (!$item1_flag && plugin::check_handin(\%itemcount, $item1 => 1)) {
             plugin::NPCTell("Perfect, this [$item1_link] is exactly what I needed.");
-            $client->SetBucket("$item1-flag", 1);
+            $client->SetAccountBucket("$item1-flag", 1);
             $item1_flag = 1;
         }
 
         if (!$item2_flag && plugin::check_handin(\%itemcount, $item2 => 1)) {
             plugin::NPCTell("Perfect, this [$item2_link] is exactly what I needed.");
-            $client->SetBucket("$item2-flag", 1);
+            $client->SetAccountBucket("$item2-flag", 1);
             $item2_flag = 1;
         }
 
         if (!$item3_flag && plugin::check_handin(\%itemcount, $item3 => 1)) {
             plugin::NPCTell("Perfect, this [$item3_link] is exactly what I needed.");
-            $client->SetBucket("$item3-flag", 1);
+            $client->SetAccountBucket("$item3-flag", 1);
             $item3_flag = 1;
         }
 
         if (!$item4_flag && plugin::check_handin(\%itemcount, $item4 => 1)) {
             plugin::NPCTell("Perfect, this [$item4_link] is exactly what I needed.");
-            $client->SetBucket("$item4-flag", 1);
+            $client->SetAccountBucket("$item4-flag", 1);
             $item4_flag = 1;
         }
 
