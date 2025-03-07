@@ -96,7 +96,8 @@ sub EVENT_CONNECT {
         plugin::DisplayWarning($client);
     }
    
-    plugin::CommonCharacterUpdate($client); 
+    plugin::CommonCharacterUpdate($client);
+    plugin::OnLoginUpdate($client);
 
     if (!$client->GetBucket("First-Login")) {
         $client->SetBucket("First-Login", 1);

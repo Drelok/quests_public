@@ -48,6 +48,143 @@ sub CommonCharacterUpdate {
     }    
 }
 
+sub OnLoginUpdate {
+    #vday 2025
+    my $client = shift;
+
+    if (!$client->GetAccountBucket("event.event.emarr.2025.awarded")) {
+        $client->SetAccountBucket("event.event.emarr.2025.awarded", "true");
+
+        my $val = $client->GetAccountBucket("event.event.emarr.2025.erollisi_signets");
+        if ($val) {
+            plugin::AddTitleFlag(240, $client);
+
+            if ($val > 5) {
+                plugin::AddTitleFlag(215, $client);
+                $client->SummonFixedItem(2017722);
+            }
+
+            # Calcualted Top 10
+            if ($val > 8) {
+                plugin::AddTitleFlag(241, $client);
+            }
+        }
+
+        $val = $client->GetAccountBucket("event.event.emarr.2025.innoruuk_signets");
+        if ($val) {
+            plugin::AddTitleFlag(242, $client);
+
+            if ($val > 5) {
+                plugin::AddTitleFlag(216, $client);
+                $client->SummonFixedItem(2017721);
+            }
+
+            # Calcualted Top 10
+            if ($val > 6) {
+                plugin::AddTitleFlag(243, $client);
+            }
+        }
+
+        $val = $client->GetAccountBucket("event.event.emarr.2025.peace");
+        if ($val) {
+            plugin::AddTitleFlag(217, $client);
+
+            if ($val >= 100) {
+                plugin::AddTitleFlag(237, $client);
+            }
+
+            # Calcualted Top 10
+            if ($val > 293) {
+                plugin::AddTitleFlag(238, $client);
+            }
+        }
+
+        $val = $client->GetAccountBucket("event.event.emarr.2025.violence");
+        if ($val) {
+            plugin::AddTitleFlag(218, $client);
+
+            if ($val >= 100) {
+                plugin::AddTitleFlag(219, $client);
+            }
+
+            # Calcualted Top 10
+            if ($val > 196) {
+                plugin::AddTitleFlag(220, $client);
+            }
+        }
+
+        $val = $client->GetAccountBucket("event.event.emarr.2025.violence");
+        if ($val) {
+            plugin::AddTitleFlag(222, $client);
+
+            if ($val >= 50) {
+                plugin::AddTitleFlag(223, $client);
+            }
+
+            if ($val >= 100) {
+                plugin::AddTitleFlag(224, $client);
+            }
+
+            # Calcualted Top 1
+            if ($val > 400) {
+                plugin::AddTitleFlag(239, $client);
+            }
+        }
+
+        $val = $client->GetAccountBucket("event.event.emarr.2025.destroy");
+        if ($val) {
+            plugin::AddTitleFlag(225, $client);
+
+            if ($val >= 50) {
+                plugin::AddTitleFlag(226, $client);
+            }
+
+            if ($val >= 100) {
+                plugin::AddTitleFlag(227, $client);
+            }
+
+            # Calcualted Top 1
+            if ($val > 800) {
+                plugin::AddTitleFlag(228, $client);
+            }
+        }
+
+        $val = $client->GetAccountBucket("event.event.emarr.2025.erollisi_roses");
+        if ($val) {
+            if ($val >= 10) {
+                plugin::AddTitleFlag(230, $client);
+            }
+
+            # Calcualted Top 100
+            if ($val > 345) {
+                plugin::AddTitleFlag(231, $client);
+            }
+
+            # Calcualted Top 10
+            if ($val > 664) {
+                plugin::AddTitleFlag(232, $client);
+            }
+        }
+
+        $val = $client->GetAccountBucket("event.event.emarr.2025.innoruuk_roses");
+        if ($val) {
+            if ($val >= 10) {
+                plugin::AddTitleFlag(234, $client);
+            }
+
+            # Calcualted Top 100
+            if ($val > 217) {
+                plugin::AddTitleFlag(235, $client);
+            }
+
+            # Calcualted Top 10
+            if ($val > 515) {
+                plugin::AddTitleFlag(236, $client);
+            }
+        }
+    }
+}
+
 sub MultiClassingEnabled
 {
     return IsTHJ();
