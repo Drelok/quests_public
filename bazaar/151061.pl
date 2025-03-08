@@ -66,7 +66,7 @@ sub EVENT_SAY {
         deity_change_select($1);
     }
     elsif ($text =~ /^confirm_deity_(\d+)-(\d)$/i) {
-        deity_change_confirm($1);
+        deity_change_confirm($1, $2);
     }
     elsif ($text =~ /unhappy with your form/i) {
         race_change_intro();
