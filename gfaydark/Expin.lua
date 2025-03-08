@@ -22,7 +22,8 @@ function event_trade(e)
 		e.other:QuestReward(e.self,0,2,0,0,0,800);
 	elseif item_lib.check_turn_in(e.trade, {item1 = 16390}) then -- Item: Crumpled Piece of Paper
 		e.self:Say("Ahhh! You found it! Here let me make you a copy and put this in a secure spot so I don't lose it again.");
-		e.other:QuestReward(e.self,{exp = 1000});
+		e.other:QuestReward(e.self, {exp = 1000});
+		e.other:SummonItem(24098); -- Item: Remiss Sketch
 	end
 
 	item_lib.return_items(e.self, e.other, e.trade)
