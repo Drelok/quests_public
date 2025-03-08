@@ -20,7 +20,7 @@ function event_trade(e)
 	elseif(item_lib.check_turn_in(e.trade, {item1 = 9040})) then -- Totem of the Watcher
 		e.self:Say("Great work, friend. Take this totem and place it in the case that you were given in Shar Vahl. Do not unwrap the totem and be quick in your pursuit of the others. Once you have all of the totems, please seal the case and return it to Shar Vahl. I can only hope that you will get to all of the spirits in time. Take care, friend.");
 		e.other:SummonItem(9031); -- Returns Official Seal of the Khati Sha
-		e.other:QuestReward(e.self,0,0,0,0,9041); -- Wrapped Watcher Totem
+        e.other:SummonItem(9041);
 		eq.depop_with_timer();
 	end
 	item_lib.return_items(e.self, e.other, e.trade)
