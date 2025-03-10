@@ -11,9 +11,13 @@ function event_say(e)
 			shadyglade_bucket == 1
 		) then
 			if e.message:findi("Hail") then
-				e.self:Say("Oh thank you for helping Tylis! We will be forever in your debt")
-				e.other:SetAccountBucket("pop.flags.saryrn", "2")
-				e.other:Message(MT.LightBlue, "You receive a character flag!")
+				if saryrn_bucket ~= 2 then
+					e.self:Say("Oh thank you for helping Tylis! We will be forever in your debt")
+					e.other:SetAccountBucket("pop.flags.saryrn", "2")
+					e.other:Message(MT.LightBlue, "You receive a character flag!")
+				else
+					e.self:Say("It looks like we've already spoken.")
+				end
 			end
 		else
 			if e.message:findi("Hail") then
