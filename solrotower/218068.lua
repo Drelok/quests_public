@@ -15,6 +15,8 @@ function event_say(e)
 		if solusek_bucket == 0 then
 			e.other:SetAccountBucket("pop.flags.solusek", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			e.self:Say("It looks like we've already spoken.")
 		end
 	end
 end
