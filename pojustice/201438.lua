@@ -58,11 +58,11 @@ function event_say(e)
 			end
 		elseif (e.message:findi("mavuin") ) then
 			if e.other:HasItem(31844) then
-				local stoning_bucket = tonumber(e.other:GetAccountBucket("pop.flags.stoning")) or 0
-				if stoning_bucket == 0 then
+				local torture_bucket = tonumber(e.other:GetAccountBucket("pop.flags.torture")) or 0
+				if torture_bucket == 0 then
 					e.other:SetAccountBucket("pop.flags.tribunal", "1");
 					e.other:SetAccountBucket("pop.flags.torture", "1");
-					e.other:Message(4, "You receive a character flag!");
+					e.other:Message(MT.LightBlue, "You receive a character flag!");
 				else
 					e.self:Say("It looks like we've already spoken.")
 				end
