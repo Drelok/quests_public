@@ -9,7 +9,7 @@ function event_say(e)
 			elseif askr_bucket == 3 then
 				e.self:Say("The giants are fierce. Each tribe leader holds a piece to open the Bastion of Thunder. Seal two pieces in the bag, and I'll forge your medallion.")
 			else
-				local problem_link = eq.silent_say_link("what problem", "problem")
+				local problem_link = eq.silent_say_link("problem")
 				e.self:Emote(
 					string.format(
 						"gazes at you with a rough beard and reeking of ale. 'Not here to clean? You wouldn't handle this [%s] anyway. Leave me to my drink.'",
@@ -17,7 +17,7 @@ function event_say(e)
 					)
 				)
 			end
-		elseif e.message:findi("what problem") then
+		elseif e.message:findi("problem") then
 			e.self:Say("Askr gestures toward the cave exit. 'Can't you see the monsters outside, pillaging at will? If you want to help, bring me one of their heads. Until then, I'm doomed with my *hic* potions.'")
 		elseif e.message:findi("yes") then
 			local askr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.askr")) or 0

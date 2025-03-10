@@ -11,7 +11,12 @@ end
 
 function event_say(e)
 	if e.message:findi("Hail") then
-		e.other:SetAccountBucket("pop.flags.aerin", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+		local aerin_bucket = tonumber(e.other:GetAccountBucket("pop.flags.aerin")) or 0
+		if aerin_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.aerin", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			e.self:Say("It looks like we've already spoken.")
+		end
 	end
 end
