@@ -16,6 +16,8 @@ function event_say(e)
 			e.other:SummonItem(29163) -- Item: Sphere of Coalesced Water
 			e.other:SetAccountBucket("pop.flags.coirnav", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			e.self:Say("It looks like we've already spoken.")
 		end
 	end
 end

@@ -16,6 +16,8 @@ function event_say(e)
 			e.other:SetZoneFlag(222)
 			e.other:SetAccountBucket("pop.flags.arbitor", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			e.self:Say("It looks like we've already spoken.")
 		end
 	end
 end

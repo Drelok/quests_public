@@ -17,6 +17,8 @@ function event_say(e)
 			e.other:SummonItem(29147) -- Item: Globe of Dancing Flame
 			e.other:SetAccountBucket("pop.flags.fennin", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			e.self:Say("It looks like we've already spoken.")
 		end
 	end
 end
