@@ -11,9 +11,13 @@ end
 
 function event_say(e)
 	if e.message:findi("Hail") then
-		e.other:Message(MT.DarkGray, "The Planar Projection seems to flicker in and out of existence. It seems to be impressed and grateful for the death of Saryrn.")
-		e.other:SetAccountBucket("pop.flags.saryrn", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
-		-- plugin::SetSubFlag($client, 'GoD', 'Saryrn', 1); -- Needs a Lua equivalent?
+		local saryrn_bucket = tonumber(e.other:GetAccountBucket("pop.flags.saryrn")) or 0
+		if saryrn_bucket == 0 then
+			e.other:Message(MT.DarkGray, "The Planar Projection seems to flicker in and out of existence. It seems to be impressed and grateful for the death of Saryrn.")
+			e.other:SetAccountBucket("pop.flags.saryrn", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		else
+			e.self:Say("It looks like we've already spoken.")
+		end
 	end
 end
