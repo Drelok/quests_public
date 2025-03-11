@@ -20,7 +20,8 @@
 --	211086 #Freegan_Haan
 --
 --	202368 A_Planar_Projection
---
+--	
+--	1120001262 #maiden_controller
 --]]
 local counter = 0;
 local roomonemaid = 0;
@@ -30,6 +31,8 @@ local roomonetrash = 0;
 local roomtwotrash = 0;
 local roomthrtrash = 0;
 local	boss = 0;
+local timerMob;
+
 
 function CustodianDeath(e)
 	roomonemaid = 0;
@@ -39,6 +42,9 @@ function CustodianDeath(e)
 	roomtwotrash = 0;
 	roomthrtrash = 0;
 	boss = 0;
+
+	--Event timer mob
+	timerMob=eq.spawn2(1120001262,0,0,-15000,9,9,9); -- NPC: #maiden_controller
 
 	--Maidens--
 	--ROOM 1
@@ -55,6 +61,9 @@ function CustodianDeath(e)
 	eq.spawn2(211079,0,0,-3172,-1097,-113,0); -- NPC: #_a_norrathian_maiden
 	eq.spawn2(211079,0,0,-3201,-1130,-113,384); -- NPC: #_a_norrathian_maiden
 	eq.spawn2(211079,0,0,-3151,-1129,-113,130); -- NPC: #_a_norrathian_maiden
+	
+	--Start timer for spawning room 2
+	eq.set_timer("room2",60*1000, timerMob);
 
 	--MOBS--
 	--ROOM 1 TRASH
@@ -63,20 +72,6 @@ function CustodianDeath(e)
 	eq.spawn2(211080,0,0,-2582,-1872,-113,41.2); -- NPC: a_crazed_norrathian
 	eq.spawn2(211080,0,0,-2588,-1727,-113,462); -- NPC: a_crazed_norrathian
 	eq.spawn2(211080,0,0,-2588,-1600,-113,41.2); -- NPC: a_crazed_norrathian
-
-	--ROOM 2 TRASH
-	eq.spawn2(211082,0,0,-3318,-1841,-113,26); -- NPC: #_a_crazed_norrathian
-	eq.spawn2(211082,0,0,-3319,-1725,-113,130); -- NPC: #_a_crazed_norrathian
-	eq.spawn2(211082,0,0,-3299,-1621,-113,41.2); -- NPC: #_a_crazed_norrathian
-	eq.spawn2(211082,0,0,-3034,-1636,-113,346); -- NPC: #_a_crazed_norrathian
-	eq.spawn2(211082,0,0,-3034,-1816,-113,316); -- needs_heading_validation
-
-	--ROOM 3 TRASH
-	eq.spawn2(211083,0,0,-3293,-1027,-113,172); -- NPC: a_crazed_norrathian_
-	eq.spawn2(211083,0,0,-3027,-1035,-113,130); -- NPC: a_crazed_norrathian_
-	eq.spawn2(211083,0,0,-3035,-1229,-113,434); -- NPC: a_crazed_norrathian_
-	eq.spawn2(211083,0,0,-3303,-1229,-113,346); -- NPC: a_crazed_norrathian_
-	eq.spawn2(211083,0,0,-3168,-1028,-113,316); -- needs_heading_validation
 
 end
 
@@ -129,7 +124,7 @@ function BossDeath(e)
 	boss = boss + 1;
 	if ( boss == 3 ) then
 		eq.update_spawn_timer(44032,25920000000); --Alekson Garn 3 days on win
-		eq.spawn2(202368,0,0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading() ); -- NPC: A_Planar_Projection
+		eq.spawn2(202368,0,0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading()):ChangeSize(32); -- NPC: A_Planar_Projection
 		DespawnEventMobs();
 	end
 end
@@ -146,6 +141,24 @@ end
 function MaidensTimer(e)
 	if ( e.timer == 'maidens' ) then 
 		FailEvent();
+	elseif ( e.timer == 'room2' ) then
+		-- Spawn ROOM 2
+		eq.stop_timer(e.timer);
+		eq.spawn2(211082,0,0,-3318,-1841,-113,26); -- NPC: #_a_crazed_norrathian
+		eq.spawn2(211082,0,0,-3319,-1725,-113,130); -- NPC: #_a_crazed_norrathian
+		eq.spawn2(211082,0,0,-3299,-1621,-113,41.2); -- NPC: #_a_crazed_norrathian
+		eq.spawn2(211082,0,0,-3034,-1636,-113,346); -- NPC: #_a_crazed_norrathian
+		eq.spawn2(211082,0,0,-3034,-1816,-113,316); -- needs_heading_validation
+
+		eq.set_timer('room3',60*1000,timerMob); -- Start timer for third wave
+	elseif ( e.timer == 'room3' ) then
+		-- Spawn ROOM 3
+		eq.stop_timer(e.timer);
+		eq.spawn2(211083,0,0,-3293,-1027,-113,172); -- NPC: a_crazed_norrathian_
+		eq.spawn2(211083,0,0,-3027,-1035,-113,130); -- NPC: a_crazed_norrathian_
+		eq.spawn2(211083,0,0,-3035,-1229,-113,434); -- NPC: a_crazed_norrathian_
+		eq.spawn2(211083,0,0,-3303,-1229,-113,346); -- NPC: a_crazed_norrathian_
+		eq.spawn2(211083,0,0,-3168,-1028,-113,316); -- needs_heading_validation
 	end
 end
 
@@ -160,6 +173,7 @@ function DespawnEventMobs()
 	eq.depop_all(211084);
 	eq.depop_all(211085);
 	eq.depop_all(211086);
+	eq.depop_all(1120001262);
 end
 
 function AleksonSay(e)
@@ -173,10 +187,15 @@ function AleksonSay(e)
 end
 
 function event_encounter_load(e)
+	encounterObj=e;
+
 	-- register our NPC event hooks
 	eq.register_npc_event("maidens", Event.say,            211060, AleksonSay);
 	eq.register_npc_event("maidens", Event.death_complete, 211076, CustodianDeath);
 
+	-- register the main event timer controller
+	eq.register_npc_event("maidens", Event.spawn,          1120001262, TimerSpawn);
+	eq.register_npc_event("maidens", Event.timer,          1120001262, MaidensTimer);	
 	-- Hook a timer to each of the mobs which could end up lingering around with 
 	-- this event.  Custodian and the Named in each room; if they are up for 
 	-- 2hours; the event will despawn itself.  The timers are discarded when 

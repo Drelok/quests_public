@@ -23,7 +23,7 @@ function event_say(e)
 				message = "Gram Dunnar listens eagerly to your tales of the Plane of Valor and Plane of Storms. 'Everything turned to glass by the dragon! That must be a sight,' he exclaims. 'Wish I could go there,' he sighs."
 			},
 			[1] = {
-				required = { alder = 1, elder = 1, grummus = 1 },
+				required = { adler = 1, elder = 1, grummus = 1 },
 				reward_flag = "pop.aa.codecay",
 				message = "Gram Dunnar shudders as you tell him of the Crypt of Decay. 'A foul place, indeed. I would have loved to slay a few of those creatures, though.'"
 			},
@@ -43,7 +43,7 @@ function event_say(e)
 				message = "'Giants and a huge fortress,' Gram sighs wistfully as you finish your story of the Bastion of Thunder. 'Storming through a place like that, killing everything in sight - those were good days.'"
 			},
 			[5] = {
-				required = { alder = 1, bertox = 1, codecay = 2, construct = 1, elder = 1, grummus = 1, hedge = 1, poxbourne = 1, terris = 1 },
+				required = { adler = 1, bertox = 1, codecay = 2, construct = 1, elder = 1, grummus = 1, hedge = 1, poxbourne = 1, terris = 1 },
 				reward_flag = "pop.aa.potorment",
 				message = "Gram Dunnar listens attentively to your story of the Plane of Torment. 'Ravens with bloody eyes,' he muses, 'and creatures with four mouths?'"
 			},
