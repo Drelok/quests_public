@@ -1,4 +1,5 @@
 my $repeat_flag = 0;
+my $wave_timer = 95;
 
 sub EVENT_SPAWN {
   $x = $npc->GetX();
@@ -11,7 +12,7 @@ sub EVENT_SPAWN {
 sub EVENT_ENTER {
     if ($repeat_flag == 0) {
       quest::me("A deep voice bellows from just ahead saying, 'Come fools see if you can match the power of Banord and his puslings.  Puslings come your master has need of you!' Wretched howls of the twisted puslings begin to echo throughout the room.");
-      quest::settimer("paffaa",190);
+      quest::settimer("paffaa",$wave_timer);
       $repeat_flag = 1;
     }
 }
@@ -26,7 +27,7 @@ sub EVENT_TIMER {
     quest::spawn2(quest::ChooseRandom(200003,200004),0,0,$x,$y,$z,$h); # NPC(s): Corrupted_Pusling (200003), Foul_Pusling (200004)
     quest::spawn2(quest::ChooseRandom(200003,200004),0,0,$x,$y,$z,$h); # NPC(s): Corrupted_Pusling (200003), Foul_Pusling (200004)
     
-    quest::settimer("paffab",190);
+    quest::settimer("paffab",$wave_timer);
   }
     
   if ($timer eq "paffab") {
@@ -38,7 +39,7 @@ sub EVENT_TIMER {
     quest::spawn2(quest::ChooseRandom(200003,200004),0,0,$x,$y,$z,$h); # NPC(s): Corrupted_Pusling (200003), Foul_Pusling (200004)
     quest::spawn2(quest::ChooseRandom(200003,200004),0,0,$x,$y,$z,$h); # NPC(s): Corrupted_Pusling (200003), Foul_Pusling (200004)
     
-    quest::settimer("paffac",190);
+    quest::settimer("paffac",$wave_timer);
   }
     
   if ($timer eq "paffac") {
