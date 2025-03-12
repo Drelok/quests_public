@@ -1,63 +1,77 @@
--- 201434 Trial of Flame
--- Trial of Flame
+-- 201434 Trial of Lashing
+-- Trial of Lashing
+--
+-- items: 31599
+
+local trial_group_id = 0;
+local client_id = 0; -- character ID, not entity ID
+local trial_x = 1373;
+local trial_y = -1125;
+local trial_z = 1;
+local trial_h = 60;
+local trial_mobs = { 201463, 201464, 201465, 201466, 201467, 201468, 201469 };
+
+local cooldown_timer = 1800000;
+local eject_timer = 900000;
+local fail_timer = 360000;
 
 function event_say(e)
 	local mavuin_bucket = tonumber(e.other:GetAccountBucket("pop.flags.mavuin")) or 0
-	if mavuin_bucket == 1 then
-		if e.message:findi("Hail") then
+	if (mavuin_bucket == 1) then
+		if (e.message:findi("hail")) then
 			local prepared_link = eq.silent_say_link("prepared")
 			e.self:Emote(
 				string.format(
 					" fixes you with a dark, piercing gaze. 'What do you want, mortal? Are you [%s]?",
 					prepared_link
 				)
-			)
-		elseif e.message:findi("prepared") then
-			local begin_the_trial_of_flame_link = eq.silent_say_link("begin the trial of flame")
+			);
+		elseif (e.message:findi("prepared")) then
+			local begin_the_trial_of_lashing_link = eq.silent_say_link("begin the trial of lashing");
 			e.self:Say(
 				string.format(
-					"Very well. When you are ready, you may [%s]. You must endure the heat of the fire and be sure not to let its creatures reach the center. We shall judge the mark of your success.",
-					begin_the_trial_of_flame_link
+					"Very well. When you are ready, you may [%s]. You must protect the victims from their tormentors. Be wary of the scourge of honor - you cannot fight it directly. You must find and destroy its life force to defeat it. We shall judge the mark of your success.",
+					begin_the_trial_of_lashing_link
 				)
 			)
-		elseif e.message:findi("begin the trial of flame") then
+		elseif (e.message:findi("begin the trial of lashing")) then
 			local active_variable = tonumber(e.self:GetEntityVariable("Active")) or 0
-			if active_variable == 0 then
-				e.self:Say("Then begin.")
+			if active_variable == 0 then 
+				e.self:Say("Then begin.");
 
-				if e.other:IsGrouped() then
-					local group = e.other:GetGroup()
-					local member_count = group:GroupCount()
-
-					for i = 0, member_count - 1 do
-						local member = group:GetMember(i)
-						if member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 150 then
-							member:MovePCInstance(201, eq.get_zone_instance_id(), 937, -703, 53, 300)
-						end
-					end
+				-- Move the Player and their Group tot he trial room.
+				local trial_group = e.other:GetGroup();
+				if (trial_group ~= nil and trial_group.valid) then
+					MoveGroup( trial_group, e.self:GetX(), e.self:GetY(), e.self:GetZ(), 75, trial_x, trial_y, trial_z, trial_h); 
+					trial_group_id = trial_group:GetID();
 				else
-					e.other:MovePCInstance(201, eq.get_zone_instance_id(), 937, -703, 53, 300)
+					client_id = e.other:CharacterID();
+					e.other:MovePCInstance(201, eq.get_zone_instance_id(), trial_x, trial_y, trial_z, trial_h); -- Zone: pojustice
 				end
 
-				eq.set_timer("Start", 30 * 1000) -- 30 Seconds
-				eq.signal(201417, 1, 30) -- #Event_Burning_Control
+				-- Spawn the Controller
+				eq.spawn2(201449, 0, 0, trial_x, trial_y, trial_z, trial_h); -- NPC: #Event_Lashing_Control
+
+				-- Set the Proximity Check Timer; if everyone has left the trial (wipe); then reset things
+				eq.set_timer("proximitycheck", 60000);
+
+				-- Set a variable to indicate the Trial is unavailable.
 				e.self:SetEntityVariable("Active", "1")
-				eq.spawn2(201417, 0, 0, 880, -729, 55, 0)
 			else
-				e.self:Say("I'm sorry, the Trial of Flame is currently unavailable to you.")
+				e.self:Say("I'm sorry, the Trial of Lashing is currently unavilable to you.");
 			end
-		elseif e.message:findi("mavuin") then
-			local flame_bucket = tonumber(e.other:GetAccountBucket("pop.flags.flame")) or 0
-			if e.other:HasItem(31796) then
-				if flame_bucket == 0 then
+		elseif (e.message:findi("mavuin") ) then
+			if e.other:HasItem(31960) then
+				local lashing_bucket = tonumber(e.other:GetAccountBucket("pop.flags.lashing")) or 0
+				if lashing_bucket == 0 then
 					e.other:SetAccountBucket("pop.flags.tribunal", "1")
-					e.other:SetAccountBucket("pop.flags.flame", "1")
+					e.other:SetAccountBucket("pop.flags.lashing", "1")
 					e.other:Message(MT.LightBlue, "You receive a character flag!");
 				else
 					e.self:Say("It looks like we've already spoken.")
 				end
 			else
-				local mark_link = eq.item_link(31796)
+				local mark_link = eq.item_link(31960)
 				e.self:Say(
 					string.format(
 						"You seem to be missing a %s, return to me when you acquire it.",
@@ -65,77 +79,160 @@ function event_say(e)
 					)
 				)
 			end
-		elseif e.message:findi("I seek knowledge") then
-			if (
-				e.other:HasItem(31796) and
-				e.other:HasItem(31842) and
-				e.other:HasItem(31845) and
-				e.other:HasItem(31846) and
-				e.other:HasItem(31960)
-			) then
-				if not e.other:HasItem(31599) then
-					e.other:SummonItem(31599) -- Item: The Mark of Justice
+		elseif (e.message:findi("i seek knowledge") ) then
+			local marks = { 31796, 31842, 31844, 31845, 31846 , 31960 }
+			local has_six = 1;
+			for k,v in pairs(marks) do
+				if (not e.other:HasItem(v)) then
+					has_six = 0;
 				end
-			elseif (
-				e.other:HasItem(31796) or
-				e.other:HasItem(31842) or
-				e.other:HasItem(31845) or
-				e.other:HasItem(31846) or
-				e.other:HasItem(31960)
-			) then
-				e.self:Say("You have done well, mortal, but there are more trials yet for you to complete.")
 			end
-		end
-	else
-		if e.message:findi("Hail") then
-			e.self:Say("I'm sorry, the Trial of Flame is currently unavailable to you.")
+
+			if (has_six == 1) then 
+				if (not e.other:HasItem(31599)) then 
+					-- give 31599 to e.other
+					e.other:SummonItem(31599); -- Item: The Mark of Justice
+				end
+			elseif (has_six == 0) then
+				e.self:Say("You have done well, mortal, but there are more trials yet for you to complete.");
+			end
 		end
 	end
 end
 
 function event_timer(e)
-	if e.timer == "Start" then
-		eq.stop_timer("Start")
-		e.self:SetEntityVariable("Active", "1")
-		eq.set_timer("Fail", 1200 * 1000) -- 20 Minutes
-	elseif e.timer == "Fail" then
-		eq.stop_timer("Fail")
+	if (e.timer == "ejecttimer") then
+		eq.stop_timer(e.timer);
+		despawn_trial_mobs()
+
+		local trial_group = eq.get_entity_list():GetGroupByID(trial_group_id);
+		if (trial_group ~= nil and trial_group.valid) then
+			MoveGroup( trial_group, trial_x, trial_y, trial_z, 250, 456, 825, 9, 180, "A mysterious force translocates you."); 
+		else
+			local client_e = eq.get_entity_list():GetClientByCharID(client_id);
+			if (client_e ~= nil and client_e.valid and client_e:CalculateDistance(trial_x, trial_y, trial_z) <= 250 ) then
+				client_e:MovePCInstance( 201, eq.get_zone_instance_id(), 456, 825, 9, 360 ); -- Zone: pojustice
+				client_e:Message( 3, "A mysterious force translocates you.");
+			end
+		end
+		HandleCorpses(trial_x, trial_y, trial_z, 200);
+
+		eq.stop_timer("proximitycheck");
+	elseif (e.timer == "cooldown") then
+		eq.stop_timer(e.timer);
+
 		e.self:DeleteEntityVariable("Active")
-		eq.signal(201434, 0, 5) -- #The_Tribunal Flame Trial
+		client_id = 0;
+		trial_group_id = 0;
+
+		despawn_trial_mobs();
+
+		eq.stop_timer("proximitycheck");
+		e.self:Shout("The Trial of Lashing is now Available.");
+	elseif (e.timer == "proximitycheck") then
+		-- The proximitycheck timer is primarily for when a trial has failed
+		-- This check will allow the trial to be re-attempted as soon as
+		-- everyone has left the trial room (or they are kicked out after
+		-- 15minutes by the ejecttimer).
+
+		-- Check to see if all the PCs have left the Trial area; if so
+		-- Clean Corpses up and release thoe hold and stop the timer.
+		if ( ProximityCheck(trial_x, trial_y, trial_z, 250) == false) then 
+			eq.stop_timer(e.timer);
+
+			eq.stop_timer("cooldown");
+			eq.stop_timer("ejecttimer");
+			eq.set_timer("ejecttimer", 100);
+			eq.set_timer("cooldown", 200);
+		end
 	end
 end
 
 function event_signal(e)
-	if e.signal == 0 then
-		e.self:Shout("The Trial of Flame is now available.")
-		e.self:DeleteEntityVariable("Active")
-		eq.stop_timer("Fail")
-		eq.signal(201417, 2, 5) -- #Event_Burning_Control
+	if (e.signal == 0) then
+	elseif (e.signal == 1) then
+		-- Trial was successful
+		-- 30min till next Trial can start
+		-- 15min Eject Timer to kick any PC out of the Trial Room
+		eq.set_timer("ejecttimer", eject_timer);
+		eq.set_timer("cooldown"	, cooldown_timer);
+
+		eq.stop_timer("proximitycheck");
+	elseif (e.signal == 2) then
+		-- Trial Failed
+		eq.set_timer("ejecttimer", fail_timer);
+		eq.set_timer("cooldown"	, fail_timer);
+
+		eq.stop_timer("proximitycheck");
+		eq.set_timer("proximitycheck", 10000);
+
+	end
+
+end
+
+function MoveGroup(trial_group, src_x, src_y, src_z, distance, tgt_x, tgt_y, tgt_z, tgt_h, msg)
+	if trial_group ~= nil then
+		local trial_count = trial_group:GroupCount();
+
+		for i = 0, trial_count - 1, 1 do
+			local mob_v = trial_group:GetMember(i);
+
+			if (mob_v ~= nil and mob_v.valid and mob_v:IsClient()) then
+				local client_v = mob_v:CastToClient();
+
+				if (client_v.valid) then
+					-- check the distance and port them up if close enough
+					if (client_v:CalculateDistance(src_x, src_y, src_z) <= distance) then
+						-- port the player up
+						client_v:MovePCInstance(201, eq.get_zone_instance_id(), tgt_x, tgt_y, tgt_z, tgt_h); -- Zone: pojustice
+
+						if (msg) then
+							client_v:Message(3, msg);
+						end
+					end
+				end
+			end
+		end
 	end
 end
 
-function event_trade(e)
-	local item_lib = require("items")
-	local mavuin_bucket = tonumber(e.other:GetAccountBucket("pop.flags.mavuin")) or 0
-	if mavuin_bucket == 1 then
-		local trials = {
-			[31842] = "execution",
-			[31796] = "flame",
-			[31960] = "lashing",
-			[31845] = "stoning",
-			[31844] = "torture",
-			[31846] = "hanging"
-		}
+function HandleCorpses(src_x, src_y, src_z, dist)
 
-		for item_id, flag in pairs(trials) do
-			if item_lib.check_turn_in(e.trade, {item1 = item_id}) then
-				e.other:Message(MT.LightBlue, "You have completed a trial - impressive for mortals. You can tell Mavuin that we will hear his plea. We will seek him out as time befits us.")
-				e.other:SetAccountBucket("pop.flags.tribunal", "1")
-				e.other:SetAccountBucket(string.format("pop.flags.%s", flag), "1")
-				e.other:Message(MT.LightBlue, "You receive a character flag!")
+	-- Move Player Corpses from the Trial Area to the Grave Yard
+	local clist = eq.get_entity_list():GetCorpseList();
+	if ( clist ~= nil ) then
+		for corpse in clist.entries do
+			if corpse:IsPlayerCorpse() then
+				 if (corpse:CalculateDistance(src_x, src_y, src_z) < dist) then
+					corpse:GMMove(58, -47, 2);
+				end
+			elseif corpse:IsNPCCorpse() then
+				if (corpse:CalculateDistance(src_x, src_y, src_z) < dist) then
+					corpse:Delete();
+				end
+			end
+		end
+	end
+end
+
+function ProximityCheck(chk_x, chk_y, chk_z, dist)
+
+	local players_in_prox = false;
+	local clist = eq.get_entity_list():GetClientList();
+
+	if ( clist ~= nil ) then
+		for client in clist.entries do
+			if (client:CalculateDistance(chk_x, chk_y, chk_z) < dist) then
+				players_in_prox = true;
 			end
 		end
 	end
 
-	item_lib.return_items(e.self, e.other, e.trade)
+	return players_in_prox;
+end
+
+function despawn_trial_mobs()
+	for k,v in pairs(trial_mobs) do
+		eq.depop_all(v);
+	end
 end

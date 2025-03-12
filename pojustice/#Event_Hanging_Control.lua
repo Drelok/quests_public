@@ -62,7 +62,7 @@ function event_signal(e)
 		eq.get_entity_list():MessageClose(e.self, false, 120, 3, "Success!");
 		
 		-- Signal the Tribunal that the Group was Successful
-		eq.signal(201436, 1); -- NPC: The_Tribunal Hanging Trial
+		eq.signal(201437, 1); -- NPC: The_Tribunal Hanging Trial
 
 		-- Depop the Controller
 		eq.depop();
@@ -133,7 +133,7 @@ function event_timer(e)
 		eq.get_entity_list():MessageClose(e.self, false, 120, 3, "The prisoner gives one final twitch and suddenly becomes still, its limbs no longer flailing.  You have failed.");
 
 		-- Signal the Tribunal that the Group has failed
-		eq.signal(201436, 2); -- NPC: The_Tribunal Hanging Trial
+		eq.signal(201437, 2); -- NPC: The_Tribunal Hanging Trial
 		
 		depop_prisoners();
 		depop_list();

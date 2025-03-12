@@ -9,7 +9,7 @@ local trial_wave      = 0;
 local wave_timer      = 90000;
 local first_wave      = 20000;
 
-local trial_mobs	= { 201463, 201464, 201465, 201466, 201467, 201468, 201469 };
+local trial_mobs	= { 201463, 201464, 201465, 201466, 201467, 201468, 201469, 201470 };
 
 local wave_mobs	= { 201464, 201465, 201466, 201470 };
 
@@ -27,7 +27,7 @@ function event_signal(e)
    if (e.signal == 1) then
       eq.get_entity_list():MessageClose(e.self, false, 120, 3, "Success!");
 
-      eq.signal(201435, 1); -- NPC: The_Tribunal Lashing Trial
+      eq.signal(201434, 1); -- NPC: The_Tribunal Lashing Trial
 
       despawn_mobs();
       eq.depop();
@@ -37,7 +37,7 @@ function event_signal(e)
       eq.get_entity_list():MessageClose(e.self, false, 120, 3, "An unnatural silence falls around you.  The justice of the Tribunal has been pronounced once again.  The defendants have been found... lacking.");
 
       despawn_prisoners();
-      eq.signal(201435, 2); -- NPC: The_Tribunal Lashing Trial
+      eq.signal(201434, 2); -- NPC: The_Tribunal Lashing Trial
 
 		-- Depop the Scourge of Honor as they are immune to damage and despawned
 		-- by the controller we are about to depop.
@@ -117,7 +117,7 @@ end
 
 function despawn_mobs()
    for k,v in pairs(trial_mobs) do
-      eq.depop_all(v);
+	eq.depop_all(v);
    end
 end
 

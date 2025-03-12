@@ -205,7 +205,7 @@ function event_timer(e)
 		eq.get_entity_list():MessageClose(e.self, false, 120, 3, "You have been found unworthy and have failed, you should be shamed and publicly flogged.");
 
 		-- Tell the Tribunal we failed
-		eq.signal(201438, 2); -- NPC: The_Tribunal Torture Trial
+		eq.signal(201436, 2); -- NPC: The_Tribunal Torture Trial
 
 		despawn_prisoners();
 		eq.depop();
