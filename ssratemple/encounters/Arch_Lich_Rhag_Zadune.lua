@@ -85,6 +85,7 @@ function process_spawn(npc_id)
 		for i,id in ipairs({mozdezh_id, lich_id}) do
 			local mob = entities:GetMobByNpcTypeID(id);
 			if mob.valid then
+                eq.debug("depopping " .. id);
 				mob:Depop();
 			end
 		end
