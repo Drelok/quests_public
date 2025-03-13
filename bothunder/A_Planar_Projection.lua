@@ -16,6 +16,8 @@ function event_say(e)
 			e.other:SetAccountBucket("pop.flags.agnarr", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 			e.other:Message(MT.LightBlue, "Very good mortal... visit Karana upstairs.")
+		else
+			e.self:Say("It looks like we've already spoken.")
 		end
 	end
 end
