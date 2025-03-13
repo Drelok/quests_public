@@ -18,9 +18,14 @@ function event_say(e)
 				)
 			)
 		elseif e.message:findi("ward") then
-			e.self:Say("The ward is carried by the one that Bertoxxulous has created to protect the entrance into his den. If you dare travel into this pungent plane and find the ward bring it back. If we can halt the advanced toxins in Milyk's system maybe we can save him.")
-			e.other:SetAccountBucket("pop.flags.adler", "1")
-			e.other:Message(MT.LightBlue, "You receive a character flag!")
+			local adler_bucket = tonumber(e.other:GetAccountBucket("pop.flags.adler")) or 0
+			if adler_bucket == 0 then
+				e.self:Say("The ward is carried by the one that Bertoxxulous has created to protect the entrance into his den. If you dare travel into this pungent plane and find the ward bring it back. If we can halt the advanced toxins in Milyk's system maybe we can save him.")
+				e.other:SetAccountBucket("pop.flags.adler", "1")
+				e.other:Message(MT.LightBlue, "You receive a character flag!")
+			else
+				e.self:Say("It looks like we've already spoken.")
+			end
 		end
 	elseif adler_bucket == 1 then
 		local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
