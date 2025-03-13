@@ -54,8 +54,8 @@ function event_say(e)
 			}
 		}
 
-		local current_story = stories[story_bucket]
-		if current_story then
+		if story_bucket >= 0 and story_bucket <= 6 then
+			local current_story = stories[story_bucket]
 			local all_requirements_met = true
 			for flag, required_value in pairs(current_story.required) do
 				local current_flag = string.format("pop.flags.%s", flag)
@@ -78,6 +78,8 @@ function event_say(e)
 				e.other:Message(MT.White, "You've earned an AA Point!")
 				e.other:SetAccountBucket(current_story.reward_flag, "1")
 				e.other:SetAccountBucket("pop.flags.story", tostring(story_bucket + 1))
+			else
+				e.self:Say("You need to adventure more it seems, come back to me once you're done.")
 			end
 		else
 			e.self:Say("I've already heard all of those stories!")
