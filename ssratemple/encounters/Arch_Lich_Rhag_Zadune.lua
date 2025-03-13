@@ -8,7 +8,7 @@ local STATE_MOZDEZH_DEAD = 2;
 local STATE_END = 255;
 
 local bucket_key = "ssratemple.lich";
-local saving_enabled = false;
+local saving_enabled = true;
 
 function get_state_from_bucket()
 	if eq.get_zone_instance_id() == 0 then

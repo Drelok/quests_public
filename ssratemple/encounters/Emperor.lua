@@ -9,7 +9,7 @@ local STATE_BLOOD_DEAD = 1;
 local STATE_END = 255;
 
 local bucket_key = "ssratemple.emp";
-local saving_enabled = false;
+local saving_enabled = true;
 
 function get_state_from_bucket()
 	local zone = eq.get_zone();
