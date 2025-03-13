@@ -15,6 +15,7 @@ function event_say(e)
 		if grummus_bucket == 0 then
 			e.other:SetAccountBucket("pop.flags.grummus", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
+			e.self:Say("You need to journey to the Crypt of Decay to continue.")
 		else
 			e.self:Say("It looks like we've already spoken.")
 		end
