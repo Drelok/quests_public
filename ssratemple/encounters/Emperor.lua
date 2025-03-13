@@ -8,12 +8,12 @@ local STATE_START = 0;
 local STATE_BLOOD_DEAD = 1;
 local STATE_END = 255;
 
-local bucket_key = "ssratemple.emp";
-local saving_enabled = false;
+function get_data_key(suffix)
+	return string.format("ssratemple_%d_emp_%s", eq.get_zone_instance_id(), suffix);
+end
 
-function get_state_from_bucket()
-	local zone = eq.get_zone();
-	local state_str = zone:GetBucket(bucket_key);
+function get_state()
+	local state_str = eq.get_data(get_data_key("state"));
 	if state_str == nil then
 		state_str = "0";
 	end
@@ -26,94 +26,53 @@ function get_state_from_bucket()
 	return state;
 end
 
-function get_state_from_zone()
-	local npcs = eq.get_entity_list();
-
-	local blood = npcs:GetNPCByNPCTypeID(blood_id);
-	if blood.valid then
-		return STATE_START;
-	end
-
-	local emp = npcs:GetNPCByNPCTypeID(empreal_id);
-	if emp.valid then
-		return STATE_BLOOD_DEAD;
-	end
-
-	return STATE_END;
-end
-
-function get_state()
-	if not saving_enabled then
-		return get_state_from_bucket();
-	else
-		return get_state_from_zone();
-	end
-end
-
 function set_state(new_state)
-	if saving_enabled then
-		return;
-	end
-
 	local instance_id = eq.get_zone_instance_id();
 	if instance_id == 0 then
 		-- Let the open world be governed by the agents of chaos
 		return;
 	end
 
-	local zone = eq.get_zone();
-	zone:SetBucket(bucket_key, tostring(new_state));
+	eq.set_data(get_data_key("state"), tostring(new_state), "14h");
 end
 
-function evt_zone_spawn(e)
-	process_spawn(e.self:GetNPCTypeID(), e.self);
+function evt_blood_spawn(e)
+	set_state(STATE_START);
+	eq.unique_spawn(empfake_id, 0, 0, 990, -325, 415, 384);
 end
 
-function process_spawn(npc_id, npc)
-	if npc_id == blood_id then
-		set_state(STATE_START);
-		eq.unique_spawn(empfake_id, 0, 0, 990, -325, 415, 384);
-	end
-
-	if npc_id == wraith_id then
-		npc:SetTimer("depop", 1800);
-	end
+function evt_blood_death(e)
+	set_state(STATE_BLOOD_DEAD);
+	eq.depop(empfake_id);
+	eq.unique_spawn(empreal_id, 0, 0, 997, -325, 415, 384); 
 end
 
-function evt_zone_death(e)
-	process_death(e.self:GetNPCTypeID(), e.self);
-end
+function evt_emp_death(e)
+	set_state(STATE_END);
+	e.self:Emote("'s corpse says 'How...did...ugh...'");
+	eq.spawn2(wraith_id, 0, 0, 877, -326, 408, 385);
+	eq.spawn2(wraith_id, 0, 0, 953, -293, 404, 385);
+	eq.spawn2(wraith_id, 0, 0, 953, -356, 404, 385);
+	eq.spawn2(wraith_id, 0, 0, 773, -360, 403, 128);
+	eq.spawn2(wraith_id, 0, 0, 770, -289, 403, 128);
 
-function process_death(npc_id, npc)
-	if npc_id == blood_id then
-		set_state(STATE_BLOOD_DEAD);
-		eq.depop(empfake_id);
-		eq.unique_spawn(empreal_id, 0, 0, 997, -325, 415, 384);
-	end
-
-	if npc_id == empreal_id then
-		set_state(STATE_END);
-		npc:Emote("'s corpse says 'How...did...ugh...'");
-		eq.spawn2(wraith_id, 0, 0, 877, -326, 408, 385);
-		eq.spawn2(wraith_id, 0, 0, 953, -293, 404, 385);
-		eq.spawn2(wraith_id, 0, 0, 953, -356, 404, 385);
-		eq.spawn2(wraith_id, 0, 0, 773, -360, 403, 128);
-		eq.spawn2(wraith_id, 0, 0, 770, -289, 403, 128);
-
-		local memory_npc = eq.spawn2(memory_id, 0, 0, npc:GetX(), npc:GetY(), npc:GetZ(), npc:GetHeading());
-		if memory_npc ~= nil then
-			local name = string.lower(npc:GetCleanName());
-			name = string.gsub(name, "^[#%s]+", "");
-			name = string.gsub(name, "[#%s]+$", "");
-			--
-			memory_npc:SetEntityVariable("Flag-Name", name);
-			memory_npc:SetEntityVariable("Stage-Name", "PoP");
-		end
+	local memory_npc = eq.spawn2(memory_id, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading());
+	if memory_npc ~= nil then
+		local name = string.lower(e.self:GetCleanName());
+		name = string.gsub(name, "^[#%s]+", "");
+		name = string.gsub(name, "[#%s]+$", "");
+		--
+		memory_npc:SetEntityVariable("Flag-Name", name);
+		memory_npc:SetEntityVariable("Stage-Name", "PoP");
 	end
 end
 
 function evt_emp_slay(e)
 	e.self:Say("Your god has found you lacking.");
+end
+
+function evt_wraith_spawn(e)
+	e.self:SetTimer("depop", 1800);
 end
 
 function evt_wraith_combat(e)
@@ -141,17 +100,13 @@ function reset(e, new_state)
 
 	set_state(new_state);
 
-	check_state(e, new_state);
+	check_state(e);
 end
 
-function check_state(e, new_state)
-	local state = new_state;
+function check_state(e)
+	local state = get_state();
 	if state == -1 then
-		state = get_state();
-	end
-
-	if state == -1 then
-		return;
+		return
 	end
 
 	if state == STATE_START then
@@ -159,7 +114,7 @@ function check_state(e, new_state)
 	end
 
 	if state == STATE_BLOOD_DEAD then
-		process_death(blood_id);
+		evt_blood_death(e);
 	end
 end
 
@@ -169,10 +124,7 @@ function GMControl(e)
 	end
 
 	if e.message:findi("help") then
-		e.self:Message(1, "-----------------------  Emperor  -------------------------");
 		e.self:Message(1, "Control options for Emperor event: ["..eq.say_link("status_emp", true).."] to view current state.  ["..eq.say_link("reset_emp", true).."] to reset to beginning.  ["..eq.say_link("state1_emp", true).."] to reset to real Emperor spawn.");
-		e.self:Message(1, "["..eq.say_link("goto_emp_room", true).."]");
-		e.self:Message(1, "-----------------------------------------------------------");
 		return;
 	end
 
@@ -202,10 +154,6 @@ function GMControl(e)
 		e.self:Message(1, "Emp reset to blood golem dead and real Emp spawned.");
 		return;
 	end
-
-	if e.message:findi("goto_emp_room") then
-		e.self:MovePCInstance(eq.get_zone_id(), eq.get_zone_instance_id(), 758, -325, 403, 132);
-	end
 end
 
 function event_encounter_load(e)
@@ -213,22 +161,15 @@ function event_encounter_load(e)
 		return;
 	end	
 
-	local rule_enabled = eq.get_rule("Zone:StateSavingOnShutdown");
-	if rule_enabled ~= nil and rule_enabled == "true" then
-		saving_enabled = true;
-	end
-
-	eq.register_npc_event(Event.spawn,          blood_id,   evt_zone_spawn);
-	eq.register_npc_event(Event.death_complete, blood_id,   evt_zone_death);
-	eq.register_npc_event(Event.death_complete, empreal_id, evt_zone_death);
+	eq.register_npc_event(Event.spawn,          blood_id,   evt_blood_spawn);
+	eq.register_npc_event(Event.death_complete, blood_id,   evt_blood_death);
+	eq.register_npc_event(Event.death_complete, empreal_id, evt_emp_death);
 	eq.register_npc_event(Event.slay,           empreal_id, evt_emp_slay);
-	eq.register_npc_event(Event.spawn,          wraith_id,  evt_zone_spawn);
+	eq.register_npc_event(Event.spawn,          wraith_id,  evt_wraith_spawn);
 	eq.register_npc_event(Event.combat,         wraith_id,  evt_wraith_combat);
 	eq.register_npc_event(Event.timer,          wraith_id,  evt_wraith_timer);
 
 	eq.register_player_event(Event.say, GMControl);
 
-	if not saving_enabled then
-		check_state(e, -1);
-	end
+	check_state(e);
 end
