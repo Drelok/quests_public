@@ -228,7 +228,7 @@ function event_encounter_load(e)
 
 	eq.register_player_event(Event.say, GMControl);
 
-	--if not saving_enabled then
-	--	check_state(e, -1);
-	--end
+	if not saving_enabled then
+		check_state(e, -1);
+	end
 end
