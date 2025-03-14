@@ -1,7 +1,5 @@
 function event_death_complete(e)
 	eq.spawn2(222015, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading()); -- #Essence_of_Earth
-	eq.signal(222012, 1);
-	eq.set_global("poeb_rathe", "1", 3, "M30");
 end
 
 function event_killed_merit(e)
