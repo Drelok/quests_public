@@ -31,7 +31,7 @@ function event_say(e)
 			local begin_the_trial_of_stoning_link = eq.silent_say_link("begin the trial of stoning");
 			e.self:Say(
 				string.format(
-					"Very well. When you are ready, you may [%s]. You must protect the victims from their tormentors. Be wary of the scourge of honor - you cannot fight it directly. You must find and destroy its life force to defeat it. We shall judge the mark of your success.",
+					"Very well. When you are ready, you may [%s]. The archers will not cease their punishment until nothing else stands.  Do not let the prisoners take more than they can bear.  We shall judge the mark of your success.",
 					begin_the_trial_of_stoning_link
 				)
 			)
