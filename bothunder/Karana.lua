@@ -36,7 +36,7 @@ function event_say(e)
 			else
 				e.self:Say("It looks like we've already spoken.")
 			end
-		elseif e.message:findi("send me on my path") or  then
+		elseif e.message:findi("send me on my path") then
 			e.self:CastSpell(797, e.other:GetID()) -- Spell: GM Gate
 		end
 	end
