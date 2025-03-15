@@ -144,7 +144,7 @@ end
 
 function event_enter_zone(e)
 	eq.debug("checking flags")
-	for _, req in ipairs(door_requirements) do
+	for _, req in pairs(door_requirements) do
 		eq.debug("flag 1")
 		local has_all_flags = true
 		for _, flag in ipairs(req.flags or {}) do
