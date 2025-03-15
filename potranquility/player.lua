@@ -174,7 +174,9 @@ function event_enter_zone(e)
 	
 		if has_all_flags then
 			for _, zone in ipairs(req.zones) do
+				eq.debug("checking zone flag for " .. zone)
 				if not e.self:HasZoneFlag(zone) then
+					eq.debug("setting zone flag for " .. zone)
 					e.self:SetZoneFlag(zone)
 					e.self:Message(MT.LightBlue, "You receive a character flag!")
 				end
