@@ -146,6 +146,10 @@ function event_enter_zone(e)
 	eq.debug("checking flags")
 	for _, req in pairs(door_requirements) do
 		eq.debug("flag 1")
+		if req.same_as then
+			req = door_requirements[req.same_as]
+		end
+
 		local has_all_flags = true
 		for _, flag in ipairs(req.flags or {}) do
 			local current_flag = string.format("pop.flags.%s", flag)
