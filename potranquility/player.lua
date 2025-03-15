@@ -143,9 +143,7 @@ function event_click_door(e)
 end
 
 function event_enter_zone(e)
-	eq.debug("checking flags")
 	for _, req in pairs(door_requirements) do
-		eq.debug("flag 1")
 		if req.same_as then
 			req = door_requirements[req.same_as]
 		end
@@ -153,7 +151,6 @@ function event_enter_zone(e)
 		local has_all_flags = true
 		for _, flag in ipairs(req.flags or {}) do
 			local current_flag = string.format("pop.flags.%s", flag)
-			eq.debug("flag 2" .. current_flag)
 			local required_value = 1
 	
 			if flag == "askr" then
@@ -174,9 +171,7 @@ function event_enter_zone(e)
 	
 		if has_all_flags then
 			for _, zone in ipairs(req.zones) do
-				eq.debug("checking zone flag for " .. zone)
 				if not e.self:HasZoneFlag(zone) then
-					eq.debug("setting zone flag for " .. zone)
 					e.self:SetZoneFlag(zone)
 					e.self:Message(MT.LightBlue, "You receive a character flag!")
 				end
