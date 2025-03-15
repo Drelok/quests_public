@@ -23,11 +23,12 @@ function event_say(e)
 			)
 		elseif e.message:findi("follow the path of the fallen") then
 			local karana_bucket = tonumber(e.other:GetAccountBucket("pop.flags.karana")) or 0
+			local send_path_link = eq.silent_say_link("send you on your path", "send me on my path")
 			if karana_bucket == 0 then
 				e.self:Emote(
 					string.format(
-						"begins to laugh quietly. You seem to notice a great storm cloud brewing once more above him. A sudden arching bolt hits you, but you are unharmed. Instead a tome written in the language of the gods appears in your hands. 'Then let what I know be yours to know as well. Your path leads you onward %s. The path to power or ruin, the choice is up to you. Speak the words and I will send you on your way.",
-						e.other:GetCleanName()
+						"begins to laugh quietly. You seem to notice a great storm cloud brewing once more above him. A sudden arching bolt hits you, but you are unharmed. Instead a tome written in the language of the gods appears in your hands. 'Then let what I know be yours to know as well. Your path leads you onward %s. The path to power or ruin, the choice is up to you. Speak the words and I will %s.",
+						e.other:GetCleanName(), send_path_link
 					)
 				)
 				e.other:SetAccountBucket("pop.flags.karana", "1")
@@ -35,7 +36,7 @@ function event_say(e)
 			else
 				e.self:Say("It looks like we've already spoken.")
 			end
-		elseif e.message:findi("send me on my path") then
+		elseif e.message:findi("send me on my path") or  then
 			e.self:CastSpell(797, e.other:GetID()) -- Spell: GM Gate
 		end
 	end

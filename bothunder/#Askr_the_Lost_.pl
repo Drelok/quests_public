@@ -2,19 +2,19 @@ $instanceid = quest::GetInstanceID();
 
 
 sub EVENT_SPAWN {
-quest::say("All to me!");
-quest::settimer(1,1800);
+    quest::say("All to me!");
+    quest::settimer(1,1800);
 }
 
 sub EVENT_TIMER  {
-if($timer == 1) {
-quest::depop();
-}
+    if($timer == 1) {
+        quest::depop();
+    }
 }
 
 sub EVENT_SAY {
-if($text=~/hail/i) {
-$client->Message(9,"You are doing well... The Storm Lord does not stand a chance!");
-quest::MovePCInstance(209, $instanceid, -663,-1738,2254); # Zone: bothunder
-}
+    if($text=~/hail/i) {
+        $client->Message(9,"You are doing well... The Storm Lord does not stand a chance!");
+        quest::MovePCInstance(209, $instanceid, -573,-1736, 2357, 382); # Zone: bothunder
+    }
 }
