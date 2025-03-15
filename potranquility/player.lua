@@ -143,10 +143,13 @@ function event_click_door(e)
 end
 
 function event_enter_zone(e)
+	eq.debug("checking flags")
 	for _, req in ipairs(door_requirements) do
+		eq.debug("flag 1")
 		local has_all_flags = true
 		for _, flag in ipairs(req.flags or {}) do
 			local current_flag = string.format("pop.flags.%s", flag)
+			eq.debug("flag 2" .. current_flag)
 			local required_value = 1
 	
 			if flag == "askr" then
