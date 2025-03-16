@@ -9,7 +9,7 @@ end
 function event_click_door(e)
 	if (e.door:GetDoorID() == 7) then
 		local codecay_bucket = tonumber(e.self:GetAccountBucket("pop.flags.codecay")) or 0
-		if (codecay_bucket == 1 or e.self:GetGM()) then
+		if (codecay_bucket >= 1 or e.self:GetGM()) then
 			e.self:MovePCInstance(200, eq.get_zone_instance_id(), 0, -16, -289, 256)
 		else
 			e.self:Message(1, "There is still more work to be done.")
