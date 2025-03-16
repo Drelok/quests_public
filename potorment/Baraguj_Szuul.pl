@@ -14,3 +14,7 @@ sub EVENT_COMBAT {
 sub EVENT_TIMER {
 	quest::depop_withtimer();
 }
+
+sub EVENT_SPAWN {
+	$npc->SetSpecialAbility(1,0); # disable summon special attack on the "fake" Baraguj to prevent instant summon back to him in case player deals massive damage on initial engage
+}
