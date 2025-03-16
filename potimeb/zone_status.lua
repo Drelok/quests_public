@@ -383,103 +383,182 @@ function ControlPhaseThree()
 		eq.spawn2(223021,0,0,1300,1150,359.38,390); -- Undead_Squad_Leader --
 		eq.spawn2(223022,0,0,1230,1330,359.38,350); -- A_Deadly_Warboar --
 		eq.spawn2(223023,0,0,1230,1310,359.38,350); -- Deathbringer_Skullsmash --
-		eq.spawn2(223008,0,0,1250,1135,359.5,384); -- A_Ferocious_Warboar --
-		eq.spawn2(223009,0,0,1250,1085,359.5,384); -- Deathbringer_Blackheart --
+		eq.spawn2(223155,0,0,1250,1135,359.5,384); -- A_Ferocious_Warboar --
+		eq.spawn2(223156,0,0,1250,1085,359.5,384); -- Deathbringer_Blackheart --
 		current_phase = "Phase3.1";
 	elseif (current_phase == "Phase3.1") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
 			event_counter = 0;
-			current_phase = "Phase3.2";
-			-- spawn phase 3 wave 2
+			current_phase = "Phase3.12";
+			-- Disable wave 1 trash spawns
 			eq.spawn_condition("potimeb",instance_id,2,0);
 			eq.clear_spawn_timers();
-			eq.spawn_condition("potimeb",instance_id,3,1);
 			-- depop untargetable and pop targetable versions
-			BossChange(223017,223024,1);	-- Xeroan_Xi`Geruonask
-			BossChange(223016,223025,2);  -- Kraksmaal_Fir`Dethsin
+			BossChange(223155,223008,1); -- A_Ferocious_Warboar
+			BossChange(223156,223009,2); -- Deathbringer_Blackheart
+		end
+	elseif (current_phase == "Phase3.12") then
+		-- This is expected to be hit twice, once per wave 1 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 1 bosses are dead, spawn wave 2 trash
+			event_counter = 0;
+			current_phase = "Phase3.2";
+			-- spawn phase 3 wave 2 trash
+			eq.spawn_condition("potimeb",instance_id,3,1);
 		end
 	elseif (current_phase == "Phase3.2") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
+			event_counter = 0;
+			current_phase = "Phase3.22";
+			-- Disable wave 2 trash spawns
+			eq.spawn_condition("potimeb",instance_id,3,0);
+			eq.clear_spawn_timers();
+			-- depop untargetable and pop targetable versions
+			BossChange(223017,223024,1); -- Kraksmaal_Fir`Dethsin
+			BossChange(223016,223025,2); -- Xeroan_Xi`Geruonask
+		end
+	elseif (current_phase == "Phase3.22") then
+		-- This is expected to be hit twice, once per wave 2 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 2 bosses are dead, spawn wave 3 trash
 			event_counter = 0;
 			current_phase = "Phase3.3";
 			-- spawn phase 3 wave 3
-			eq.spawn_condition("potimeb",instance_id,3,0);
-			eq.clear_spawn_timers();
 			eq.spawn_condition("potimeb",instance_id,4,1);
-			BossChange(223023,223031,1);	-- A_Deadly_Warboar
-			BossChange(223022,223032,2); -- Deathbringer_Skullsmash	
 		end
 	elseif (current_phase == "Phase3.3") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
+			event_counter = 0;
+			current_phase = "Phase3.32";
+			-- Disable wave 3 trash spawns
+			eq.spawn_condition("potimeb",instance_id,4,0);
+			eq.clear_spawn_timers();
+			-- Depop untargetable and pop targetable versions
+			BossChange(223022,223032,1); -- A_Deadly_Warboar
+			BossChange(223023,223031,2); -- Deathbringer_Skullsmash
+		end
+	elseif (current_phase == "Phase3.32") then
+		-- This is expected to be hit twice, once per wave 3 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 3 bosses are dead, spawn wave 4 trash
 			event_counter = 0;
 			current_phase = "Phase3.4";
 			-- spawn phase 3 wave 4
-			eq.spawn_condition("potimeb",instance_id,4,0);
-			eq.clear_spawn_timers();
 			eq.spawn_condition("potimeb",instance_id,5,1);
-			BossChange(223012,223038,1); -- Sinrunal_Gorgedreal
-			BossChange(223013,223037,2); -- Herlsoakian		
-			end
+		end
 	elseif (current_phase == "Phase3.4") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
+			event_counter = 0;
+			current_phase = "Phase3.42";
+			-- Disable wave 4 trash spawns
+			eq.spawn_condition("potimeb",instance_id,5,0);
+			eq.clear_spawn_timers();
+			-- Depop untargetable and pop targetable versions
+			BossChange(223012,223038,1); -- Sinrunal_Gorgedreal
+			BossChange(223013,223037,2); -- Herlsoakian
+		end
+	elseif (current_phase == "Phase3.42") then
+		-- This is expected to be hit twice, once per wave 4 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 4 bosses are dead, spawn wave 5 trash
 			event_counter = 0;
 			current_phase = "Phase3.5";
 			-- spawn phase 3 wave 5
-			eq.spawn_condition("potimeb",instance_id,5,0);
-			eq.clear_spawn_timers();
 			eq.spawn_condition("potimeb",instance_id,6,1);
-			BossChange(223011,223046,1); -- Deathbringer_Rianit
-			BossChange(223010,223047,2); -- A_Needletusk_Warboar
 		end
 	elseif (current_phase == "Phase3.5") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
+			event_counter = 0;
+			current_phase = "Phase3.52";
+			-- Disable wave 5 trash spawns
+			eq.spawn_condition("potimeb",instance_id,6,0);
+			eq.clear_spawn_timers();
+			-- Depop untargetable and pop targetable versions
+			BossChange(223011,223046,1); -- Deathbringer_Rianit
+			BossChange(223010,223047,2); -- A_Needletusk_Warboar
+		end
+	elseif (current_phase == "Phase3.52") then
+		-- This is expected to be hit twice, once per wave 5 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 5 bosses are dead, spawn wave 6 trash
 			event_counter = 0;
 			current_phase = "Phase3.6";
 			-- spawn phase 3 wave 6
-			eq.spawn_condition("potimeb",instance_id,6,0);
-			eq.clear_spawn_timers();
 			eq.spawn_condition("potimeb",instance_id,7,1);
-			BossChange(223015,223050,1); -- Xerskel_Gerodnsal
-			BossChange(223014,223051,2); -- Dersool_Fal`Giersnaol	
 		end
 	elseif (current_phase == "Phase3.6") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
 			event_counter = 0;
-			current_phase = "Phase3.7";
-			-- spawn phase 3 wave 7
+			current_phase = "Phase3.62";
+			-- Disable wave 6 trash spawns
 			eq.spawn_condition("potimeb",instance_id,7,0);
 			eq.clear_spawn_timers();
+			-- Depop untargetable and pop targetable versions
+			BossChange(223014,223051,1); -- Xerskel_Gerodnsal
+			BossChange(223015,223050,2); -- Dersool_Fal`Giersnaol
+		end
+	elseif (current_phase == "Phase3.62") then
+		-- This is expected to be hit twice, once per wave 6 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 6 bosses are dead, spawn wave 7 trash
+			event_counter = 0;
+			current_phase = "Phase3.7";
+			-- spawn phase 3 wave 7 trash
 			eq.spawn_condition("potimeb",instance_id,8,1);
-			BossChange(223021,223057,1); -- Undead_Squad_Leader
-			BossChange(223020,223058,2); -- Dark_Knight_of_Terris
 		end
 	elseif (current_phase == "Phase3.7") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
 			event_counter = 0;
-			current_phase = "Phase3.8";
-			-- spawn phase 3 wave 8
+			current_phase = "Phase3.72";
+			-- Disable wave 7 trash spawns
 			eq.spawn_condition("potimeb",instance_id,8,0);
 			eq.clear_spawn_timers();
+			-- Depop untargetable and pop targetable versions
+			BossChange(223021,223057,1); -- Undead_Squad_Leader
+			BossChange(223020,223058,2); -- Dark_Knight_of_Terris
+		end
+	elseif (current_phase == "Phase3.72") then
+		-- This is expected to be hit twice, once per wave 7 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 7 bosses are dead, spawn wave 8 trash
+			event_counter = 0;
+			current_phase = "Phase3.8";
+			-- spawn phase 3 wave 8 trash
 			eq.spawn_condition("potimeb",instance_id,9,1);
-			BossChange(223019,223065,1); -- Champion_of_Torment
-			BossChange(223018,223066,2); -- Dreamwarp
 		end
 	elseif (current_phase == "Phase3.8") then
 		event_counter = event_counter + 1;
-		if (event_counter == 10) then
+		if (event_counter == 8) then
 			event_counter = 0;
-			current_phase = "Phase3.9";
-			-- turn off spawn condition for wave 8
+			current_phase = "Phase3.82";
+			-- Disable wave 8 trash spawns
 			eq.spawn_condition("potimeb",instance_id,9,0);
 			eq.clear_spawn_timers();
-			-- spawn golems
+			-- Depop untargetable and pop targetable versions
+			BossChange(223019,223065,1); -- Champion_of_Torment
+			BossChange(223018,223066,2); -- Dreamwarp
+		end
+	elseif (current_phase == "Phase3.82") then
+		-- This is expected to be hit twice, once per wave 8 boss
+		event_counter = event_counter + 1;
+		if (event_counter == 2) then
+			-- Both wave 8 bosses are dead, spawn golems
+			event_counter = 0;
+			current_phase = "Phase3.9";
 			eq.spawn2(223073,0,0,1492,1110,374.1,391); -- Avatar_of_the_Elements
 			eq.spawn2(223074,0,0,1563,1110,374.1,391); -- Supernatural_Guardian
 		end
