@@ -2,7 +2,7 @@
 
 local expedition_info = {
     expedition = { name="The Prison of the Forsaken", min_players=1, max_players=72 },
-    instance   = { zone="potimeb", version=0, duration=43200 }, -- 12 Hours
+    instance   = { zone="potimeb", version=255, duration=50400 }, -- 14 Hours
     safereturn = { zone="potimea", x=-37, y=-110, z=6.08, h=0.0 },
     zonein     = { x=-9, y=-2466, z=-79, h=0 }
 }
