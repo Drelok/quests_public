@@ -258,7 +258,7 @@ function event_say(e)
 	}
 
 	for _, entry in pairs(flags) do
-		local bucket_value = tonumber(e.other:GetAccountBucket(entry.key)) or 0
+		local bucket_value = tonumber(e.other:GetAccountBucket(string.format("pop.flags.%s", entry.key))) or 0
 		local required_value = entry.required_value or 1
 
 		if bucket_value == required_value then
