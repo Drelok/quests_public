@@ -97,7 +97,23 @@ local door_requirements = {
 		}
 	},
 	[83] = { same_as = 81 },
-	[84] = { same_as = 81 }
+	[84] = { same_as = 81 },
+	[222] = {
+		flags = {
+			"arbitor"
+		},
+		zones = {
+			Zone.poearthb
+		}
+	},
+	[145] = {
+		flags = {
+			"maelin"
+		},
+		zones = {
+			Zone.potimea, Zone.potimeb
+		}
+	}
 }
 
 function event_click_door(e)
