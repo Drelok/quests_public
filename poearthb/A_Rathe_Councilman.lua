@@ -25,5 +25,6 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.signal(1120001052,1);
+	--eq.signal(1120001052,1); -- seedling
+	eq.signal(222012,1); -- #rathe_controller
 end
