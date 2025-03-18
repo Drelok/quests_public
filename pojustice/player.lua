@@ -19,19 +19,21 @@ function event_click_door(e)
 			clicker = e.self;
 			-- if we're in a raid, we need to move our raid group members
 			local raid = e.self:GetRaid();
+			local group = e.self:GetGroup();
 			if (raid.valid) then
 				player_list = raid;
 				player_list_count = raid:RaidCount();
 				raid_group = raid:GetGroup(e.self);
-			else
+			elseif (group.valid) then
 				-- so we're not in raid, lets check for real groups
-				local group = e.self:GetGroup();
-				if (group.valid) then
-					player_list = group;
-					player_list_count = group:GroupCount();
-				end
+				player_list = group;
+				player_list_count = group:GroupCount();
+			else
+				e.self:MovePCInstance(201, instance_id, 65, 1308, 7, 121);
 			end
- 			MoveGroup(e.self:GetX(), e.self:GetY(), e.self:GetZ(), 75, 65, 1308, 7, 121);
+ 			if (player_list ~= nil) then
+				MoveGroup(e.self:GetX(), e.self:GetY(), e.self:GetZ(), 75, 65, 1308, 7, 121);
+			end
 			--using this until proximity_say is fixed
 			--monk has to have all trials done to loot Symbol on live so force monk to do the clickup or no triggered spawn
 			local el = eq.get_entity_list();
