@@ -22,7 +22,7 @@ sub EVENT_ITEM {
     if ($total_glamours == 4) {
         if (plugin::check_handin(\%itemcount, %glamour_handin)) {
             # Get a random new glamour
-            my $random_result = get_random_glamour();
+            my $random_result = get_random_glamour_of_any_type();
             
             if (defined $random_result) {
                 plugin::Whisper("Ah, recycling old glamours! An environmentally conscious choice, $clientName. Let me craft something new from these..."); 
@@ -109,18 +109,8 @@ sub EVENT_SAY {
         if ($eom_available < 2) {
             $response = "I'm sorry, $clientName. You don't have enough Echo of Memory, please return when you have enough to pay me.";
         } else {
-            # Randomly choose between weapon or armor glamour
-            my $random_result;
-            if (int(rand(2)) == 0) {
-                # Get a random weapon glamour
-                $random_result = get_random_glamour();
-                $response = "I feel inspired to create a weapon glamour for you today!";
-            } else {
-                # Get a random armor glamour
-                $random_result = get_random_armor();
-                $response = "I feel inspired to create an armor glamour for you today!";
-            }
-
+            my $random_result = get_random_glamour_of_any_type();
+            
             if ($random_result && plugin::SpendEOM($client, 2)) {
                 $client->SummonItem($random_result);
             }
@@ -142,6 +132,20 @@ sub SerializeList {
 sub DeserializeList {
     my $string = shift;
     return split(',', $string);
+}
+
+# Function to get a random glamour of any type (weapon or armor)
+sub get_random_glamour_of_any_type {
+    # Randomly choose between weapon or armor glamour
+    if (int(rand(2)) == 0) {
+        # Get a random weapon glamour
+        quest::debug("Generating random weapon glamour");
+        return get_random_glamour();
+    } else {
+        # Get a random armor glamour
+        quest::debug("Generating random armor glamour");
+        return get_random_armor();
+    }
 }
 
 sub get_random_glamour {
@@ -195,7 +199,7 @@ sub get_random_glamour {
     # Fetch the result (a random item id)
     my $id = $sth->fetchrow(); 
     if (defined $id) {
-        quest::debug("Random Ornament: $id");
+        quest::debug("Random Weapon Glamour: $id");
     } else {
         $client->Message(13, "ERROR: Unable to retrieve random ornament. Seek help on #bugs in Discord.");
     }
