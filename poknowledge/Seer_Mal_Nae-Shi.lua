@@ -264,7 +264,7 @@ function event_say(e)
 
         if entry.conditions then
             for _, cond in ipairs(entry.conditions) do
-                if bucket_value == cond.required_value then
+                if bucket_value <= cond.required_value then
                     e.other:Message(MT.Tell, cond.set_message)
                 else
                     e.other:Message(MT.Tell, cond.unset_message)
