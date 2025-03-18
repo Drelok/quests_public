@@ -9,6 +9,7 @@ sub EVENT_SAY {
     }
    
     my $remove_class_cost = 10;
+    my $reset_aa_cost = 5;
     my $remove_class_lockout = 7;
     my $reset_aa_lockout = 7;
 
@@ -202,21 +203,21 @@ sub EVENT_SAY {
         }
 
        
-        if (plugin::GetEOM($client) >= $remove_class_cost) {
-                plugin::YellowText("It will cost $remove_class_cost Echo of Memory in order to reset your AA. Additionally, 
+        if (plugin::GetEOM($client) >= $reset_aa_cost) {
+                plugin::YellowText("It will cost $reset_aa_cost Echo of Memory in order to reset your AA. Additionally, 
                                 there is a $reset_aa_lockout-day cooldown after performing this reset before you can remove another.
                                 Each time you do this, your cooldown for this avatar will permanently increase. Would you like to ["
                                 .quest::saylink("confirm_reset_aa", 1, "Proceed")."]?");
         
         } else {
-                plugin::YellowText("It costs $remove_class_cost Echo of Memory in order to reset your AA. You can obtain
+                plugin::YellowText("It costs $reset_aa_cost Echo of Memory in order to reset your AA. You can obtain
                                 Echo of Memory through contributions to the sever or purchase from other players in the Bazaar.");
         }  
     }
 
     if ($text eq 'confirm_reset_aa') {
         if (!$client->HasExpeditionLockout("AA Reset Lockout", "")) {
-            if (plugin::SpendEOM($client, $remove_class_cost)) {
+            if (plugin::SpendEOM($client, $reset_aa_cost)) {
                 plugin::YellowText("All of your AA have been refunded.");
                 $client->ResetAA();
                 plugin::CommonCharacterUpdate($client);
