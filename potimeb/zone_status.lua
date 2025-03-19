@@ -185,7 +185,7 @@ function event_signal(e)
 	instance_id = eq.get_zone_instance_id()
 
 	if buckets[e.signal] ~= nil then
-		eq.get_zone():SetBucket(buckets[e.signal], "1")
+		eq.get_zone():SetBucket(buckets[e.signal][1], "1")
 	end
 
 	-- grab the entity_list
