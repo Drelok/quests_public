@@ -207,7 +207,7 @@ function event_signal(e)
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
 			if phase_bucket == 0 then
-				eq.set_data(expedition_identifier, 1)
+				eq.set_data(expedition_identifier, "1")
 			elseif phase_bucket == 1 then -- Moving to Phase 2
 				event_counter = 0
 				UpdateFailTimer(60) -- Add 60 Minutes to fail timer
@@ -245,9 +245,9 @@ function event_signal(e)
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
 			if phase_bucket == 3 then
-				eq.set_data(expedition_identifier, 4)
+				eq.set_data(expedition_identifier, "4")
 			elseif phase_bucket == 4 then
-				eq.set_data(expedition_identifier, 5)
+				eq.set_data(expedition_identifier, "5")
 				current_phase = "Phase5"
 				-- add 4 hours to the fail timer
 				UpdateFailTimer(240) -- 60 Minutes per God
@@ -275,7 +275,7 @@ function event_signal(e)
 		) then -- If all Phase 5 gods are dead
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			eq.set_data(expedition_identifier, 5)
+			eq.set_data(expedition_identifier, "5")
 			eq.spawn_condition("potimeb", instance_id, 11, 0)
 			eq.spawn_condition("potimeb", instance_id, 12, 0)
 			eq.spawn_condition("potimeb", instance_id, 13, 0)
@@ -304,7 +304,7 @@ function event_signal(e)
 	elseif e.signal == 8 then
 		-- update the zone status
 		local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-		eq.set_data(expedition_identifier, 6)
+		eq.set_data(expedition_identifier, "6")
 		SetZoneLockout()
 		-- port everyone in the zone back to the PoK library top floor
 		local client_list = entity_list:GetClientList()
@@ -560,7 +560,7 @@ function ControlPhaseThree()
 		event_counter = event_counter + 1
 		if event_counter == 2 then
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			eq.set_data(expedition_identifier, 3)
+			eq.set_data(expedition_identifier, "3")
 			local phase_bucket = tonumber(eq.get_zone():GetBucket(expedition_identifier)) or 0
 			event_counter = 0
 			if expedition.valid and phase_bucket == 3 then
@@ -747,7 +747,7 @@ function event_timer(e)
 			for pc in player_list.entries do
 				if not pc:GetGM() then
 					count = count + 1
-					if count > player_limit then 
+					if count > player_limit then
 						pc:MovePC(219, -37, -110, 13, 0)--boot to Time A
 					end
 				end
@@ -755,16 +755,23 @@ function event_timer(e)
 		end
 	elseif e.timer == "lockout" then	--handles instance where Quarm killed but Zeb/Druzzil Ro script not completed
 		eq.stop_timer(e.timer)
-		local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-		eq.set_data(expedition_identifier, 6)
 		SetZoneLockout()
 		-- port everyone in the zone back to PoTimeA
+		local expedition_id = 0
 		local client_list = eq.get_entity_list():GetClientList()
 		for c in client_list.entries do
 			if c.valid and not c:GetGM() then
 				c:MovePCInstance(219, 0, -37, -110, 9, 0)
+				local expedition = c:GetExpedition()
+				if expedition.valid then
+					expedition_id = expedition:GetID()
+				end
 			end
 		end
+
+		local expedition_identifier = string.format("potime-%d-phase", expedition_id)
+		eq.set_data(expedition_identifier, "6")
+
 		ControllerDepop()
 	end
 end
