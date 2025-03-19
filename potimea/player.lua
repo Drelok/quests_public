@@ -63,7 +63,7 @@ function event_click_door(e)
 			if expedition.valid then
 				local instance_id = expedition:GetInstanceID()
 				if instance_id == 0 then
-					e.self:Message(MT.Red, "Instance failed to be created, yell at a GM")\
+					e.self:Message(MT.Red, "Instance failed to be created, yell at a GM")
 					return
 				end
 
