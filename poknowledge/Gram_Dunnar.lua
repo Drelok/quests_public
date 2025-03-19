@@ -14,7 +14,7 @@ function event_say(e)
 			)
 		)
 	elseif e.message:findi("stories") then
-		local story_bucket = tonumber(e.other:GetAccountBucket("pop.flags.story")) or 0
+		local story_bucket = tonumber(e.other:GetBucket("pop.flags.story")) or 0
 
 		local stories = {
 			[0] = {
@@ -65,7 +65,7 @@ function event_say(e)
 					break
 				end
 
-				local reward_flag_value = tonumber(e.other:GetAccountBucket(current_story.reward_flag)) or 0
+				local reward_flag_value = tonumber(e.other:GetBucket(current_story.reward_flag)) or 0
 				if reward_flag_value ~= 0 then
 					all_requirements_met = false
 					break
@@ -76,8 +76,8 @@ function event_say(e)
 				e.other:Message(MT.LightBlue, current_story.message)
 				e.other:AddAAPoints(1)
 				e.other:Message(MT.White, "You've earned an AA Point!")
-				e.other:SetAccountBucket(current_story.reward_flag, "1")
-				e.other:SetAccountBucket("pop.flags.story", tostring(story_bucket + 1))
+				e.other:SetBucket(current_story.reward_flag, "1")
+				e.other:SetBucket("pop.flags.story", tostring(story_bucket + 1))
 			else
 				e.self:Say("You need to adventure more it seems, come back to me once you're done.")
 			end
