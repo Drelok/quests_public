@@ -32,9 +32,9 @@ function event_death_complete(e)
 	eq.signal(223097, 223127); -- Add Loot Lockout for Phase 2 Wing
 	eq.signal(223242, 2); --signal phase_two_undead
 	eq.depop_all(2231731);
-	eq.signal(223097, 3);	--signal zone_status that phase is complete
 
 	eq.set_data(expedition_identifier, "2")
+	eq.signal(223097, 3);	--signal zone_status that phase is complete
 end
 
 function event_hp(e)
