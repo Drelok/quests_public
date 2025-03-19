@@ -128,7 +128,6 @@ function event_spawn(e)
 	local entity_list = eq.get_entity_list()
 	local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 	local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-
 	-- Check Lockouts to decide what phase
 	if phase_bucket == 0 then
 		-- Spawn phase 1
@@ -232,9 +231,9 @@ function event_signal(e)
 	-- signal 5 comes from the phase 4 gods.
 	elseif e.signal == 5 then
 		local saryrn_bucket = tonumber(eq.get_zone():GetBucket("Saryrn")) or 0
-		local tallon_bucket = tonumber(eq.get_zone():GetBucket("Tallon")) or 0
-		local terris_bucket = tonumber(eq.get_zone():GetBucket("Terris")) or 0
-		local vallon_bucket = tonumber(eq.get_zone():GetBucket("Vallon")) or 0
+		local tallon_bucket = tonumber(eq.get_zone():GetBucket("Tallon Zek")) or 0
+		local terris_bucket = tonumber(eq.get_zone():GetBucket("Terris-Thule")) or 0
+		local vallon_bucket = tonumber(eq.get_zone():GetBucket("Vallon Zek")) or 0
 		if 
 			saryrn_bucket == 1 and
 			tallon_bucket == 1 and
@@ -243,28 +242,24 @@ function event_signal(e)
 		 then -- If all Phase 4 gods are dead
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			if phase_bucket == 3 then
-				eq.set_data(expedition_identifier, "4")
-			elseif phase_bucket == 4 then
-				eq.set_data(expedition_identifier, "5")
-				current_phase = "Phase5"
-				-- add 4 hours to the fail timer
-				UpdateFailTimer(240) -- 60 Minutes per God
-				-- sendsignal to flavor text NPC
-				eq.signal(223227, 5) -- Emoter
-				-- reset counter for later use
-				-- event_counter = 0
-				-- spawn phase 5
-				SpawnPhaseFive()
-			end
+			eq.set_data(expedition_identifier, "4")
+			current_phase = "Phase5"
+			-- add 4 hours to the fail timer
+			UpdateFailTimer(240) -- 60 Minutes per God
+			-- sendsignal to flavor text NPC
+			eq.signal(223227, 5) -- Emoter
+			-- reset counter for later use
+			-- event_counter = 0
+			-- spawn phase 5
+			SpawnPhaseFive()
 		end
 	-- signal 6 comes from the phase 5 gods.
 	elseif e.signal == 6 then
 		instance_id = eq.get_zone_instance_id()
 		local bertox_bucket = tonumber(eq.get_zone():GetBucket("Bertoxxulous")) or 0
-		local cazic_bucket = tonumber(eq.get_zone():GetBucket("Cazic")) or 0
+		local cazic_bucket = tonumber(eq.get_zone():GetBucket("Cazic-Thule")) or 0
 		local innoruuk_bucket = tonumber(eq.get_zone():GetBucket("Innoruuk")) or 0
-		local rallos_bucket = tonumber(eq.get_zone():GetBucket("Rallos")) or 0
+		local rallos_bucket = tonumber(eq.get_zone():GetBucket("Rallos Zek")) or 0
 
 		if (
 			bertox_bucket == 1 and
@@ -336,7 +331,7 @@ function ControlPhaseTwo()
 	local expedition = eq.get_expedition()
 	if expedition.valid then
 		local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-		local phase_bucket = tonumber(eq.get_zone():GetBucket(expedition_identifier)) or 0
+		local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
 		if phase_bucket == 2 then
 			current_phase = "Phase3"
 			ControlPhaseThree()
@@ -560,7 +555,7 @@ function ControlPhaseThree()
 		if event_counter == 2 then
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			eq.set_data(expedition_identifier, "3")
-			local phase_bucket = tonumber(eq.get_zone():GetBucket(expedition_identifier)) or 0
+			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
 			event_counter = 0
 			if expedition.valid and phase_bucket == 3 then
 				current_phase = "Phase4"
