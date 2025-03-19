@@ -11,7 +11,6 @@ sub EVENT_SAY {
     my $remove_class_cost = 10;
     my $reset_aa_cost = 5;
     my $remove_class_lockout = 7;
-    my $reset_aa_lockout = 7;
 
     if ($text=~/hail/i) {   
         if (plugin::GetClassesCount($client) <= 1) {
@@ -195,18 +194,10 @@ sub EVENT_SAY {
         my $free_aa_reset_used = ($client->GetBucket("free_aa_reset_used") || 0);
         if (!$free_aa_reset_used) {
             plugin::YellowText("You have a free AA Reset available. Would you like to [".quest::saylink("free_reset_aa", 1, "use it")."]?");
-        } else {
-            if ($client->HasExpeditionLockout("AA Reset Lockout", "")) {
-                plugin::YellowText("You cannot reset your AA at this time, you still are under cooldown from a previous reset.");
-                return 0;
-            }
         }
-
        
         if (plugin::GetEOM($client) >= $reset_aa_cost) {
-                plugin::YellowText("It will cost $reset_aa_cost Echo of Memory in order to reset your AA. Additionally, 
-                                there is a $reset_aa_lockout-day cooldown after performing this reset before you can remove another.
-                                Each time you do this, your cooldown for this avatar will permanently increase. Would you like to ["
+                plugin::YellowText("It will cost $reset_aa_cost Echo of Memory in order to reset your AA. Would you like to ["
                                 .quest::saylink("confirm_reset_aa", 1, "Proceed")."]?");
         
         } else {
@@ -215,16 +206,12 @@ sub EVENT_SAY {
         }  
     }
 
-    if ($text eq 'confirm_reset_aa') {
-        if (!$client->HasExpeditionLockout("AA Reset Lockout", "")) {
-            if (plugin::SpendEOM($client, $reset_aa_cost)) {
-                plugin::YellowText("All of your AA have been refunded.");
-                $client->ResetAA();
-                plugin::CommonCharacterUpdate($client);
-                $client->Save(1);
-
-                $client->AddExpeditionLockout("AA Reset Lockout", "", $reset_aa_lockout * 24 * 60 * 60);
-            }
+    if ($text eq 'confirm_reset_aa') {        
+        if (plugin::SpendEOM($client, $reset_aa_cost)) {
+            plugin::YellowText("All of your AA have been refunded.");
+            $client->ResetAA();
+            plugin::CommonCharacterUpdate($client);
+            $client->Save(1);                
         }
     }
 
