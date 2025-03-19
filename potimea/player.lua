@@ -58,19 +58,23 @@ function event_click_door(e)
 				-- GetDoorID = 12 : Undead Trial
 				e.self:MovePCInstance(223, instance_id, -27, 1103, 496, 124)
 			end
-		else	-- If not in an expedition, create one
-			expedition = e.self:CreateExpedition(expedition_info)
-			if expedition.valid then
-				local instance_id = expedition:GetInstanceID()
-				if instance_id == 0 then
-					e.self:Message(MT.Red, "Instance failed to be created, yell at a GM")
-					return
+		else -- If not in an expedition, create one
+			if not e.self:HasExpeditionLockout("The Prison of the Forsaken", "Plane of Time") then
+				expedition = e.self:CreateExpedition(expedition_info)
+				if expedition.valid then
+					local instance_id = expedition:GetInstanceID()
+					if instance_id == 0 then
+						e.self:Message(MT.Red, "Instance failed to be created, yell at a GM")\
+						return
+					end
+
+					expedition:AddLockout("Plane of Time", 14 * 60 * 60) -- 14 Hours
+
+					local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
+					eq.set_data(expedition_identifier, 0, "14H")
 				end
-
-				expedition:AddLockout("Plane of Time", 14 * 60 * 60) -- 14 Hours
-
-				local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-				eq.set_data(expedition_identifier, "0", "14H")
+			else
+				e.self:Message(MT.Red, "You are currently locked out, try again once your lockout is over.")
 			end
 		end
 	end
