@@ -267,12 +267,12 @@ function event_signal(e)
 		local innoruuk_bucket = tonumber(eq.get_zone():GetBucket("Innoruuk")) or 0
 		local rallos_bucket = tonumber(eq.get_zone():GetBucket("Rallos")) or 0
 
-		if 
+		if (
 			bertox_bucket == 1 and
 			cazic_bucket == 1 and
 			innoruuk_bucket == 1 and
 			rallos_bucket == 1
-		 then -- If all Phase 5 gods are dead
+		) then -- If all Phase 5 gods are dead
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
 			eq.set_data(expedition_identifier, 5)
