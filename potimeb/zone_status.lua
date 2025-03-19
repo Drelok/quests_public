@@ -206,9 +206,8 @@ function event_signal(e)
 		if event_counter >= 5 then
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			if phase_bucket == 0 then
+			if phase_bucket == 0 then -- Moving to Phase 2
 				eq.set_data(expedition_identifier, "1")
-			elseif phase_bucket == 1 then -- Moving to Phase 2
 				event_counter = 0
 				UpdateFailTimer(60) -- Add 60 Minutes to fail timer
 				eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
