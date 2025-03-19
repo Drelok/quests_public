@@ -99,7 +99,7 @@ sub EVENT_POPUPRESPONSE {
                         # Check for a coordinate override for this zone
                         if (exists $dz_coord_overrides{$zone_shortname}) {
                             my ($x, $y, $z, $heading) = @{$dz_coord_overrides{$zone_shortname}};
-                            $player->MovePCDynamicZone($dz->GetZoneID(), $x, $y, $z, $heading);
+                            $player->MovePCInstance($dz->GetZoneID(), $dz->GetInstanceID(), $x, $y, $z, $heading);
                         } else {
                             $player->MovePCDynamicZone($dz->GetZoneID());
                         }
@@ -110,7 +110,7 @@ sub EVENT_POPUPRESPONSE {
                 $client->SpellEffect(218,1);
                 if (exists $dz_coord_overrides{$zone_shortname}) {
                     my ($x, $y, $z, $heading) = @{$dz_coord_overrides{$zone_shortname}};
-                    $client->MovePCDynamicZone($dz->GetZoneID(), $x, $y, $z, $heading);
+                    $client->MovePCInstance($dz->GetZoneID(), $dz->GetInstanceID(), $x, $y, $z, $heading);
                 } else {
                     $client->MovePCDynamicZone($dz->GetZoneID());
                 }
