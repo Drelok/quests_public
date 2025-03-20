@@ -266,6 +266,62 @@ function raidMove(phase)
 	end	
 end
 
+-- These Lockouts are Live Like
+-- P1
+local P1AIR					= 'Neimon of Air'
+local P1EARTH				= 'Terlok of Earth'
+local P1WATER				= 'Anar of Water'
+local P1FIRE				= 'Kazrok of Fire'
+local P1UNDEAD				= 'Rythor of the Undead'
+-- P2
+local P2AIR					= 'Windshapen Warlord of Air'
+local P2EARTH				= 'Earthen Overseer'
+local P2WATER				= 'War Shapen Emissary'
+local P2FIRE				= 'Gutripping War Beast'
+local P2UNDEAD				= 'Ralthos Enrok'
+-- P3
+local FEROCIOUSWARBOAR		= 'A Ferocious Warboar'
+local BLACKHEART			= 'Deathbringer Blackheart'
+local XEROAN				= 'Xeroan Xi`Geruonask'
+local KRAKSMAAL				= 'Kraksmaal Fir`Dethsin'
+local DEADLYWARBOAR			= 'A Deadly Warboar'
+local SKULLSMASH			= 'Deathbringer Skullsmash'
+local HERLSOAKIAN			= 'Herlsoakian'
+local SINRUNAL				= 'Sinrunal Gorgedreal'
+local NEEDLETUSK			= 'A Needletusk Warboar'
+local RIANIT				= 'Deathbringer Rianit'
+local DERSOOL				= 'Dersool Fal`Giersnaol'
+local XERSKEL				= 'Xerskel Gerodnsal'
+local SQUADLEADER			= 'Undead Squad Leader'
+local DARKKNIGHT			= 'Dark Knight of Terris'
+local TORMENT				= 'Champion of Torment'
+local DREAMWARP				= 'Dreamwarp'
+local AVATAR				= 'Avatar of the Elements'
+local SUPGUARDIAN			= 'Supernatural Guardian'
+-- P4
+local TERRIS				= 'Terris-Thule'
+local SARYRN				= 'Saryrn'
+local TALLONZEK				= 'Tallon Zek'
+local VALLONZEK				= 'Vallon Zek'
+-- P5
+local BERTOXXULOUOSTRASH	= 'Bertoxxulous Trash'
+local BERTOXXULOUOS			= 'Bertoxxulous'
+local CAZICTHULETRASH		= 'Cazic-Thule Trash'
+local CAZICTHULE			= 'Cazic-Thule'
+local INNORUUKTRASH			= 'Innoruuk Trash'
+local INNORUUK				= 'Innoruuk'
+local RALLOSZEKTRASH		= 'Rallos Zek Trash'
+local RALLOSZEK				= 'Rallos Zek'
+-- P6
+local QUARM					= 'Quarm'
+
+-- These are Custom Timers to help with tracking status
+local PHASE1COMPLETE	= 'Phase 1 Complete'
+local PHASE2COMPLETE	= 'Phase 2 Complete'
+local PHASE3COMPLETE	= 'Phase 3 Complete'
+local PHASE4COMPLETE	= 'Phase 4 Complete'
+local PHASE5COMPLETE	= 'Phase 5 Complete'
+
 buckets = {
 	-- Phase 1
 	[223170] = P1AIR,

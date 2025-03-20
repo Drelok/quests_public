@@ -68,7 +68,7 @@ local PHASE4COMPLETE	= 'Phase 4 Complete'
 local PHASE5COMPLETE	= 'Phase 5 Complete'
 
 
-buckets = {
+local buckets = {
 	-- Phase 1
 	[223170] = P1AIR,
 	[223169] = P1EARTH,
