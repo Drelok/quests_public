@@ -626,14 +626,14 @@ function SpawnPhaseFive()
 	instance_id = eq.get_zone_instance_id()
 	local expedition = eq.get_expedition()
 
-	local bertox_bucket = tonumber(eq.get_zone():GetBucket("Bertoxxulous")) or 0
-	local bertox_trash_bucket = tonumber(eq.get_zone():GetBucket("Bertoxxulous Trash")) or 0
-	local cazic_bucket = tonumber(eq.get_zone():GetBucket("Cazic")) or 0
-	local cazic_trash_bucket = tonumber(eq.get_zone():GetBucket("Cazic Trash")) or 0
-	local innoruuk_bucket = tonumber(eq.get_zone():GetBucket("Innoruuk")) or 0
-	local innoruuk_trash_bucket = tonumber(eq.get_zone():GetBucket("Innoruuk Trash")) or 0
-	local rallos_bucket = tonumber(eq.get_zone():GetBucket("Rallos")) or 0
-	local rallos_trash_bucket = tonumber(eq.get_zone():GetBucket("Rallos Trash")) or 0
+	local bertox_bucket = tonumber(eq.get_zone():GetBucket(BERTOXXULOUOS)) or 0
+	local bertox_trash_bucket = tonumber(eq.get_zone():GetBucket(BERTOXXULOUOSTRASH)) or 0
+	local cazic_bucket = tonumber(eq.get_zone():GetBucket(CAZICTHULE)) or 0
+	local cazic_trash_bucket = tonumber(eq.get_zone():GetBucket(CAZICTHULETRASH)) or 0
+	local innoruuk_bucket = tonumber(eq.get_zone():GetBucket(INNORUUK)) or 0
+	local innoruuk_trash_bucket = tonumber(eq.get_zone():GetBucket(INNORUUKTRASH)) or 0
+	local rallos_bucket = tonumber(eq.get_zone():GetBucket(RALLOSZEK)) or 0
+	local rallos_trash_bucket = tonumber(eq.get_zone():GetBucket(RALLOSZEKTRASH)) or 0
 
 	if expedition.valid then
 		if bertox_bucket == 0 and bertox_trash_bucket == 0 then
