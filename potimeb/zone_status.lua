@@ -233,10 +233,10 @@ function event_signal(e)
 		ControlPhaseThree()
 	-- signal 5 comes from the phase 4 gods.
 	elseif e.signal == 5 then
-		local saryrn_bucket = tonumber(eq.get_zone():GetBucket("Saryrn")) or 0
-		local tallon_bucket = tonumber(eq.get_zone():GetBucket("Tallon Zek")) or 0
-		local terris_bucket = tonumber(eq.get_zone():GetBucket("Terris-Thule")) or 0
-		local vallon_bucket = tonumber(eq.get_zone():GetBucket("Vallon Zek")) or 0
+		local saryrn_bucket = tonumber(eq.get_zone():GetBucket(SARYRN)) or 0
+		local tallon_bucket = tonumber(eq.get_zone():GetBucket(TALLONZEK)) or 0
+		local terris_bucket = tonumber(eq.get_zone():GetBucket(TERRIS)) or 0
+		local vallon_bucket = tonumber(eq.get_zone():GetBucket(VALLONZEK)) or 0
 		if 
 			saryrn_bucket == 1 and
 			tallon_bucket == 1 and
@@ -259,10 +259,10 @@ function event_signal(e)
 	-- signal 6 comes from the phase 5 gods.
 	elseif e.signal == 6 then
 		instance_id = eq.get_zone_instance_id()
-		local bertox_bucket = tonumber(eq.get_zone():GetBucket("Bertoxxulous")) or 0
-		local cazic_bucket = tonumber(eq.get_zone():GetBucket("Cazic-Thule")) or 0
-		local innoruuk_bucket = tonumber(eq.get_zone():GetBucket("Innoruuk")) or 0
-		local rallos_bucket = tonumber(eq.get_zone():GetBucket("Rallos Zek")) or 0
+		local bertox_bucket = tonumber(eq.get_zone():GetBucket(BERTOXXULOUOS)) or 0
+		local cazic_bucket = tonumber(eq.get_zone():GetBucket(CAZICTHULE)) or 0
+		local innoruuk_bucket = tonumber(eq.get_zone():GetBucket(INNORUUK)) or 0
+		local rallos_bucket = tonumber(eq.get_zone():GetBucket(RALLOSZEK)) or 0
 
 		if (
 			bertox_bucket == 1 and
@@ -277,7 +277,7 @@ function event_signal(e)
 			eq.spawn_condition("potimeb", instance_id, 12, 0)
 			eq.spawn_condition("potimeb", instance_id, 13, 0)
 			eq.spawn_condition("potimeb", instance_id, 14, 0)
-			local quarm_bucket = tonumber(eq.get_zone():GetBucket("Quarm")) or 0
+			local quarm_bucket = tonumber(eq.get_zone():GetBucket(QUARM)) or 0
 			if quarm_bucket == 0 or phase_bucket < 6 then
 				current_phase = "Phase6"
 				-- add 2 hours to the fail timer
