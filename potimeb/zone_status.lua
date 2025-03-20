@@ -69,54 +69,57 @@ local PHASE5COMPLETE	= 'Phase 5 Complete'
 
 
 buckets = {
-	[223170] = {P1AIR,              eq.seconds('14h')}, 
-	[223169] = {P1EARTH,            eq.seconds('14h')}, 
-	[223172] = {P1WATER,            eq.seconds('14h')}, 
-	[223173] = {P1FIRE,             eq.seconds('14h')}, 
-	[223171] = {P1UNDEAD,           eq.seconds('14h')}, 
-	[223118] = {P2AIR,              eq.seconds('14h')}, 
-	[223134] = {P2EARTH,            eq.seconds('14h')}, 
-	[223096] = {P2WATER,            eq.seconds('14h')}, 
-	[223146] = {P2FIRE,             eq.seconds('14h')}, 
-	[223127] = {P2UNDEAD,           eq.seconds('14h')}, 
-	[223008] = {FEROCIOUSWARBOAR,   eq.seconds('14h')}, 
-	[223009] = {BLACKHEART,         eq.seconds('14h')}, 
-	[223016] = {XEROAN,             eq.seconds('14h')}, 
-	[223017] = {KRAKSMAAL,          eq.seconds('14h')}, 
-	[223022] = {DEADLYWARBOAR,      eq.seconds('14h')}, 
-	[223023] = {SKULLSMASH,         eq.seconds('14h')}, 
-	[223013] = {HERLSOAKIAN,        eq.seconds('14h')}, 
-	[223012] = {SINRUNAL,           eq.seconds('14h')}, 
-	[223010] = {NEEDLETUSK,         eq.seconds('14h')}, 
-	[223011] = {RIANIT,             eq.seconds('14h')}, 
-	[223015] = {DERSOOL,            eq.seconds('14h')}, 
-	[223014] = {XERSKEL,            eq.seconds('14h')}, 
-	[223021] = {SQUADLEADER,        eq.seconds('14h')}, 
-	[223020] = {DARKKNIGHT,         eq.seconds('14h')}, 
-	[223019] = {TORMENT,            eq.seconds('14h')}, 
-	[223018] = {DREAMWARP,          eq.seconds('14h')}, 
-	[223073] = {AVATAR,             eq.seconds('14h')}, 
-	[223074] = {SUPGUARDIAN,        eq.seconds('14h')}, 
-	[223075] = {TERRIS,             eq.seconds('14h')}, 
-	[223076] = {SARYRN,             eq.seconds('14h')}, 
-	[223077] = {TALLONZEK,          eq.seconds('14h')}, 
-	[223078] = {VALLONZEK,          eq.seconds('14h')}, 
-	[223098] = {BERTOXXULOUOSTRASH, eq.seconds('14h')}, 
-	[223142] = {BERTOXXULOUOS,      eq.seconds('14h')}, 
-	[223165] = {CAZICTHULETRASH,    eq.seconds('14h')}, 
-	[223166] = {CAZICTHULE,         eq.seconds('14h')}, 
-	[223000] = {INNORUUKTRASH,      eq.seconds('14h')}, 
-	[223167] = {INNORUUK,           eq.seconds('14h')}, 
-	[223001] = {RALLOSZEKTRASH,     eq.seconds('14h')}, 
-	[223168] = {RALLOSZEK,          eq.seconds('14h')}, 
-	[223201] = {QUARM,              eq.seconds('14h')}, 
-	[999999] = {PHASE1COMPLETE,     eq.seconds('14h')}, 
-	[999999] = {PHASE2COMPLETE,     eq.seconds('14h')}, 
-	[999999] = {PHASE3COMPLETE,     eq.seconds('14h')}, 
-	[999999] = {PHASE4COMPLETE,     eq.seconds('14h')}, 
-	[999999] = {PHASE5COMPLETE,     eq.seconds('14h')}
-}
+	-- Phase 1
+	[223170] = P1AIR,
+	[223169] = P1EARTH,
+	[223172] = P1WATER,
+	[223173] = P1FIRE,
+	[223171] = P1UNDEAD,
 
+	-- Phase 2
+	[223118] = P2AIR,
+	[223134] = P2EARTH,
+	[223096] = P2WATER,
+	[223146] = P2FIRE,
+	[223127] = P2UNDEAD,
+
+	-- Named Enemies
+	[223008] = FEROCIOUSWARBOAR,
+	[223009] = BLACKHEART,
+	[223016] = XEROAN,
+	[223017] = KRAKSMAAL,
+	[223022] = DEADLYWARBOAR,
+	[223023] = SKULLSMASH,
+	[223013] = HERLSOAKIAN,
+	[223012] = SINRUNAL,
+	[223010] = NEEDLETUSK,
+	[223011] = RIANIT,
+	[223015] = DERSOOL,
+	[223014] = XERSKEL,
+	[223021] = SQUADLEADER,
+	[223020] = DARKKNIGHT,
+	[223019] = TORMENT,
+	[223018] = DREAMWARP,
+
+	-- Major Bosses
+	[223073] = AVATAR,
+	[223074] = SUPGUARDIAN,
+	[223075] = TERRIS,
+	[223076] = SARYRN,
+	[223077] = TALLONZEK,
+	[223078] = VALLONZEK,
+	[223201] = QUARM,
+
+	-- Trash Mobs and Mini-Bosses
+	[223098] = BERTOXXULOUOSTRASH,
+	[223142] = BERTOXXULOUOS,
+	[223165] = CAZICTHULETRASH,
+	[223166] = CAZICTHULE,
+	[223000] = INNORUUKTRASH,
+	[223167] = INNORUUK,
+	[223001] = RALLOSZEKTRASH,
+	[223168] = RALLOSZEK,
+}
 function event_spawn(e)
 	ResetVariables()
 
@@ -183,8 +186,8 @@ function event_signal(e)
 	local expedition = eq.get_expedition()
 	instance_id = eq.get_zone_instance_id()
 
-	if buckets[e.signal] ~= nil then
-		eq.get_zone():SetBucket(buckets[e.signal][1], "1")
+	if buckets[e.signal] then
+		eq.get_zone():SetBucket(buckets[e.signal], "1")
 	end
 
 	-- grab the entity_list

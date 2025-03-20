@@ -266,6 +266,60 @@ function raidMove(phase)
 	end	
 end
 
+buckets = {
+	-- Phase 1
+	[223170] = P1AIR,
+	[223169] = P1EARTH,
+	[223172] = P1WATER,
+	[223173] = P1FIRE,
+	[223171] = P1UNDEAD,
+
+	-- Phase 2
+	[223118] = P2AIR,
+	[223134] = P2EARTH,
+	[223096] = P2WATER,
+	[223146] = P2FIRE,
+	[223127] = P2UNDEAD,
+
+	-- Named Enemies
+	[223008] = FEROCIOUSWARBOAR,
+	[223009] = BLACKHEART,
+	[223016] = XEROAN,
+	[223017] = KRAKSMAAL,
+	[223022] = DEADLYWARBOAR,
+	[223023] = SKULLSMASH,
+	[223013] = HERLSOAKIAN,
+	[223012] = SINRUNAL,
+	[223010] = NEEDLETUSK,
+	[223011] = RIANIT,
+	[223015] = DERSOOL,
+	[223014] = XERSKEL,
+	[223021] = SQUADLEADER,
+	[223020] = DARKKNIGHT,
+	[223019] = TORMENT,
+	[223018] = DREAMWARP,
+
+	-- Major Bosses
+	[223073] = AVATAR,
+	[223074] = SUPGUARDIAN,
+	[223075] = TERRIS,
+	[223076] = SARYRN,
+	[223077] = TALLONZEK,
+	[223078] = VALLONZEK,
+	[223201] = QUARM,
+
+	-- Trash Mobs and Mini-Bosses
+	[223098] = BERTOXXULOUOSTRASH,
+	[223142] = BERTOXXULOUOS,
+	[223165] = CAZICTHULETRASH,
+	[223166] = CAZICTHULE,
+	[223000] = INNORUUKTRASH,
+	[223167] = INNORUUK,
+	[223001] = RALLOSZEKTRASH,
+	[223168] = RALLOSZEK,
+}
+
+
 --GM ONLY CONTROLS--
 function event_say(e)
 	local expedition = eq.get_expedition()
@@ -404,6 +458,18 @@ function event_say(e)
 		elseif e.message:find("tb_pr_p6") then
 			raidMove(6);
 			e.self:Message(MT.Lime,"Moving raid to [Phase 6]");
+		elseif e.message:findi("buckets") then
+			for id, name in pairs(buckets) do
+				local bucket_value = tonumber(eq.get_zone():GetBucket(name)) or 0
+				e.self:Message(
+					MT.Chat1Echo,
+					string.format(
+						"%s | %d",
+						name,
+						bucket_value
+					)
+				)
+			end
 		end
 	end
 end
