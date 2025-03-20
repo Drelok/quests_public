@@ -10,11 +10,11 @@ end
 function event_signal(e)
 	if (e.signal == 1) and (emote_phase == 0) then
 		-- beginning of phase 1
-		eq.get_zone():Setvariable("Emote", "1")
+		eq.get_zone():SetVariable("Emote", "1")
 		eq.zone_emote(MT.LightGray,"In the distance, an hourglass appears, the grains of sand falling methodically into place. As quickly as the image was formed, it dissipates. You have one hour left.");
 	else
 		-- After completing a phase
-		eq.get_zone():Setvariable("Emote", tostring(e.signal))
+		eq.get_zone():SetVariable("Emote", tostring(e.signal))
 		-- half second heartbeat to resume the emote thread
 		eq.set_timer("emote_hb",500);
 		ThreadManager:Clear();
