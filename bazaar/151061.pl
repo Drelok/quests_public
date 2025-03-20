@@ -282,7 +282,7 @@ sub pet_name_change_confirm {
     if ($success) {
         quest::say("The currents of magic shift, and the veil of change is drawn back. "
             . "Your companion, loyal to the ways of the '$class_name', is now ready to take on a new name.");
-        $client->ChangePetName($class_id);
+        $client->GrantPetNameChange($class_id);
         plugin::YellowText("Your pet is ready for renaming. Speak its new name when the time comes.");
     } else {
         quest::say("Sadly, $name, you do not have sufficient currency to properly anchor this transformation. Gather more resources and return when you are ready.");
