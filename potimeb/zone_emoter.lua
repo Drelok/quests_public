@@ -1,22 +1,20 @@
 --zone_emoter (223227)
 
 local ThreadManager = require("thread_manager");
-local emote_phase = 0;
 local port_raid = false;
 
 function event_spawn(e)
-	emote_phase = 0;
 	port_raid = false;
 end
 
 function event_signal(e)
 	if (e.signal == 1) and (emote_phase == 0) then
 		-- beginning of phase 1
-		emote_phase = 1;
+		eq.get_zone():Setvariable("Emote", "1")
 		eq.zone_emote(MT.LightGray,"In the distance, an hourglass appears, the grains of sand falling methodically into place. As quickly as the image was formed, it dissipates. You have one hour left.");
 	else
 		-- After completing a phase
-		emote_phase = e.signal;
+		eq.get_zone():Setvariable("Emote", tostring(e.signal))
 		-- half second heartbeat to resume the emote thread
 		eq.set_timer("emote_hb",500);
 		ThreadManager:Clear();
@@ -29,8 +27,9 @@ function event_timer(e)
 end
 
 function PhaseEmotes()	
+	local emote_variable = tonumber(eq.get_zone():GetVariable("Emote")) or 0
 	eq.GM_Message(MT.Green,string.format("[Phase %i Dialogue]  Port Raid? [%s]",emote_phase,tostring(port_raid)));	--debug
-	if (emote_phase == 2) then
+	if (emote_variable == 2) then
 		-- After completing Phase One:
 		ThreadManager:Wait(4);
 		eq.zone_emote(MT.LightGray,"Solusek Ro says, 'This is absurd, why are we wasting our time and energy on this?! Direct action is needed, now! Banishing Zebuxoruk will not stop the mortals from entering our planes. Their greed for power will have them soon trampling through our realms!'");
@@ -64,7 +63,7 @@ function PhaseEmotes()
 		eq.zone_emote(MT.LightGray,"As the path before you opens up in a swirl of mystical energy, the faded image of an hourglass appears. You have one additional hour.");
 		eq.stop_timer("emote_hb");
 		ThreadManager:Stop();
-	elseif (emote_phase == 3) then
+	elseif (emote_variable == 3) then
 		-- After completing Phase Two:
 		eq.zone_emote(MT.LightGray,"Ethereal mists gather at the far wall, causing it to fade in and out of focus.");
 		ThreadManager:Wait(4);
@@ -96,7 +95,7 @@ function PhaseEmotes()
 		end
 		eq.stop_timer("emote_hb");
 		ThreadManager:Stop();
-	elseif (emote_phase == 4) then
+	elseif (emote_variable == 4) then
 		-- After completing Phase Three:
 		eq.zone_emote(MT.LightGray,"Terris Thule says, 'I am certain my warriors will have no problem holding back any intruders, but I have my doubts about the other armies.'");
 		ThreadManager:Wait(4);
@@ -114,7 +113,7 @@ function PhaseEmotes()
 		end
 		eq.stop_timer("emote_hb");
 		ThreadManager:Stop();
-	elseif (emote_phase == 5) then
+	elseif (emote_variable == 5) then
 		-- After completing Phase Four:
 		eq.zone_emote(MT.LightGray,"Rallos Zek says, 'Something is wrong. I feel Tallon and Vallon's spirits have weakened.'");
 		ThreadManager:Wait(4);
@@ -136,7 +135,7 @@ function PhaseEmotes()
 		end
 		eq.stop_timer("emote_hb");
 		ThreadManager:Stop();
-	elseif (emote_phase == 6) then
+	elseif (emote_variable == 6) then
 		-- After completing Phase Five:
 		eq.zone_emote(MT.LightGray,"Fennin Ro says, 'Impossible! How could the races of Norrath have traveled this deep into the Planes?!'");
 		ThreadManager:Wait(4);
