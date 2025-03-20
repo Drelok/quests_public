@@ -37,10 +37,13 @@ function event_timer(e)
 
 		-- Check on which version to spawn
 		local expedition = eq.get_expedition()
-		if (expedition.valid and not expedition:HasLockout('Anar of Water')) then
-			eq.spawn2(223104,0,0,68,867,495,371);	--Anar_of_Water (223104)
-		else
-			eq.spawn2(223091,0,0,68,867,495,371);	--#Shadow_of_Anar (223091)
+		if expedition.valid then
+			local anar_bucket = tonumber(eq.get_zone():GetBucket("Anar")) or 0
+			if anar_bucket == 0 then
+				eq.spawn2(223104,0,0,68,867,495,371);	--Anar_of_Water (223104)
+			else
+				eq.spawn2(223091,0,0,68,867,495,371);	--#Shadow_of_Anar (223091)
+			end
 		end
 		eq.stop_timer("Phase1Water");
 	elseif(e.timer == "player_count") then

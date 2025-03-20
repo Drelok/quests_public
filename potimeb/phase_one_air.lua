@@ -80,12 +80,14 @@ function event_signal(e)
 
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
-			if (expedition.valid and not expedition:HasLockout('Neimon of Air')) then
-				eq.spawn2(223120,0,0,68,1355,494.8,371); -- Neimon_of_Air
-			else
-				eq.spawn2(223240,0,0,68,1355,494.8,371);	--#Shadow_of_Neimon (223240)
+			if expedition.valid then
+				local neimon_bucket = tonumber(eq.get_zone():GetBucket("Neimon")) or 0
+				if neimon_bucket == 0 then
+					eq.spawn2(223120,0,0,68,1355,494.8,371); -- Neimon_of_Air
+				else
+					eq.spawn2(223240,0,0,68,1355,494.8,371);	--#Shadow_of_Neimon (223240)
+				end
 			end
-			
 		end
 	-- signal 2 comes from the mobs in the final wave of the air event
 	elseif (e.signal ==2) then

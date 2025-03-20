@@ -115,34 +115,50 @@ function event_click_door(e)
 		end	
 
 	elseif (door_id == 62) then
-		if (expedition.valid and expedition:HasLockout('Phase 3 Complete')  or e.self:GetGM()) then
-			e.self:MovePCInstance(223,eq.get_zone_instance_id(),-395,0,350,127);
-		else
-			e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
+		if expedition.valid then
+			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
+			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
+			if phase_bucket == 3 or e.self:GetGM() then
+				e.self:MovePCInstance(223,eq.get_zone_instance_id(),-395,0,350,127);
+			else
+				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
+			end
 		end
 		-- update player lockout to phase 3
 		
 	elseif (door_id == 24) then
-		if (expedition.valid and expedition:HasLockout('Phase 4 Complete')  or e.self:GetGM()) then
-			e.self:MovePCInstance(223,eq.get_zone_instance_id(),-410,0,5,127);
-		else
-			e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
+		if expedition.valid then
+			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
+			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
+			if phase_bucket == 4 or e.self:GetGM() then
+				e.self:MovePCInstance(223,eq.get_zone_instance_id(),-410,0,5,127);
+			else
+				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
+			end
 		end
 		-- update player lockout to phase 4
 	elseif (door_id == 51) then
-		if (expedition.valid and expedition:HasLockout('Phase 5 Complete')  or e.self:GetGM()) then
-			e.self:MovePCInstance(223,eq.get_zone_instance_id(),245,-1115,0,387);
-		else
-			e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
+		if expedition.valid then
+			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
+			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
+			if phase_bucket == 5 or e.self:GetGM() then
+				e.self:MovePCInstance(223,eq.get_zone_instance_id(),245,-1115,0,387);
+			else
+				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
+			end
 		end
 		-- update player lockout to phase 5
 	elseif (door_id == 57 or door_id == 59) then
-		if (expedition.valid and expedition:HasLockout('Phase 5 Complete')  or e.self:GetGM()) then
-			return;
-		else
-			e.self:Message(MT.NPCQuestSay,"A mystical force seems to have the lever locked in place.");
-			e.door:ForceClose(e.self);
-		end	
+		if expedition.valid then
+			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
+			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
+			if phase_bucket == 6 or e.self:GetGM() then
+				return
+			else
+				e.self:Message(MT.NPCQuestSay,"A mystical force seems to have the lever locked in place.");
+				e.door:ForceClose(e.self);
+			end
+		end
 		
 	--door handling for phase 4 and phase 5 doors behind the gods that lead to their respective planes
 	elseif ((door_id == 20) and (not eq.get_entity_list():IsMobSpawnedByNpcTypeID(223001)) and 
@@ -201,8 +217,7 @@ function ResetLockouts(e)	-- Removes all Lockouts
 		for phase, eventtable in pairs(phaselockouts) do
 			if(phase == e) then
 				for i, eventlockout in pairs(eventtable) do
-					--expedition:RemoveLockout(eventlockout);
-
+					-- expedition:RemoveLockout(eventlockout);
 					eq.GM_Message(MT.Red,string.format("[DEBUG] Removing lockout = [%s]!", eventlockout));
 				end
 			end
@@ -210,7 +225,7 @@ function ResetLockouts(e)	-- Removes all Lockouts
 	else	
 		for phase, eventtable in pairs(phaselockouts) do
 			for i, eventlockout in pairs(eventtable) do
-				expedition:RemoveLockout(eventlockout);
+				-- expedition:RemoveLockout(eventlockout);
 				eq.GM_Message(MT.Red,string.format("[DEBUG] Removing lockout = [%s]!", eventlockout));
 			end
 		end

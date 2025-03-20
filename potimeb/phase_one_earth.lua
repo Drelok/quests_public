@@ -51,10 +51,13 @@ function event_signal(e)
 
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
-			if (expedition.valid and not expedition:HasLockout('Terlok of Earth')) then
-				eq.unique_spawn(223119,0,0,70.3,1644.5,493.7,371); 	--Terlok_of_Earth (223119)
-			else
-				eq.unique_spawn(223238,0,0,70.3,1644.5,493.7,371);		--#Shadow_of_Terlok (223238)  PH version
+			if expedition.valid then
+				local terlok_bucket = tonumber(eq.get_zone():GetBucket("Terlok")) or 0
+				if terlok_bucket == 0 then
+					eq.unique_spawn(223119,0,0,70.3,1644.5,493.7,371); 	--Terlok_of_Earth (223119)
+				else
+					eq.unique_spawn(223238,0,0,70.3,1644.5,493.7,371);		--#Shadow_of_Terlok (223238)  PH version
+				end
 			end
 			--event_counter = 0;
 		end

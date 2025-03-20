@@ -37,10 +37,13 @@ function event_spawn(e)
 	eq.spawn2(223141,0,0,230,875,495,387);
 	--11 mobs so far
 
-	if expedition.valid and not expedition:HasLockout('War Shapen Emissary') then
-		eq.spawn2(223096,6,0,428,744,493,387);		--War_Shapen_Emissary (223096)
-	else
-		kills = kills + 1;
+	if expedition.valid then
+		local emissary_bucket = tonumber(eq.get_zone():GetBucket("Emissary")) or 0
+		if emissary_bucket == 0 then
+			eq.spawn2(223096,6,0,428,744,493,387);		--War_Shapen_Emissary (223096)
+		else
+			kills = kills + 1;
+		end
 	end
 
 	--Fire trial phase 2 mobs
@@ -56,10 +59,13 @@ function event_spawn(e)
 	eq.spawn2(223143,0,0,230,570,495,387);		--A_Ferocious_War_Boar (223143)
 	eq.spawn2(223143,0,0,230,630,495,387);
 
-	if expedition.valid and not expedition:HasLockout('Gutripping War Beast') then
-		eq.spawn2(223146,7,0,428,677,493,387);		--Gutripping_War_Beast (223146)
-	else
-		kills = kills + 1;
+	if expedition.valid then
+		local gutripping_bucket = tonumber(eq.get_zone():GetBucket("Gutripping")) or 0
+		if gutripping_bucket == 0 then
+			eq.spawn2(223146,7,0,428,677,493,387);		--Gutripping_War_Beast (223146)
+		else
+			kills = kills + 1;
+		end
 	end
 	
 	--earth trial phase 2 mobs
@@ -75,10 +81,13 @@ function event_spawn(e)
 	eq.spawn2(223102,0,0,250,1460,495,305);	--An_Elemental_Stonefist (223102)
 	eq.spawn2(223102,0,0,300,1435,495,305);
 
-	if expedition.valid and not expedition:HasLockout('Earthen Overseer') then
-		eq.spawn2(223134,9,0,440,1467,493,387);	--Earthen_Overseer (223134)
-	else
-		kills = kills + 1;
+	if expedition.valid then
+		local earthen_bucket = tonumber(eq.get_zone():GetBucket("Earthen")) or 0
+		if earthen_bucket == 0 then
+			eq.spawn2(223134,9,0,440,1467,493,387);	--Earthen_Overseer (223134)
+		else
+			kills = kills + 1;
+		end
 	end
 	
 	--air trial phase 2 mobs
@@ -94,9 +103,12 @@ function event_spawn(e)
 	eq.spawn2(223099,0,0,285,1575,495,445);	--Champion_of_Korascian (223099)
 	eq.spawn2(223099,0,0,250,1545,495,445);
 
-	if expedition.valid and not expedition:HasLockout('Windshapen Warlord of Air') then
-		eq.spawn2(223118,8,0,442,1532,493,387);	--A_Windshapen_Warlord_of_Air (223118)
-	else
-		kills = kills + 1;
+	if expedition.valid then
+		local windshapen_bucket = tonumber(eq.get_zone():GetBucket("Windshapen")) or 0
+		if windshapen_bucket == 0 then
+			eq.spawn2(223118,8,0,442,1532,493,387);	--A_Windshapen_Warlord_of_Air (223118)
+		else
+			kills = kills + 1;
+		end
 	end
 end
