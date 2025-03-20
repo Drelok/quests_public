@@ -71,7 +71,7 @@ function event_signal(e)
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
 			if expedition.valid then
-				local rythor_bucket = tonumber(eq.get_zone():GetBucket("Rythor")) or 0
+				local rythor_bucket = tonumber(eq.get_zone():GetBucket("Rythor of the Undead")) or 0
 				if rythor_bucket == 0 then
 					eq.unique_spawn(223129,0,0,65.2,1109.7,494.8,371); -- Rythor_of_the_Undead
 				else

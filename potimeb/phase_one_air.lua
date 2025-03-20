@@ -81,7 +81,7 @@ function event_signal(e)
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
 			if expedition.valid then
-				local neimon_bucket = tonumber(eq.get_zone():GetBucket("Neimon")) or 0
+				local neimon_bucket = tonumber(eq.get_zone():GetBucket("Neimon of Air")) or 0
 				if neimon_bucket == 0 then
 					eq.spawn2(223120,0,0,68,1355,494.8,371); -- Neimon_of_Air
 				else
