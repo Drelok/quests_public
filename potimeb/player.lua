@@ -404,11 +404,20 @@ function event_say(e)
 			e.self:Message(MT.Guild,string.format("- [%s] -",eq.say_link("tb_p6",false,"Phase 6")));
 		elseif e.message:find("tb_p1") then
 			eq.set_data(expedition_identifier,"0");
+			eq.get_zone():DeleteBucket("Kazrok of Fire");
+			eq.get_zone():DeleteBucket("Terlok of Earth");
+			eq.get_zone():DeleteBucket("Anar of Water");
+			eq.get_zone():DeleteBucket("Neimon of Air");
+			eq.get_zone():DeleteBucket("Rythor of the Undead");
 			ResetLockouts(99);
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 1 Loading]");
 		elseif e.message:find("tb_p2") then
 			eq.set_data(expedition_identifier,"1");
+			eq.get_zone():DeletEBucket("War Shapen Emissary");
+			eq.get_zone():DeleteBucket("Gutripping War Beast");
+			eq.get_zone():DeleteBucket("Earthen Overseer");
+			eq.get_zone():DeleteBucket("Windshapen Warlord of Air");
 			ResetLockouts(99);
 			SetLockouts(1);
 			ZoneReset(e);

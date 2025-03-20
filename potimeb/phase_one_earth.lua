@@ -5,6 +5,8 @@
 local event_counter = 0;
 local terlok = false;
 
+local event_mobs = {223106,223119,223147};
+
 --specify trial boundaries for player check routine
 local min_x = -75;
 local max_x = 90;
@@ -21,12 +23,19 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	-- tell zone_status phase 1 was started
-	eq.signal(223097,1,5*1000);
-	-- wait 45 seconds before spawning the mobs.
-	eq.clear_proximity();
-	eq.set_timer("Phase1Earth",45000);
-	eq.set_timer("player_count",5 * 1000);	--check to ensure only 18 players in trial area
+	if tonumber(eq.get_zone():GetBucket("Terlok of Earth")) or 0 > 0 then
+		eq.zone_emote(14,"You have already completed the Trial of Earth!");
+	else
+		for index, mob in ipairs(event_mobs) do
+			eq.depop_all(mob);
+		end
+		-- tell zone_status phase 1 was started
+		eq.signal(223097,1,5*1000);
+		-- wait 45 seconds before spawning the mobs.
+		eq.clear_proximity();
+		eq.set_timer("Phase1Earth",10000);
+		eq.set_timer("player_count",5 * 1000);	--check to ensure only 18 players in trial area
+	end
 end
 
 function event_timer(e)

@@ -203,9 +203,15 @@ function event_signal(e)
 	-- signal 2 comes from the mobs in the final wave of each phase 1 event
 	elseif e.signal == 2 then
 		-- check that all 5 phase 1 events are down.
-		event_counter = event_counter +1
+		local p1Complete = 0;
+		local p1FireComplete = tonumber(eq.get_zone():GetBucket("Kazrok of Fire")) or 0
+		local p1UndeadComplete = tonumber(eq.get_zone():GetBucket("Rythor of the Undead")) or 0
+		local p1WaterComplete = tonumber(eq.get_zone():GetBucket("Anar of Water")) or 0
+		local p1EarthComplete = tonumber(eq.get_zone():GetBucket("Terlok of Earth")) or 0
+		local p1AirComplete = tonumber(eq.get_zone():GetBucket("Neimon of Air")) or 0
+		p1Complete = p1FireComplete + p1UndeadComplete + p1WaterComplete + p1EarthComplete + p1AirComplete
 
-		if event_counter >= 5 then
+		if p1Complete >= 5 then
 			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
 			if phase_bucket == 0 then -- Moving to Phase 2
