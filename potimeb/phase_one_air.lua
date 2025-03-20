@@ -21,7 +21,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if tonumber(eq.get_zone():GetBucket("Neimon of Air")) or 0 > 0 then
+	if tonumber(eq.get_zone():GetVariable("Neimon of Air")) or 0 > 0 then
 		eq.zone_emote(14,"You have already completed the Trial of Air!");
 	else
 		for index, mob in ipairs(event_mobs) do
@@ -88,7 +88,7 @@ function event_signal(e)
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
 			if expedition.valid then
-				local neimon_bucket = tonumber(eq.get_zone():GetBucket("Neimon of Air")) or 0
+				local neimon_bucket = tonumber(eq.get_zone():GetVariable("Neimon of Air")) or 0
 				if neimon_bucket == 0 then
 					eq.spawn2(223120,0,0,68,1355,494.8,371); -- Neimon_of_Air
 				else

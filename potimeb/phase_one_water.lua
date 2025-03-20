@@ -21,7 +21,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if tonumber(eq.get_zone():GetBucket("Anar of Water")) or 0 > 0 then
+	if tonumber(eq.get_zone():GetVariable("Anar of Water")) or 0 > 0 then
 		eq.zone_emote(14,"You have already completed the Trial of Water!");
 	else
 		-- depop all mobs to prevent duplicates
@@ -46,7 +46,7 @@ function event_timer(e)
 		-- Check on which version to spawn
 		local expedition = eq.get_expedition()
 		if expedition.valid then
-			local anar_bucket = tonumber(eq.get_zone():GetBucket("Anar of Water")) or 0
+			local anar_bucket = tonumber(eq.get_zone():GetVariable("Anar of Water")) or 0
 			if anar_bucket == 0 then
 				eq.spawn2(223104,0,0,68,867,495,371);	--Anar_of_Water (223104)
 			else

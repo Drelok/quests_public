@@ -25,15 +25,11 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	local expedition = eq.get_expedition()
-	local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-	local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-
 	eq.signal(223097, 223127); -- Add Loot Lockout for Phase 2 Wing
 	eq.signal(223242, 2); --signal phase_two_undead
 	eq.depop_all(2231731);
 
-	eq.set_data(expedition_identifier, "2")
+	eq.get_zone():SetVariable("Phase", "2")
 	eq.signal(223097, 3);	--signal zone_status that phase is complete
 end
 

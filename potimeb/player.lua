@@ -116,9 +116,8 @@ function event_click_door(e)
 
 	elseif (door_id == 62) then
 		if expedition.valid then
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			if phase_bucket == 3 or e.self:GetGM() then
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			if phase_variable == 3 or e.self:GetGM() then
 				e.self:MovePCInstance(223,eq.get_zone_instance_id(),-395,0,350,127);
 			else
 				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
@@ -128,9 +127,8 @@ function event_click_door(e)
 		
 	elseif (door_id == 24) then
 		if expedition.valid then
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			if phase_bucket == 4 or e.self:GetGM() then
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			if phase_variable == 4 or e.self:GetGM() then
 				e.self:MovePCInstance(223,eq.get_zone_instance_id(),-410,0,5,127);
 			else
 				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
@@ -139,9 +137,8 @@ function event_click_door(e)
 		-- update player lockout to phase 4
 	elseif (door_id == 51) then
 		if expedition.valid then
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			if phase_bucket == 5 or e.self:GetGM() then
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			if phase_variable == 5 or e.self:GetGM() then
 				e.self:MovePCInstance(223,eq.get_zone_instance_id(),245,-1115,0,387);
 			else
 				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
@@ -150,9 +147,8 @@ function event_click_door(e)
 		-- update player lockout to phase 5
 	elseif (door_id == 57 or door_id == 59) then
 		if expedition.valid then
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			if phase_bucket == 6 or e.self:GetGM() then
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			if phase_variable == 6 or e.self:GetGM() then
 				return
 			else
 				e.self:Message(MT.NPCQuestSay,"A mystical force seems to have the lever locked in place.");
@@ -379,7 +375,6 @@ buckets = {
 --GM ONLY CONTROLS--
 function event_say(e)
 	local expedition = eq.get_expedition()
-	local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 	
 	if e.self:GetGM() then
 		instance_id = eq.get_zone_instance_id();
@@ -403,7 +398,7 @@ function event_say(e)
 			e.self:Message(MT.Guild,string.format("- [%s] -",eq.say_link("tb_p5",false,"Phase 5")));
 			e.self:Message(MT.Guild,string.format("- [%s] -",eq.say_link("tb_p6",false,"Phase 6")));
 		elseif e.message:find("tb_p1") then
-			eq.set_data(expedition_identifier,"0");
+			eq.get_zone():SetVariable("Phase", "0")
 			eq.get_zone():DeleteBucket("Kazrok of Fire");
 			eq.get_zone():DeleteBucket("Terlok of Earth");
 			eq.get_zone():DeleteBucket("Anar of Water");
@@ -413,7 +408,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 1 Loading]");
 		elseif e.message:find("tb_p2") then
-			eq.set_data(expedition_identifier,"1");
+			eq.get_zone():SetVariable("Phase", "1")
 			eq.get_zone():DeletEBucket("War Shapen Emissary");
 			eq.get_zone():DeleteBucket("Gutripping War Beast");
 			eq.get_zone():DeleteBucket("Earthen Overseer");
@@ -423,14 +418,14 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 2 Loading]");
 		elseif e.message:find("tb_p3") then
-			eq.set_data(expedition_identifier,"2");
+			eq.get_zone():SetVariable("Phase", "2")
 			ResetLockouts(99);
 			SetLockouts(1);
 			SetLockouts(2);
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 3 Loading]");
 		elseif e.message:find("tb_p4") then
-			eq.set_data(expedition_identifier,"3");
+			eq.get_zone():SetVariable("Phase", "3")
 			eq.get_zone():DeleteBucket("Saryrn");
 			eq.get_zone():DeleteBucket("Tallon Zek");
 			eq.get_zone():DeleteBucket("Terris-Thule");
@@ -442,7 +437,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 4 Loading]");
 		elseif e.message:find("tb_p5") then
-			eq.set_data(expedition_identifier,"4");
+			eq.get_zone():SetVariable("Phase", "4")
 			eq.get_zone():DeleteBucket("Bertoxxulous");
 			eq.get_zone():DeleteBucket("Cazic-Thule");
 			eq.get_zone():DeleteBucket("Innoruuk");
@@ -455,7 +450,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 5 Loading]");
 		elseif e.message:find("tb_p6") then
-			eq.set_data(expedition_identifier,"5");
+			eq.get_zone():SetVariable("Phase", "4")
 			ResetLockouts(99);
 			SetLockouts(1);
 			SetLockouts(2);
@@ -525,7 +520,7 @@ function event_say(e)
 			e.self:Message(MT.Lime,"Moving raid to [Phase 6]");
 		elseif e.message:findi("buckets") then
 			for id, name in pairs(buckets) do
-				local bucket_value = tonumber(eq.get_zone():GetBucket(name)) or 0
+				local bucket_value = tonumber(eq.get_zone():GetVariable(name)) or 0
 				e.self:Message(
 					MT.Chat1Echo,
 					string.format(

@@ -21,7 +21,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if tonumber(eq.get_zone():GetBucket("Kazrok of Fire")) or 0 > 0 then
+	if tonumber(eq.get_zone():GetVariable("Kazrok of Fire")) or 0 > 0 then
 		eq.zone_emote(14,"You have already completed the Trial of Fire!");
 	else
 		-- Depop everything to prevent double spawns
@@ -61,7 +61,7 @@ function event_signal(e)
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
 			if expedition.valid then
-				local kazrok_bucket = tonumber(eq.get_zone():GetBucket("Kazrok of Fire")) or 0
+				local kazrok_bucket = tonumber(eq.get_zone():GetVariable("Kazrok of Fire")) or 0
 				if kazrok_bucket == 0 then
 					eq.unique_spawn(223090,0,0,68,573,504,371);  	--#Kazrok_of_Fire (223090)
 				else

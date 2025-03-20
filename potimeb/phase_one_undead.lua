@@ -21,7 +21,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if tonumber(eq.get_zone():GetBucket("Rythor of the Undead")) or 0 > 0 then
+	if tonumber(eq.get_zone():GetVariable("Rythor of the Undead")) or 0 > 0 then
 		eq.zone_emote(14,"You have already completed the Trial of Undead!");
 	else
 		-- depop all mobs to prevent duplicates
@@ -79,7 +79,7 @@ function event_signal(e)
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
 			if expedition.valid then
-				local rythor_bucket = tonumber(eq.get_zone():GetBucket("Rythor of the Undead")) or 0
+				local rythor_bucket = tonumber(eq.get_zone():GetVariable("Rythor of the Undead")) or 0
 				if rythor_bucket == 0 then
 					eq.unique_spawn(223129,0,0,65.2,1109.7,494.8,371); -- Rythor_of_the_Undead
 				else

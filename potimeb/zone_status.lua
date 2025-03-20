@@ -68,7 +68,7 @@ local PHASE4COMPLETE	= 'Phase 4 Complete'
 local PHASE5COMPLETE	= 'Phase 5 Complete'
 
 
-local buckets = {
+local variables = {
 	-- Phase 1
 	[223170] = P1AIR,
 	[223169] = P1EARTH,
@@ -129,50 +129,49 @@ function event_spawn(e)
 	instance_id = eq.get_zone_instance_id()
 	local expedition = eq.get_expedition()
 	local entity_list = eq.get_entity_list()
-	local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-	local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
+	local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 	-- Check Lockouts to decide what phase
-	if phase_bucket == 0 then
+	if phase_variable == 0 then
 		-- Spawn phase 1
 		eq.spawn2(223169, 0, 0, 13.5, 1632.4, 492.3, 0) -- earth trigger
 		eq.spawn2(223170, 0, 0, 10.1, 1350, 492.6, 0) -- air trigger
 		eq.spawn2(223171, 0, 0, 18.0, 1107, 492.2, 0) -- undead trigger
 		eq.spawn2(223172, 0, 0, 11.5, 857, 492.5, 0) -- water trigger
 		eq.spawn2(223173, 0, 0, 13.2, 574.2, 492.3, 0) -- fire trigger
-	elseif phase_bucket == 1 then
+	elseif phase_variable == 1 then
 		UpdateFailTimer(60)
 		current_phase = "Phase2"
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 2) -- Emoter
 		-- spawn phase 2 controller
 		eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
-	elseif phase_bucket == 2 then
+	elseif phase_variable == 2 then
 		UpdateFailTimer(75)
 		current_phase = "Phase3"
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 3) -- Emoter
 		-- begin Phase 3
 		ControlPhaseThree()
-	elseif phase_bucket == 3 then
+	elseif phase_variable == 3 then
 		UpdateFailTimer(240) -- TODO UPDATE TIMER BASED ON NUMBER OF P4 GODS UP
 		current_phase = "Phase4"
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 4) -- Emoter
 		SpawnPhaseFour()
-	elseif phase_bucket == 4 then
+	elseif phase_variable == 4 then
 		UpdateFailTimer(240) -- TODO UPDATE TIMER BASED ON NUMBER OF P5 GODS UP
 		current_phase = "Phase5"
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 5) -- Emoter
 		SpawnPhaseFive()
-	elseif phase_bucket == 5 then
+	elseif phase_variable == 5 then
 		UpdateFailTimer(120)
 		current_phase = "Phase6"
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 6) -- Emoter
 		-- spawn Quarm
-		local quarm_bucket = tonumber(eq.get_zone():GetBucket("Quarm")) or 0
-		if quarm_bucket == 0 then -- If left DZ and zone before P6 Complete lockout
+		local quarm_variable = tonumber(eq.get_zone():GetVariable("Quarm")) or 0
+		if quarm_variable == 0 then -- If left DZ and zone before P6 Complete lockout
 			eq.spawn2(223201, 0, 0, -401, -1106, 32.5, 22)
 			-- spawn #A_Servitor_of_Peace
 			eq.spawn2(223101, 0, 0, 244, -1106, -1.125, 194.0625)
@@ -186,8 +185,8 @@ function event_signal(e)
 	local expedition = eq.get_expedition()
 	instance_id = eq.get_zone_instance_id()
 
-	if buckets[e.signal] then
-		eq.get_zone():SetBucket(buckets[e.signal], "1")
+	if variables[e.signal] then
+		eq.get_zone():SetVariable(variables[e.signal], "1")
 	end
 
 	-- grab the entity_list
@@ -204,30 +203,29 @@ function event_signal(e)
 	elseif e.signal == 2 then
 		-- check that all 5 phase 1 events are down.
 		local p1Complete = 0;
-		local p1FireComplete = tonumber(eq.get_zone():GetBucket("Kazrok of Fire")) or 0
-		local p1UndeadComplete = tonumber(eq.get_zone():GetBucket("Rythor of the Undead")) or 0
-		local p1WaterComplete = tonumber(eq.get_zone():GetBucket("Anar of Water")) or 0
-		local p1EarthComplete = tonumber(eq.get_zone():GetBucket("Terlok of Earth")) or 0
-		local p1AirComplete = tonumber(eq.get_zone():GetBucket("Neimon of Air")) or 0
+		local p1FireComplete = tonumber(eq.get_zone():GetVariable("Kazrok of Fire")) or 0
+		local p1UndeadComplete = tonumber(eq.get_zone():GetVariable("Rythor of the Undead")) or 0
+		local p1WaterComplete = tonumber(eq.get_zone():GetVariable("Anar of Water")) or 0
+		local p1EarthComplete = tonumber(eq.get_zone():GetVariable("Terlok of Earth")) or 0
+		local p1AirComplete = tonumber(eq.get_zone():GetVariable("Neimon of Air")) or 0
 		p1Complete = p1FireComplete + p1UndeadComplete + p1WaterComplete + p1EarthComplete + p1AirComplete
 
 		if p1Complete >= 5 then
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			if phase_bucket == 0 then -- Moving to Phase 2
-				eq.set_data(expedition_identifier, "1")
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			if phase_variable == 0 then -- Moving to Phase 2
+				eq.get_zone():SetVariable("Phase", "1")
 				event_counter = 0
 				UpdateFailTimer(60) -- Add 60 Minutes to fail timer
 				eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
 				eq.signal(223227, 2) -- Emoter
-			elseif phase_bucket == 2 then -- Moving to Phase 3
+			elseif phase_variable == 2 then -- Moving to Phase 3
 				SetupPhaseThree()
-			elseif phase_bucket == 3 then -- Moving to Phase 4
+			elseif phase_variable == 3 then -- Moving to Phase 4
 				SetupPhaseFour()
-			elseif phase_bucket == 4 then -- Moving to Phase 5
+			elseif phase_variable == 4 then -- Moving to Phase 5
 				eq.signal(223097, 5)
 				eq.signal(223227, 5) -- Emoter
-			elseif phase_bucket == 5 then -- Moving to Phase 6
+			elseif phase_variable == 5 then -- Moving to Phase 6
 				eq.signal(223097, 6)
 				eq.signal(223227, 6) -- Emoter
 			end
@@ -239,19 +237,18 @@ function event_signal(e)
 		ControlPhaseThree()
 	-- signal 5 comes from the phase 4 gods.
 	elseif e.signal == 5 then
-		local saryrn_bucket = tonumber(eq.get_zone():GetBucket(SARYRN)) or 0
-		local tallon_bucket = tonumber(eq.get_zone():GetBucket(TALLONZEK)) or 0
-		local terris_bucket = tonumber(eq.get_zone():GetBucket(TERRIS)) or 0
-		local vallon_bucket = tonumber(eq.get_zone():GetBucket(VALLONZEK)) or 0
+		local saryrn_variable = tonumber(eq.get_zone():GetVariable(SARYRN)) or 0
+		local tallon_variable = tonumber(eq.get_zone():GetVariable(TALLONZEK)) or 0
+		local terris_variable = tonumber(eq.get_zone():GetVariable(TERRIS)) or 0
+		local vallon_variable = tonumber(eq.get_zone():GetVariable(VALLONZEK)) or 0
 		if 
-			saryrn_bucket == 1 and
-			tallon_bucket == 1 and
-			terris_bucket == 1 and
-			vallon_bucket == 1
+			saryrn_variable == 1 and
+			tallon_variable == 1 and
+			terris_variable == 1 and
+			vallon_variable == 1
 		 then -- If all Phase 4 gods are dead
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			eq.set_data(expedition_identifier, "4")
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			eq.get_zone():SetVariable("Phase", "4")
 			current_phase = "Phase5"
 			-- add 4 hours to the fail timer
 			UpdateFailTimer(240) -- 60 Minutes per God
@@ -265,26 +262,25 @@ function event_signal(e)
 	-- signal 6 comes from the phase 5 gods.
 	elseif e.signal == 6 then
 		instance_id = eq.get_zone_instance_id()
-		local bertox_bucket = tonumber(eq.get_zone():GetBucket(BERTOXXULOUOS)) or 0
-		local cazic_bucket = tonumber(eq.get_zone():GetBucket(CAZICTHULE)) or 0
-		local innoruuk_bucket = tonumber(eq.get_zone():GetBucket(INNORUUK)) or 0
-		local rallos_bucket = tonumber(eq.get_zone():GetBucket(RALLOSZEK)) or 0
+		local bertox_variable = tonumber(eq.get_zone():GetVariable(BERTOXXULOUOS)) or 0
+		local cazic_variable = tonumber(eq.get_zone():GetVariable(CAZICTHULE)) or 0
+		local innoruuk_variable = tonumber(eq.get_zone():GetVariable(INNORUUK)) or 0
+		local rallos_variable = tonumber(eq.get_zone():GetVariable(RALLOSZEK)) or 0
 
 		if (
-			bertox_bucket == 1 and
-			cazic_bucket == 1 and
-			innoruuk_bucket == 1 and
-			rallos_bucket == 1
+			bertox_variable == 1 and
+			cazic_variable == 1 and
+			innoruuk_variable == 1 and
+			rallos_variable == 1
 		) then -- If all Phase 5 gods are dead
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-			eq.set_data(expedition_identifier, "5")
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			eq.get_zone():SetVariable("Phase", "5")
 			eq.spawn_condition("potimeb", instance_id, 11, 0)
 			eq.spawn_condition("potimeb", instance_id, 12, 0)
 			eq.spawn_condition("potimeb", instance_id, 13, 0)
 			eq.spawn_condition("potimeb", instance_id, 14, 0)
-			local quarm_bucket = tonumber(eq.get_zone():GetBucket(QUARM)) or 0
-			if quarm_bucket == 0 or phase_bucket < 6 then
+			local quarm_variable = tonumber(eq.get_zone():GetVariable(QUARM)) or 0
+			if quarm_variable == 0 or phase_variable < 6 then
 				current_phase = "Phase6"
 				-- add 2 hours to the fail timer
 				UpdateFailTimer(120)
@@ -306,8 +302,7 @@ function event_signal(e)
 	-- signal 8 comes from Druzzil_Ro
 	elseif e.signal == 8 then
 		-- update the zone status
-		local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-		eq.set_data(expedition_identifier, "6")
+		eq.get_zone():SetVariable("Phase", "6")
 		SetZoneLockout()
 		-- port everyone in the zone back to the PoK library top floor
 		local client_list = entity_list:GetClientList()
@@ -339,9 +334,8 @@ end
 function ControlPhaseTwo()
 	local expedition = eq.get_expedition()
 	if expedition.valid then
-		local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-		local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
-		if phase_bucket == 2 then
+		local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+		if phase_variable == 2 then
 			current_phase = "Phase3"
 			ControlPhaseThree()
 			-- sendsignal to flavor text NPC
@@ -562,11 +556,10 @@ function ControlPhaseThree()
 	elseif current_phase == "Phase3.9" then
 		event_counter = event_counter + 1
 		if event_counter == 2 then
-			local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
-			eq.set_data(expedition_identifier, "3")
-			local phase_bucket = tonumber(eq.get_data(expedition_identifier)) or 0
+			eq.get_zone():SetVariable("Phase", "3")
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 			event_counter = 0
-			if expedition.valid and phase_bucket == 3 then
+			if expedition.valid and phase_variable == 3 then
 				current_phase = "Phase4"
 				-- sendsignal to flavor text NPC
 				eq.signal(223227, 4) -- Emoter
@@ -595,28 +588,28 @@ end
 function SpawnPhaseFour()
 	local expedition = eq.get_expedition()
 
-	local saryrn_bucket = tonumber(eq.get_zone():GetBucket("Saryrn")) or 0
-	local tallon_bucket = tonumber(eq.get_zone():GetBucket("Tallon")) or 0
-	local terris_bucket = tonumber(eq.get_zone():GetBucket("Terris")) or 0
-	local vallon_bucket = tonumber(eq.get_zone():GetBucket("Vallon")) or 0
+	local saryrn_variable = tonumber(eq.get_zone():GetVariable("Saryrn")) or 0
+	local tallon_variable = tonumber(eq.get_zone():GetVariable("Tallon")) or 0
+	local terris_variable = tonumber(eq.get_zone():GetVariable("Terris")) or 0
+	local vallon_variable = tonumber(eq.get_zone():GetVariable("Vallon")) or 0
 
 	if expedition.valid then
-		if saryrn_bucket == 0 then
+		if saryrn_variable == 0 then
 			eq.spawn2(223076, 0, 0, -320, -316, 358, 65) -- Saryrn
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
-		if tallon_bucket == 0 then
+		if tallon_variable == 0 then
 			eq.spawn2(223077, 0, 0, 405, -84, 358, 384) -- Tallon Zek
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
-		if terris_bucket == 0 then
+		if terris_variable == 0 then
 			eq.spawn2(223075, 0, 0, -310, 307, 365, 190) -- Terris Thule
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
-		if vallon_bucket == 0 then
+		if vallon_variable == 0 then
 			eq.spawn2(223078, 0, 0, 405, 75, 358, 384) -- Vallon Zek
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
@@ -632,48 +625,48 @@ function SpawnPhaseFive()
 	instance_id = eq.get_zone_instance_id()
 	local expedition = eq.get_expedition()
 
-	local bertox_bucket = tonumber(eq.get_zone():GetBucket(BERTOXXULOUOS)) or 0
-	local bertox_trash_bucket = tonumber(eq.get_zone():GetBucket(BERTOXXULOUOSTRASH)) or 0
-	local cazic_bucket = tonumber(eq.get_zone():GetBucket(CAZICTHULE)) or 0
-	local cazic_trash_bucket = tonumber(eq.get_zone():GetBucket(CAZICTHULETRASH)) or 0
-	local innoruuk_bucket = tonumber(eq.get_zone():GetBucket(INNORUUK)) or 0
-	local innoruuk_trash_bucket = tonumber(eq.get_zone():GetBucket(INNORUUKTRASH)) or 0
-	local rallos_bucket = tonumber(eq.get_zone():GetBucket(RALLOSZEK)) or 0
-	local rallos_trash_bucket = tonumber(eq.get_zone():GetBucket(RALLOSZEKTRASH)) or 0
+	local bertox_variable = tonumber(eq.get_zone():GetVariable(BERTOXXULOUOS)) or 0
+	local bertox_trash_variable = tonumber(eq.get_zone():GetVariable(BERTOXXULOUOSTRASH)) or 0
+	local cazic_variable = tonumber(eq.get_zone():GetVariable(CAZICTHULE)) or 0
+	local cazic_trash_variable = tonumber(eq.get_zone():GetVariable(CAZICTHULETRASH)) or 0
+	local innoruuk_variable = tonumber(eq.get_zone():GetVariable(INNORUUK)) or 0
+	local innoruuk_trash_variable = tonumber(eq.get_zone():GetVariable(INNORUUKTRASH)) or 0
+	local rallos_variable = tonumber(eq.get_zone():GetVariable(RALLOSZEK)) or 0
+	local rallos_trash_variable = tonumber(eq.get_zone():GetVariable(RALLOSZEKTRASH)) or 0
 
 	if expedition.valid then
-		if bertox_bucket == 0 and bertox_trash_bucket == 0 then
+		if bertox_variable == 0 and bertox_trash_variable == 0 then
 			eq.spawn2(223142, 0, 0, -299, -297, 23.3, 62); -- Fake Bertoxxulous
 			UpdateFailTimer(60); -- 1 Hour per God
 			eq.spawn_condition("potimeb", instance_id, 14, 1);	
-		elseif bertox_bucket == 0 and bertox_trash_bucket == 1 then
+		elseif bertox_variable == 0 and bertox_trash_variable == 1 then
 			eq.spawn2(223098, 0, 0, -299, -297, 23.3, 62); -- Real Bertoxxulous - 223098 - swapped
 			UpdateFailTimer(60); -- 1 Hour per God
 		end
 		
-		if cazic_bucket == 0 and cazic_trash_bucket == 0 then
+		if cazic_variable == 0 and cazic_trash_variable == 0 then
 			eq.spawn2(223166, 0, 0, -257, 255, 6, 203); -- Fake Cazic
 			UpdateFailTimer(60); -- 1 Hour per God
 			eq.spawn_condition("potimeb", instance_id, 12, 1);	
-		elseif cazic_bucket == 0 and cazic_trash_bucket == 1 then
+		elseif cazic_variable == 0 and cazic_trash_variable == 1 then
 			eq.spawn2(223165, 0, 0, -257, 255, 6, 203); -- Real Cazic
 			UpdateFailTimer(60); -- 1 Hour per God
 		end
 		
-		if innoruuk_bucket == 0 and innoruuk_trash_bucket == 0 then
+		if innoruuk_variable == 0 and innoruuk_trash_variable == 0 then
 			eq.spawn2(223167, 0, 0, 303.3, 306, 13.3, 323) -- Fake Innoruuk
 			UpdateFailTimer(60) -- 1 Hour per God
 			eq.spawn_condition("potimeb", instance_id, 11, 1)
-		elseif innoruuk_bucket == 0 and innoruuk_trash_bucket == 1 then
+		elseif innoruuk_variable == 0 and innoruuk_trash_variable == 1 then
 			eq.spawn2(223000, 0, 0, 303.3, 306, 13.3, 323) -- Real Innoruuk
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 		
-		if rallos_bucket == 0 and rallos_trash_bucket == 0 then
+		if rallos_variable == 0 and rallos_trash_variable == 0 then
 			eq.spawn2(223168, 0, 0, 264, -279, 18.75, 435) -- Fake Rallos
 			UpdateFailTimer(60) -- 1 Hour per God
 			eq.spawn_condition("potimeb", instance_id, 13, 1)
-		elseif rallos_bucket == 0 and rallos_trash_bucket == 1 then
+		elseif rallos_variable == 0 and rallos_trash_variable == 1 then
 			eq.spawn2(223001, 0, 0, 264, -279, 18.75, 435) -- Real Rallos
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
@@ -772,8 +765,7 @@ function event_timer(e)
 			end
 		end
 
-		local expedition_identifier = string.format("potime-%d-phase", expedition_id)
-		eq.set_data(expedition_identifier, "6")
+		eq.get_zone():SetVariable("Phase", "6")
 
 		ControllerDepop()
 	end

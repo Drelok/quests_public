@@ -23,7 +23,7 @@ function event_spawn(e)
 end
 
 function event_enter(e)
-	if tonumber(eq.get_zone():GetBucket("Terlok of Earth")) or 0 > 0 then
+	if tonumber(eq.get_zone():GetVariable("Terlok of Earth")) or 0 > 0 then
 		eq.zone_emote(14,"You have already completed the Trial of Earth!");
 	else
 		for index, mob in ipairs(event_mobs) do
@@ -61,7 +61,7 @@ function event_signal(e)
 			-- Check on which version to spawn
 			local expedition = eq.get_expedition()
 			if expedition.valid then
-				local terlok_bucket = tonumber(eq.get_zone():GetBucket("Terlok of Earth")) or 0
+				local terlok_bucket = tonumber(eq.get_zone():GetVariable("Terlok of Earth")) or 0
 				if terlok_bucket == 0 then
 					eq.unique_spawn(223119,0,0,70.3,1644.5,493.7,371); 	--Terlok_of_Earth (223119)
 				else
