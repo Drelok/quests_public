@@ -26,6 +26,7 @@ end
 function event_killed_merit(e)
 	local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
 	if grummus_bucket == 0 then
+		e.self:SetZoneFlag(Zone.codecay)
 		e.other:SetAccountBucket("pop.flags.grummus", "1")
 		e.other:Message(MT.LightBlue, "You receive a character flag!")
 	end
