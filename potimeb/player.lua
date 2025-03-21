@@ -519,6 +519,14 @@ function event_say(e)
 			raidMove(6);
 			e.self:Message(MT.Lime,"Moving raid to [Phase 6]");
 		elseif e.message:findi("buckets") then
+			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+			e.self:Message(
+				MT.Chat1Echo,
+				string.format(
+					"Phase | %d",
+					phase_variable
+				)
+			)
 			for id, name in pairs(buckets) do
 				local bucket_value = tonumber(eq.get_zone():GetVariable(name)) or 0
 				e.self:Message(
