@@ -111,16 +111,20 @@ function help_xegony(e)
 end
 
 function event_death_complete(e)
-	eq.unique_spawn(215438, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) --essence of air
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.unique_spawn(215438, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) --essence of air
+	end
 	eq.disable_spawn2(45107) --muzlakh
 	eq.depop_with_timer(215486)
 end
 
 function event_killed_merit(e)
-	local xegony_bucket = tonumber(e.other:GetAccountBucket("pop.flags.xegony")) or 0
-	if xegony_bucket == 0 then
-		e.other:SummonItem(29164) -- Item: Amorphous Cloud of Air
-		e.other:SetAccountBucket("pop.flags.xegony", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local xegony_bucket = tonumber(e.other:GetAccountBucket("pop.flags.xegony")) or 0
+		if xegony_bucket == 0 then
+			e.other:SummonItem(29164) -- Item: Amorphous Cloud of Air
+			e.other:SetAccountBucket("pop.flags.xegony", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end

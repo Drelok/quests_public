@@ -33,15 +33,19 @@ function event_death_complete(e)
 	local xloc = e.self:GetX();
 	local yloc = e.self:GetY();
 	local zloc = e.self:GetZ();
-	eq.spawn2(202368,0,0,xloc,yloc,zloc,0); -- NPC: A_Planar_Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.spawn2(202368,0,0,xloc,yloc,zloc,0); -- NPC: A_Planar_Projection
+	end
 	--tell vallon_controller I died
 	eq.signal(214112,3); -- NPC: #vallon_controller
 end
 
 function event_killed_merit(e)
-	local vallon_bucket = tonumber(e.other:GetAccountBucket("pop.flags.vallon")) or 0
-	if vallon_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.vallon", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local vallon_bucket = tonumber(e.other:GetAccountBucket("pop.flags.vallon")) or 0
+		if vallon_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.vallon", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end

@@ -46,15 +46,19 @@ function event_hp(e)
 end
 
 function event_death_complete(e)
-	eq.unique_spawn(209114, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) --planar projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.unique_spawn(209114, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) --planar projection
+	end
 	eq.unique_spawn(209108, 0, 0, -469, -1754, 2351.2, 395.2) -- Karana upstairs
 end
 
 function event_killed_merit(e)
-	local agnarr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.agnarr")) or 0
-	if agnarr_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.agnarr", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local agnarr_bucket = tonumber(e.other:GetAccountBucket("pop.flags.agnarr")) or 0
+		if agnarr_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.agnarr", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
 

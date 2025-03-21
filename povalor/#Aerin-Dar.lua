@@ -66,7 +66,9 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.spawn2(202368, 0, 0, 359, 2500, 39, 257) --NPC: A_Planar_Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only spawn in non-respawning dz
+		eq.spawn2(202368, 0, 0, 359, 2500, 39, 257) --NPC: A_Planar_Projection
+	end
 end
 
 function event_killed_merit(e)

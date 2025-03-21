@@ -28,16 +28,20 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.unique_spawn(202368, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.unique_spawn(202368, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	end
 	eq.spawn2(212076, 0, 0, -1118, 2024, -908, 258) --a_warder_of_Rizlona (212076)
 	eq.spawn2(212076, 0, 0, -1101, 1978, -920, 258) --a_warder_of_Rizlona (212076)
 	eq.spawn2(212076, 0, 0, -1086, 2024, -908, 258) --a_warder_of_Rizlona (212076)
 end
 
 function event_killed_merit(e)
-	local rizlona_bucket = tonumber(e.other:GetAccountBucket("pop.flags.rizlona")) or 0
-	if rizlona_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.rizlona", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local rizlona_bucket = tonumber(e.other:GetAccountBucket("pop.flags.rizlona")) or 0
+		if rizlona_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.rizlona", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end

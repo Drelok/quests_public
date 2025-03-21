@@ -94,13 +94,17 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.unique_spawn(218068, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only spawn in non-respawning dz
+		eq.unique_spawn(218068, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	end
 end
 
 function event_killed_merit(e)
-	local saryrn_bucket = tonumber(e.other:GetAccountBucket("pop.flags.saryrn")) or 0
-	if saryrn_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.saryrn", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local saryrn_bucket = tonumber(e.other:GetAccountBucket("pop.flags.saryrn")) or 0
+		if saryrn_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.saryrn", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end

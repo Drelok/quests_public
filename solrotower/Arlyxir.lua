@@ -27,16 +27,20 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.unique_spawn(202367, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.unique_spawn(202367, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	end
 	eq.spawn2(212074, 0, 0, 1713, 1206, 627, 264) -- a_warder_of_Arlyxir (212074)
 	eq.spawn2(212074, 0, 0, 1738, 1206, 627, 264) -- a_warder_of_Arlyxir (212074)
 	eq.spawn2(212074, 0, 0, 1726, 1146, 612, 264) -- a_warder_of_Arlyxir (212074)
 end
 
 function event_killed_merit(e)
-	local arlyxir_bucket = tonumber(e.other:GetAccountBucket("pop.flags.arlyxir")) or 0
-	if arlyxir_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.arlyxir", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local arlyxir_bucket = tonumber(e.other:GetAccountBucket("pop.flags.arlyxir")) or 0
+		if arlyxir_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.arlyxir", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end

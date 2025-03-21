@@ -32,16 +32,20 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.unique_spawn(202366, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.unique_spawn(202366, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) -- NPC: A_Planar_Projection
+	end
 	eq.spawn2(212075, 0, 0, 972, 1918, -164, 126) --a_warder_of_Dresolik (212075)
 	eq.spawn2(212075, 0, 0, 1043, 1918, -164, 382) --a_warder_of_Dresolik (212075)
 	eq.spawn2(212075, 0, 0, 1007, 1980, -164, 0) --a_warder_of_Dresolik (212075)
 end
 
 function event_killed_merit(e)
-	local dresolik_bucket = tonumber(e.other:GetAccountBucket("pop.flags.dresolik")) or 0
-	if dresolik_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.dresolik", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local dresolik_bucket = tonumber(e.other:GetAccountBucket("pop.flags.dresolik")) or 0
+		if dresolik_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.dresolik", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end

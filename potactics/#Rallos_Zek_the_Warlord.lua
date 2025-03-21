@@ -94,7 +94,9 @@ function event_combat(e)
 end
 
 function event_death_complete(e)
-	eq.spawn2(214105, 0, 0, 699, 8, -294, 128) -- #A_Planar_Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.spawn2(214105, 0, 0, 699, 8, -294, 128) -- #A_Planar_Projection
+	end
 	eq.stop_timer("Fail")
 	eq.stop_timer("Adds")
 	eq.signal(214123, 214113)
@@ -108,10 +110,12 @@ function event_death_complete(e)
 end
 
 function event_killed_merit(e)
-	local rallos_bucket = tonumber(e.other:GetAccountBucket("pop.flags.rallos")) or 0
-	if rallos_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.rallos", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local rallos_bucket = tonumber(e.other:GetAccountBucket("pop.flags.rallos")) or 0
+		if rallos_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.rallos", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
 

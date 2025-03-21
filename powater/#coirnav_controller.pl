@@ -39,7 +39,9 @@ sub EVENT_SIGNAL {
     quest::depopall(216067);
     quest::depopall(216057);
     quest::setglobal("coirnav_done", 3, 7, "D1"); # You can't attempt this again for 1 days
-    quest::spawn2(216066,0,0,$x,$y,$z,138); #Spawn Essence of Water
+    if ($zone->GetInstanceVersion() == quest::get_rule("Custom:StaticInstanceVersion")){ # Only spawn in non-respawning dz
+      quest::spawn2(216066,0,0,$x,$y,$z,138); #Spawn Essence of Water
+    }
   }
 }
 

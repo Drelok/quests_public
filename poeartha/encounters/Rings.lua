@@ -1116,7 +1116,9 @@ function Mystical_Timer(e)
 end
 
 function Mystical_Death(e)
-	eq.spawn2(218068,0,0,1562.11,-2741.93,6.97,386.5); -- Spawn Planar Projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		eq.spawn2(218068,0,0,1562.11,-2741.93,6.97,386.5); -- Spawn Planar Projection
+	end
 end
 
 	

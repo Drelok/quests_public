@@ -98,13 +98,17 @@ function event_hp(e)
 end
 
 function event_death_complete(e)
-	eq.spawn2(202368, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading()) -- planar projection
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only spawn in non-respawning dz
+		eq.spawn2(202368, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading()) -- planar projection
+	end
 end
 
 function event_killed_merit(e)
-	local terris_bucket = tonumber(e.other:GetAccountBucket("pop.flags.terris")) or 0
-	if terris_bucket == 0 then
-		e.other:SetAccountBucket("pop.flags.terris", "1")
-		e.other:Message(MT.LightBlue, "You receive a character flag!")
+	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		local terris_bucket = tonumber(e.other:GetAccountBucket("pop.flags.terris")) or 0
+		if terris_bucket == 0 then
+			e.other:SetAccountBucket("pop.flags.terris", "1")
+			e.other:Message(MT.LightBlue, "You receive a character flag!")
+		end
 	end
 end
