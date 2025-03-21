@@ -11,7 +11,7 @@ sub EVENT_SAY {
       quest::say("Ye look mighty inexperienced t'be in this area, $name. Come an' seek me out when ye 'ave more knowledge o'the planes!");
     }
     else {
-      quest::say("Well, the emblems dinnae be easy t'craft but I will gladly give ye one fer the price of 500 platinum pieces. They allow a planes traveler with no craftin' skills t'create many fine pieces o'planar armor in a special, magical kit I also 'ave an' will throw in with the price. The kit acts as a focal point fer the wild magic energy o'the Planes. Ye will only be able t'use each emblem an' kit once when ye create the piece, 'owever I dinnae be goin' anywhere soon! Just venture back when ye need another an' dinnae ferget the coin! An' if ye be needin' an emblem fer a particular " . quest::silent_saylink("class") . ", just mention tha' class's name and I'll trade ye that emblem fer the coin.");
+      quest::say("Well, the emblems dinnae be easy t'craft but I will gladly give ye one fer the price of 500 platinum pieces. They allow a planes traveler with no craftin' skills t'create many fine pieces o'planar armor in a special, magical kit I also 'ave an' will throw in with the price. The kit acts as a focal point fer the wild magic energy o'the Planes. Ye will only be able t'use each emblem an' kit once when ye create the piece, 'owever I dinnae be goin' anywhere soon! Just venture back when ye need another an' dinnae ferget the coin! Tell me yer " . quest::silent_saylink("class") . ", and I'll hand ye that emblem fer the coin.");
     }
   }
   if ($text=~/class/i) {
@@ -168,103 +168,11 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  my $cash = $platinum * 1000 + $gold * 100 + $silver * 10 + $copper;
-
-  if ($client->GetGlobal("mage_epic_fire1") == 1) {
-    if (plugin::check_handin(\%itemcount, 32409 => 1, 15791 => 1)) {
-      quest::say("Eh? I see ol' Gnaap 'as gotten' 'imself in'o a pickle again. Well le's see. I figu'e tha'ye need a good solven'. Ye'll need t'fin yer'self some metallic liquid, 'at'll make a fine suspension. Then fin' yerself some'un good wit' a brew barrel. Have'em mix tha' wit' sum 'ydro-lize'd ether, an' sum 'evy water.");
-      quest::summonitem(16577); #reinforced flask
-    }
-  }
-  if ($ulevel > 54) { #Must be level 55 or higher
-    if ($cash >= 500000) { #Money for class emblem
-    #This is very ugly.  Should be a case/switch instead, but dunno
-    #if that's available.
-      if (plugin::HasClassName($client, "Warrior")) {
-        quest::summonitem(16267);#Warrior Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Cleric")) {
-        quest::summonitem(16271);#Cleric Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Paladin")) {
-        quest::summonitem(16269);#Paladin Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Ranger")) {
-        quest::summonitem(16272);#Ranger Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Shadowknight")) {
-        quest::summonitem(16270);#Shadowknight Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Druid")) {
-        quest::summonitem(16276);#Druid Emblem
-        quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
-      }
-      elsif (plugin::HasClassName($client, "Monk")) {
-        quest::summonitem(16275);#Monk Emblem
-        quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
-      }
-      elsif (plugin::HasClassName($client, "Bard")) {
-        quest::summonitem(16268);#Bard Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Rogue")) {
-        quest::summonitem(16273);#Rogue Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Shaman")) {
-        quest::summonitem(16274);#Shaman Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      elsif (plugin::HasClassName($client, "Necromancer")) {
-        quest::summonitem(16278);#Necromancer Emblem
-        quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
-      }
-      elsif (plugin::HasClassName($client, "Wizard")) {
-        quest::summonitem(16279);#Wizard Emblem
-        quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
-      }
-      elsif (plugin::HasClassName($client, "Magician")) {
-        quest::summonitem(16280);#Magician Emblem
-        quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
-      }
-      elsif (plugin::HasClassName($client, "Enchanter")) {
-        quest::summonitem(16281);#Enchanter Emblem
-        quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
-      }
-      elsif (plugin::HasClassName($client, "Beastlord")) {
-        quest::summonitem(16277);#Beastlord Emblem
-        quest::summonitem(17185);#Druzzil's Mystical Sewing Kit
-      }
-      elsif (plugin::HasClassName($client, "Berserker")) {
-        quest::summonitem(32000);#Berserker Emblem
-        quest::summonitem(17184);#Mystical Furnace of Ro
-      }
-      else {
-        quest::say("What ar ye?");
-        quest::givecash($copper,$silver,$gold,$platinum); #Return money
-        return 1;
-      }
-      quest::say("Wonderful! This coin will go towards me fines with the Myrist library. They charge quite a bit fer overdue volumes! 'ere be yer emblem an' a kit in which ye may craft planar armor. The kit only 'as enough magical energy t'craft one piece before the energies expire, be sure ye understand. May the armor ye make with it provide ye with much protection.");
-    }
-    else {
-      if ($cash > 0) {
-        quest::say("Tis not enuff!");
-        quest::givecash($copper,$silver,$gold,$platinum); #Return money
-      }
-      plugin::return_items(\%itemcount);
-      return 1;
-    }
-  }
-  else {
-    quest::say("Ye look mighty inexperienced t'be in this area, $name. Come an' seek me out when ye 'ave more knowledge o'the planes!");
-    if ($cash > 0) {
-      quest::givecash($copper,$silver,$gold,$platinum); #Return money
-    }
+  if ($client->GetGlobal("mage_epic_fire1") == 1 && plugin::check_handin(\%itemcount, 32409 => 1, 15791 => 1)) {
+    quest::say("Eh? I see ol' Gnaap 'as gotten' 'imself in'o a pickle again. Well le's see. I figu'e tha'ye need a good solven'. Ye'll need t'fin yer'self some metallic liquid, 'at'll make a fine suspension. Then fin' yerself some'un good wit' a brew barrel. Have'em mix tha' wit' sum 'ydro-lize'd ether, an' sum 'evy water.");
+    quest::summonitem(16577); #reinforced flask
+  } else {
+    quest::say("I cannae take yer coin unless ye' tell me yer class, hero.");
   }
   plugin::return_items(\%itemcount);
 }
