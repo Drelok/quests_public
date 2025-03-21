@@ -233,6 +233,7 @@ function event_signal(e)
 	elseif e.signal == 3 then -- signal 3 comes from the phase 2 mobs.
 		local bosses_are_dead = not eq.is_npc_spawned({223096, 223118, 223127, 223134, 223146})
 		if bosses_are_dead then
+			eq.get_zone():SetVariable("Phase", "2");
 			ControlPhaseTwo()
 		end
 	-- signal 4 comes from the phase 3 mobs.

@@ -241,7 +241,7 @@ function SetLockouts(e)	--depops zone and reloads controllers
 					timer = 475200;
 				end
 
-				expedition:AddLockout(eventlockout, timer);
+				--expedition:AddLockout(eventlockout, timer);
 				eq.GM_Message(MT.Red,string.format("[DEBUG] Adding lockout = [%s] -- Timer = [%i]!", eventlockout, timer));
 			end
 		end
@@ -399,20 +399,20 @@ function event_say(e)
 			e.self:Message(MT.Guild,string.format("- [%s] -",eq.say_link("tb_p6",false,"Phase 6")));
 		elseif e.message:find("tb_p1") then
 			eq.get_zone():SetVariable("Phase", "0")
-			eq.get_zone():DeleteBucket("Kazrok of Fire");
-			eq.get_zone():DeleteBucket("Terlok of Earth");
-			eq.get_zone():DeleteBucket("Anar of Water");
-			eq.get_zone():DeleteBucket("Neimon of Air");
-			eq.get_zone():DeleteBucket("Rythor of the Undead");
+			eq.get_zone():DeleteVariable("Kazrok of Fire");
+			eq.get_zone():DeleteVariable("Terlok of Earth");
+			eq.get_zone():DeleteVariable("Anar of Water");
+			eq.get_zone():DeleteVariable("Neimon of Air");
+			eq.get_zone():DeleteVariable("Rythor of the Undead");
 			ResetLockouts(99);
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 1 Loading]");
 		elseif e.message:find("tb_p2") then
 			eq.get_zone():SetVariable("Phase", "1")
-			eq.get_zone():DeletEBucket("War Shapen Emissary");
-			eq.get_zone():DeleteBucket("Gutripping War Beast");
-			eq.get_zone():DeleteBucket("Earthen Overseer");
-			eq.get_zone():DeleteBucket("Windshapen Warlord of Air");
+			eq.get_zone():DeleteVariable("War Shapen Emissary");
+			eq.get_zone():DeleteVariable("Gutripping War Beast");
+			eq.get_zone():DeleteVariable("Earthen Overseer");
+			eq.get_zone():DeleteVariable("Windshapen Warlord of Air");
 			ResetLockouts(99);
 			SetLockouts(1);
 			ZoneReset(e);
@@ -450,7 +450,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 5 Loading]");
 		elseif e.message:find("tb_p6") then
-			eq.get_zone():SetVariable("Phase", "4")
+			eq.get_zone():SetVariable("Phase", "5")
 			ResetLockouts(99);
 			SetLockouts(1);
 			SetLockouts(2);

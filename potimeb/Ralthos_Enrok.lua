@@ -29,7 +29,6 @@ function event_death_complete(e)
 	eq.signal(223242, 2); --signal phase_two_undead
 	eq.depop_all(2231731);
 
-	eq.get_zone():SetVariable("Phase", "2")
 	eq.signal(223097, 3);	--signal zone_status that boss is dead
 end
 
