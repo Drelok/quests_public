@@ -3,9 +3,9 @@
 
 function event_spawn(e)
 	-- activate immediately
-	mob:SetBodyType(1, true);		--humanoid
-	mob:SetSpecialAbility(24, 0);	--will not aggro
-	mob:SetSpecialAbility(35, 0);	--no harm from players
+	e.self:SetBodyType(1, true);		--humanoid
+	e.self:SetSpecialAbility(24, 0);	--will not aggro
+	e.self:SetSpecialAbility(35, 0);	--no harm from players
 end
 
 function event_slay(e)
