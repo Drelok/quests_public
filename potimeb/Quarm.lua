@@ -116,21 +116,9 @@ function DispellBuffs(e)
 	e.self:BuffFadeAll();
 	eq.set_timer("AE",6000);
 end
-function SpawnObserver(e)
 
-	local xloc = e.self:GetX();
-	local yloc = e.self:GetY();
-	local zloc = e.self:GetZ();
-	local heading = e.self:GetHeading();
-	
-	-- spawn an_observer on death.
-	eq.spawn2(1120001082,0,0,xloc,yloc,zloc,heading);
-	
-
-end
 function event_death_complete(e)
 	
-	SpawnObserver(e);
 	-- signal the zone_status that we died
 	eq.signal(223097,7);
 	eq.signal(223097,223201); -- Add Lockout
