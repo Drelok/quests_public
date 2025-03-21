@@ -285,6 +285,11 @@ sub EVENT_COMBINE_VALIDATE {
 			}
 		}
 	}
+
+    if ($recipe_id == 927863) {
+        my $name = $client->GetCleanName();
+        plugin::WorldAnnounceItem("$name has forged the {item} within the Crucible of the Elements!", 2017730);
+    }
 	
 	return 0;
 }
