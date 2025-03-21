@@ -31,7 +31,7 @@ function event_timer(e)
 end
 
 function event_death_complete(e)
-	eq.unique_spawn(210461,0,0,346,-2512,-450,0);	 --a_confused_castaway (210461)
+	eq.unique_spawn(210231,0,0,346,-2512,-450,0);	 -- just spawn real jeplak now
 end
 
 
