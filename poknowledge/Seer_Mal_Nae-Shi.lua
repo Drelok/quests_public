@@ -5,7 +5,7 @@ function event_say(e)
             set_message = "You have spoken to Jezith within the Plane of Tranquility for the Hedge preflag by saying tormented by nightmares.",
             unset_message = "You have NOT spoken to Jezith within the Plane of Tranquility for the Hedge preflag by saying tormented by nightmares."
         },
-        construct = {
+        {
             key = "construct",
             set_message = "You have killed the Construct of Nightmares.",
             unset_message = "You have NOT killed the Construct of Nightmares."
@@ -27,14 +27,18 @@ function event_say(e)
         },
         {
             key = "behemoth",
-            set_message = "You have talked to the Gnome within the Plane of Innovation factory.",
-            unset_message = "You have NOT talked to the Gnome within the Plane of Innovation factory."
-        },
-        {
-            key = "behemoth",
-            required = 2,
-            set_message = "You have defeated the Behemoth within the Plane of Innovation and then QUICKLY hailed the Gnome in the factory.",
-            unset_message = "You have NOT defeated the Behemoth within the Plane of Innovation and then QUICKLY hailed the Gnome in the factory."
+            conditions = {
+                {
+                    required_value = 1,
+                    set_message = "You have talked to the Gnome within the Plane of Innovation factory.",
+                    unset_message = "You have NOT talked to the Gnome within the Plane of Innovation factory."
+                },
+                {
+                    required_value = 2,
+                    set_message = "You have defeated the Behemoth within the Plane of Innovation and then QUICKLY hailed the Gnome in the factory.",
+                    unset_message = "You have NOT defeated the Behemoth within the Plane of Innovation and then QUICKLY hailed the Gnome in the factory."
+                },
+            }
         },
         {
             key = "adler",
