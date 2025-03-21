@@ -9,19 +9,19 @@ local total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_tim
 
 -- These Lockouts are Live Like
 -- P1
-local P1AIR					= 'Neimon of Air'
+local P1AIR				= 'Neimon of Air'
 local P1EARTH				= 'Terlok of Earth'
 local P1WATER				= 'Anar of Water'
 local P1FIRE				= 'Kazrok of Fire'
 local P1UNDEAD				= 'Rythor of the Undead'
 -- P2
-local P2AIR					= 'Windshapen Warlord of Air'
+local P2AIR				= 'Windshapen Warlord of Air'
 local P2EARTH				= 'Earthen Overseer'
 local P2WATER				= 'War Shapen Emissary'
 local P2FIRE				= 'Gutripping War Beast'
 local P2UNDEAD				= 'Ralthos Enrok'
 -- P3
-local FEROCIOUSWARBOAR		= 'A Ferocious Warboar'
+local FEROCIOUSWARBOAR			= 'A Ferocious Warboar'
 local BLACKHEART			= 'Deathbringer Blackheart'
 local XEROAN				= 'Xeroan Xi`Geruonask'
 local KRAKSMAAL				= 'Kraksmaal Fir`Dethsin'
@@ -54,7 +54,7 @@ local INNORUUK				= 'Innoruuk'
 -- local RALLOSZEKTRASH		= 'Rallos Zek Trash'
 local RALLOSZEK				= 'Rallos Zek'
 -- P6
-local QUARM					= 'Quarm'
+local QUARM				= 'Quarm'
 
 -- These are Custom Timers to help with tracking status
 local PHASE1COMPLETE	= 'Phase 1 Complete'
@@ -188,7 +188,7 @@ function event_signal(e)
 
 	-- grab the entity_list
 	local entity_list = eq.get_entity_list()
-	local phase_one_started = tonumber(eq.get_zone():GetVariable("Phase 1")) or 0 == 1;
+	local phase_one_started = tonumber(eq.get_zone():GetVariable("Phase 1 Started")) or 0 == 1;
 	-- signal 1 comes from the phase 1 trigger mobs
 	if e.signal == 1 and not phase_one_started then
 		eq.get_zone():SetVariable("Phase", "Phase 2")
