@@ -49,13 +49,13 @@ local SARYRN				= 'Saryrn'
 local TALLONZEK				= 'Tallon Zek'
 local VALLONZEK				= 'Vallon Zek'
 -- P5
-local BERTOXXULOUOSTRASH	= 'Bertoxxulous Trash'
+-- local BERTOXXULOUOSTRASH	= 'Bertoxxulous Trash'
 local BERTOXXULOUOS			= 'Bertoxxulous'
-local CAZICTHULETRASH		= 'Cazic-Thule Trash'
+-- local CAZICTHULETRASH		= 'Cazic-Thule Trash'
 local CAZICTHULE			= 'Cazic-Thule'
-local INNORUUKTRASH			= 'Innoruuk Trash'
+-- local INNORUUKTRASH			= 'Innoruuk Trash'
 local INNORUUK				= 'Innoruuk'
-local RALLOSZEKTRASH		= 'Rallos Zek Trash'
+-- local RALLOSZEKTRASH		= 'Rallos Zek Trash'
 local RALLOSZEK				= 'Rallos Zek'
 -- P6
 local QUARM					= 'Quarm'
@@ -111,13 +111,13 @@ local variables = {
 	[223201] = QUARM,
 
 	-- Trash Mobs and Mini-Bosses
-	[223098] = BERTOXXULOUOSTRASH,
+	-- [223098] = BERTOXXULOUOSTRASH,
 	[223142] = BERTOXXULOUOS,
-	[223165] = CAZICTHULETRASH,
+	-- [223165] = CAZICTHULETRASH,
 	[223166] = CAZICTHULE,
-	[223000] = INNORUUKTRASH,
+	-- [223000] = INNORUUKTRASH,
 	[223167] = INNORUUK,
-	[223001] = RALLOSZEKTRASH,
+	-- [223001] = RALLOSZEKTRASH,
 	[223168] = RALLOSZEK,
 }
 function event_spawn(e)

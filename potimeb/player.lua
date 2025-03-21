@@ -51,13 +51,13 @@ local phaselockouts = {
 		'Phase 4 Complete'
 	},
 	[5] = {
-		'Bertoxxulous Trash',
+		-- 'Bertoxxulous Trash',
 		'Bertoxxulous',
-		'Cazic-Thule Trash',
+		-- 'Cazic-Thule Trash',
 		'Cazic-Thule',
-		'Innoruuk Trash',
+		-- 'Innoruuk Trash',
 		'Innoruuk',
-		'Rallos Zek Trash',
+		-- 'Rallos Zek Trash',
 		'Rallos Zek',
 		'Phase 5 Complete'
 	},
@@ -300,13 +300,13 @@ local SARYRN				= 'Saryrn'
 local TALLONZEK				= 'Tallon Zek'
 local VALLONZEK				= 'Vallon Zek'
 -- P5
-local BERTOXXULOUOSTRASH	= 'Bertoxxulous Trash'
+-- local BERTOXXULOUOSTRASH	= 'Bertoxxulous Trash'
 local BERTOXXULOUOS			= 'Bertoxxulous'
-local CAZICTHULETRASH		= 'Cazic-Thule Trash'
+-- local CAZICTHULETRASH		= 'Cazic-Thule Trash'
 local CAZICTHULE			= 'Cazic-Thule'
-local INNORUUKTRASH			= 'Innoruuk Trash'
+-- local INNORUUKTRASH			= 'Innoruuk Trash'
 local INNORUUK				= 'Innoruuk'
-local RALLOSZEKTRASH		= 'Rallos Zek Trash'
+-- local RALLOSZEKTRASH		= 'Rallos Zek Trash'
 local RALLOSZEK				= 'Rallos Zek'
 -- P6
 local QUARM					= 'Quarm'
