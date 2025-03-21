@@ -148,7 +148,7 @@ function event_click_door(e)
 	elseif (door_id == 57 or door_id == 59) then
 		if expedition.valid then
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
-			if phase_variable >= 6 or e.self:GetGM() then
+			if phase_variable >= 5 or e.self:GetGM() then
 				return
 			else
 				e.self:Message(MT.NPCQuestSay,"A mystical force seems to have the lever locked in place.");
