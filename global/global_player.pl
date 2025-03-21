@@ -334,7 +334,67 @@ sub EVENT_COMBINE_SUCCESS {
 
 sub EVENT_ITEM_CLICK_CAST_CLIENT {
     plugin::swap_items($client, $item_id, $slot_id);
-}  
+
+    if ($spell_id == 36874) {
+        my $client = plugin::val('client');
+        cycle_items($client, $item_id, $slot_id);
+    }
+}
+
+sub cycle_items {
+    my ($client, $item_id, $slot_id) = @_;
+    
+    # Define item cycle order
+    my %next_item = (
+        17731 => 17734,
+        17734 => 17735,
+        17735 => 17815,
+        17815 => 17816,
+        17816 => 17817,
+        17817 => 17818,
+        17818 => 17731,
+    );
+    
+    # If current item isn't in our cycle, bail out
+    return unless exists $next_item{$item_id};
+    
+    # Get the next item in the cycle
+    my $dst_item = $next_item{$item_id};
+    
+    # Retrieve augment data for the current item
+    my @augments = (
+        $client->GetAugmentIDAt($slot_id, 0),
+        $client->GetAugmentIDAt($slot_id, 1),
+        $client->GetAugmentIDAt($slot_id, 2),
+        $client->GetAugmentIDAt($slot_id, 3),
+        $client->GetAugmentIDAt($slot_id, 4),
+        $client->GetAugmentIDAt($slot_id, 5),
+    );
+    
+    # Replace invalid augment values (-1) with 0
+    foreach my $augment (@augments) {
+        $augment = 0 if $augment == -1;
+    }
+    
+    # Remove the current item
+    $client->DeleteItemInInventory($slot_id, 0, 1);
+    
+    # Construct item data with augments and attunement
+    my $item_data = {
+        item_id       => $dst_item,
+        charges       => 1,
+        augment_one   => $augments[0],
+        augment_two   => $augments[1],
+        augment_three => $augments[2],
+        augment_four  => $augments[3],
+        augment_five  => $augments[4],
+        augment_six   => $augments[5],
+        attuned       => 1,
+    };
+    
+    # Add the new item with augments
+    $client->AddItem($item_data);
+}
 
 sub EVENT_CAST_ON {
     # Check for mutually-exclusive elemental form spells.
