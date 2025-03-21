@@ -5,3 +5,7 @@ function event_say(e)
         e.other:MovePC(Zone.poknowledge, 908.10, 19, 389.13, 129);
     end
 end
+
+function event_spawn(e)
+    e.self:ModifyNPCStat("special_abilities", "19,1^20,1^21,1^24,1^25,1^35,1");
+end
