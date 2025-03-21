@@ -48,8 +48,8 @@ end
 function event_death_complete(e)
 	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
 		eq.unique_spawn(209114, 0, 0, e.self:GetX(), e.self:GetY(),  e.self:GetZ(),  e.self:GetHeading()) --planar projection
+		eq.unique_spawn(209108, 0, 0, -469, -1754, 2351.2, 395.2) -- Karana upstairs
 	end
-	eq.unique_spawn(209108, 0, 0, -469, -1754, 2351.2, 395.2) -- Karana upstairs
 end
 
 function event_killed_merit(e)
