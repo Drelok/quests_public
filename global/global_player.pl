@@ -288,7 +288,14 @@ sub EVENT_COMBINE_VALIDATE {
 
     if ($recipe_id == 927863) {
         my $name = $client->GetCleanName();
-        plugin::WorldAnnounceItem("$name has forged the {item} within the Crucible of the Elements!", 2017730);
+        plugin::WorldAnnounceItem("$name has forged the {item} within the Crucible of the Elements! Hail the Prismatic Conquerer!", 2017730);
+        plugin::AddTitleFlag(678, $client);
+    }
+
+    if ($recipe_id == 927864) {
+        my $name = $client->GetCleanName();
+        plugin::WorldAnnounceItem("$name has claimed the {item} from the grasp of history! Hail the Truthbearer!", 2017731);
+        plugin::AddTitleFlag(679, $client);
     }
 	
 	return 0;
