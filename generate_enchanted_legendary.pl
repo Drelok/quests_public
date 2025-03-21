@@ -364,8 +364,8 @@ sub calculate_enchanted_stats {
         $stats{$stat} = non_negative($base->{$stat}) ? $base->{$stat} : 0;
     }
     
-    # Set backstabdmg to twice the damage value
-    if (defined $stats{damage}) {
+    # Set backstabdmg to twice the damage value (only if base item had backstabdmg)
+    if (defined $stats{damage} && non_negative($base->{backstabdmg})) {
         $stats{backstabdmg} = $stats{damage} * 2;
     }
     
@@ -477,8 +477,8 @@ sub calculate_legendary_stats {
         $stats{attack} = ceil($enchanted->{attack} * 2);
     }
     
-    # Set backstabdmg to twice the damage value
-    if (defined $stats{damage}) {
+    # Set backstabdmg to twice the damage value (only if base item had backstabdmg)
+    if (defined $stats{damage} && non_negative($base->{backstabdmg})) {
         $stats{backstabdmg} = $stats{damage} * 2;
     }
     
