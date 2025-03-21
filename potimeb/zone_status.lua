@@ -118,10 +118,12 @@ local variables = {
 }
 
 function event_spawn(e)
-	ResetVariables()
-
-	-- turn off all the spawn conditions
-	ResetSpawnConditions()
+	local phase_one_started = tonumber(eq.get_zone():GetVariable("Phase 1 Started")) or 0
+	if phase_one_started == 0 then
+		ResetVariables()
+		-- turn off all the spawn conditions
+		ResetSpawnConditions()
+	end
 
 	instance_id = eq.get_zone_instance_id()
 	local expedition = eq.get_expedition()
