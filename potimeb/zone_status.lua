@@ -640,38 +640,38 @@ function SpawnPhaseFive()
 
 	if expedition.valid then
 		-- if bertox_variable == 0 and bertox_trash_variable == 0 then
-			-- eq.spawn2(223142, 0, 0, -299, -297, 23.3, 62); -- Fake Bertoxxulous
+			-- eq.spawn2(223098, 0, 0, -299, -297, 23.3, 62); -- Fake Bertoxxulous
 			-- UpdateFailTimer(60); -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 14, 1);	
 		if bertox_variable == 0 then
-			eq.spawn2(223098, 0, 0, -299, -297, 23.3, 62); -- Real Bertoxxulous - 223098 - swapped
+			eq.spawn2(223142, 0, 0, -299, -297, 23.3, 62); -- Real Bertoxxulous - 223098 - swapped
 			UpdateFailTimer(60); -- 1 Hour per God
 		end
 		
 		-- if cazic_variable == 0 and cazic_trash_variable == 0 then
-			-- eq.spawn2(223166, 0, 0, -257, 255, 6, 203); -- Fake Cazic
+			-- eq.spawn2(223165, 0, 0, -257, 255, 6, 203); -- Fake Cazic
 			-- UpdateFailTimer(60); -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 12, 1);	
 		if cazic_variable == 0 then
-			eq.spawn2(223165, 0, 0, -257, 255, 6, 203); -- Real Cazic
+			eq.spawn2(223166, 0, 0, -257, 255, 6, 203); -- Real Cazic
 			UpdateFailTimer(60); -- 1 Hour per God
 		end
 		
 		-- if innoruuk_variable == 0 and innoruuk_trash_variable == 0 then
-			-- eq.spawn2(223167, 0, 0, 303.3, 306, 13.3, 323) -- Fake Innoruuk
+			-- eq.spawn2(223000, 0, 0, 303.3, 306, 13.3, 323) -- Fake Innoruuk
 			-- UpdateFailTimer(60) -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 11, 1)
 		if innoruuk_variable == 0 then
-			eq.spawn2(223000, 0, 0, 303.3, 306, 13.3, 323) -- Real Innoruuk
+			eq.spawn2(223167, 0, 0, 303.3, 306, 13.3, 323) -- Real Innoruuk
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 		
 		-- if rallos_variable == 0 and rallos_trash_variable == 0 then
-			-- eq.spawn2(223168, 0, 0, 264, -279, 18.75, 435) -- Fake Rallos
+			-- eq.spawn2(223001, 0, 0, 264, -279, 18.75, 435) -- Fake Rallos
 			-- UpdateFailTimer(60) -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 13, 1)
 		if rallos_variable == 0 then
-			eq.spawn2(223001, 0, 0, 264, -279, 18.75, 435) -- Real Rallos
+			eq.spawn2(223168, 0, 0, 264, -279, 18.75, 435) -- Real Rallos
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 	end
