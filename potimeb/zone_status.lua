@@ -213,7 +213,7 @@ function event_signal(e)
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 			if phase_variable == 0 then -- Moving to Phase 2
 				eq.get_zone():SetVariable("Phase", "1")
-				eq.get_zone():SetVariable("Counter", 0)
+				eq.get_zone():SetVariable("Counter", "0")
 				UpdateFailTimer(60) -- Add 60 Minutes to fail timer
 				eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
 				eq.signal(223227, 2) -- Emoter
