@@ -1,6 +1,13 @@
 --#Jeplak,_Lord_of_Srerendi (210471)
 --Zone: Postorms
 
+function event_spawn(e)
+	-- activate immediately
+	mob:SetBodyType(1, true);		--humanoid
+	mob:SetSpecialAbility(24, 0);	--will not aggro
+	mob:SetSpecialAbility(35, 0);	--no harm from players
+end
+
 function event_slay(e)
 	if e.other:IsClient() or e.other:IsPet() then
 		spawn_adds(e,2,2);	--2 adds on death always
