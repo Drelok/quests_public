@@ -2,12 +2,8 @@
 
 local charid_list
 local entity_list
-local Lockouts = {}
-local current_phase = "Phase0"
-local event_counter = 0
 local instance_id = 0
 local player_limit
-local p1_started = false
 
 local total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0
 
@@ -120,6 +116,7 @@ local variables = {
 	-- [223001] = RALLOSZEKTRASH,
 	[223168] = RALLOSZEK,
 }
+
 function event_spawn(e)
 	ResetVariables()
 
@@ -140,33 +137,33 @@ function event_spawn(e)
 		eq.spawn2(223173, 0, 0, 13.2, 574.2, 492.3, 0) -- fire trigger
 	elseif phase_variable == 1 then
 		UpdateFailTimer(60)
-		current_phase = "Phase2"
+		eq.get_zone():SetVariable("Current Phase", "Phase 2")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 2) -- Emoter
 		-- spawn phase 2 controller
 		eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
 	elseif phase_variable == 2 then
 		UpdateFailTimer(75)
-		current_phase = "Phase3"
+		eq.get_zone():SetVariable("Current Phase", "Phase 3")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 3) -- Emoter
 		-- begin Phase 3
 		ControlPhaseThree()
 	elseif phase_variable == 3 then
 		UpdateFailTimer(240) -- TODO UPDATE TIMER BASED ON NUMBER OF P4 GODS UP
-		current_phase = "Phase4"
+		eq.get_zone():SetVariable("Current Phase", "Phase 4")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 4) -- Emoter
 		SpawnPhaseFour()
 	elseif phase_variable == 4 then
 		UpdateFailTimer(240) -- TODO UPDATE TIMER BASED ON NUMBER OF P5 GODS UP
-		current_phase = "Phase5"
+		eq.get_zone():SetVariable("Current Phase", "Phase 5")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 5) -- Emoter
 		SpawnPhaseFive()
 	elseif phase_variable == 5 then
 		UpdateFailTimer(120)
-		current_phase = "Phase6"
+		eq.get_zone():SetVariable("Current Phase", "Phase 6")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 6) -- Emoter
 		-- spawn Quarm
@@ -191,11 +188,13 @@ function event_signal(e)
 
 	-- grab the entity_list
 	local entity_list = eq.get_entity_list()
+	local phase_one_started = tonumber(eq.get_zone():GetVariable("Phase 1")) or 0 == 1;
 	-- signal 1 comes from the phase 1 trigger mobs
-	if e.signal == 1 and not p1_started then
-		p1_started = true
+	if e.signal == 1 and not phase_one_started then
+		eq.get_zone():SetVariable("Phase", "Phase 2")
+		eq.get_zone():SetVariable("Phase 1 Started", "1")
 		-- npc global for status tracking.
-		current_phase = "Phase1"
+		eq.get_zone():SetVariable("Current Phase", "Phase 1")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 1) -- Emoter
 		UpdateFailTimer(60)
@@ -214,7 +213,7 @@ function event_signal(e)
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 			if phase_variable == 0 then -- Moving to Phase 2
 				eq.get_zone():SetVariable("Phase", "1")
-				event_counter = 0
+				eq.get_zone():SetVariable("Counter", 0)
 				UpdateFailTimer(60) -- Add 60 Minutes to fail timer
 				eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
 				eq.signal(223227, 2) -- Emoter
@@ -245,15 +244,15 @@ function event_signal(e)
 		local tallon_variable = tonumber(eq.get_zone():GetVariable(TALLONZEK)) or 0
 		local terris_variable = tonumber(eq.get_zone():GetVariable(TERRIS)) or 0
 		local vallon_variable = tonumber(eq.get_zone():GetVariable(VALLONZEK)) or 0
-		if 
+		if (
 			saryrn_variable == 1 and
 			tallon_variable == 1 and
 			terris_variable == 1 and
 			vallon_variable == 1
-		 then -- If all Phase 4 gods are dead
+		) then -- If all Phase 4 gods are dead
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 			eq.get_zone():SetVariable("Phase", "4")
-			current_phase = "Phase5"
+			eq.get_zone():SetVariable("Current Phase", "Phase 5")
 			-- add 4 hours to the fail timer
 			UpdateFailTimer(240) -- 60 Minutes per God
 			-- sendsignal to flavor text NPC
@@ -285,7 +284,7 @@ function event_signal(e)
 			eq.spawn_condition("potimeb", instance_id, 14, 0)
 			local quarm_variable = tonumber(eq.get_zone():GetVariable(QUARM)) or 0
 			if quarm_variable == 0 or phase_variable < 6 then
-				current_phase = "Phase6"
+				eq.get_zone():SetVariable("Current Phase", "Phase 6")
 				-- add 2 hours to the fail timer
 				UpdateFailTimer(120)
 				-- sendsignal to flavor text NPC
@@ -300,7 +299,7 @@ function event_signal(e)
 		end	
 	-- signal 7 comes from Quarm
 	elseif e.signal == 7 then
-		current_phase = "QuarmDead"
+		eq.get_zone():SetVariable("Current Phase", "Quarm Dead")
 		eq.stop_timer("event_hb")
 		eq.set_timer("lockout", 50 * 60 * 1000)
 	-- signal 8 comes from Druzzil_Ro
@@ -320,10 +319,10 @@ function event_signal(e)
 end
 
 function ResetVariables()
-	current_phase = "Phase0"
-	event_counter = 0
+	eq.get_zone():SetVariable("Current Phase", "Phase 0")
+	eq.get_zone():SetVariable("Counter", "0")
+	eq.get_zone():SetVariable("Phase One Started", "0")
 	instance_id = 0
-	p1_started = false
 	total_time = 0
 end
 
@@ -340,7 +339,7 @@ function ControlPhaseTwo()
 	if expedition.valid then
 		local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 		if phase_variable == 2 then
-			current_phase = "Phase3"
+			eq.get_zone():SetVariable("Current Phase", "Phase 3")
 			ControlPhaseThree()
 			-- sendsignal to flavor text NPC
 			eq.signal(223227, 3) -- Emoter
@@ -358,7 +357,8 @@ end
 function ControlPhaseThree()
 	instance_id = eq.get_zone_instance_id()
 	local expedition = eq.get_expedition()
-	if current_phase == "Phase3" then
+	local current_phase = eq.get_zone():GetVariable("Current Phase")
+	if current_phase == "Phase 3" then
 		--spawn phase 3
 		locs = {[1] = {1250, 1085, 360}, [2] = {1250, 1135, 360} }	-- destination x, y, z locs only
 		-- set the spawn condition for the first wave
@@ -380,12 +380,14 @@ function ControlPhaseThree()
 		eq.spawn2(223023, 0, 0, 1230, 1310, 359.38, 350) -- Deathbringer_Skullsmash --
 		eq.spawn2(223155, 0, 0, 1250, 1135, 359.5, 384) -- A_Ferocious_Warboar --
 		eq.spawn2(223156, 0, 0, 1250, 1085, 359.5, 384) -- Deathbringer_Blackheart --
-		current_phase = "Phase3.1"
-	elseif current_phase == "Phase3.1" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.12"
+		eq.get_zone():SetVariable("Current Phase", "Phase 3.1")
+	elseif current_phase == "Phase 3.1" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.12")
 			-- Disable wave 1 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 2, 0)
 			eq.clear_spawn_timers()
@@ -393,21 +395,25 @@ function ControlPhaseThree()
 			BossChange(223155, 223008, 1) -- A_Ferocious_Warboar
 			BossChange(223156, 223009, 2) -- Deathbringer_Blackheart
 		end
-	elseif current_phase == "Phase3.12" then
+	elseif current_phase == "Phase 3.12" then
 		-- This is expected to be hit twice, once per wave 1 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 1 bosses are dead, spawn wave 2 trash
-			event_counter = 0
-			current_phase = "Phase3.2"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.2")
 			-- spawn phase 3 wave 2 trash
 			eq.spawn_condition("potimeb", instance_id, 3, 1)
 		end
-	elseif current_phase == "Phase3.2" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.22"
+	elseif current_phase == "Phase 3.2" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.22")
 			-- Disable wave 2 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 3, 0)
 			eq.clear_spawn_timers()
@@ -415,21 +421,25 @@ function ControlPhaseThree()
 			BossChange(223017, 223024, 1) -- Kraksmaal_Fir`Dethsin
 			BossChange(223016, 223025, 2) -- Xeroan_Xi`Geruonask
 		end
-	elseif current_phase == "Phase3.22" then
+	elseif current_phase == "Phase 3.22" then
 		-- This is expected to be hit twice, once per wave 2 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 2 bosses are dead, spawn wave 3 trash
-			event_counter = 0
-			current_phase = "Phase3.3"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.3")
 			-- spawn phase 3 wave 3
 			eq.spawn_condition("potimeb", instance_id, 4, 1)
 		end
-	elseif current_phase == "Phase3.3" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.32"
+	elseif current_phase == "Phase 3.3" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.32")
 			-- Disable wave 3 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 4, 0)
 			eq.clear_spawn_timers()
@@ -437,21 +447,25 @@ function ControlPhaseThree()
 			BossChange(223022, 223032, 1) -- A_Deadly_Warboar
 			BossChange(223023, 223031, 2) -- Deathbringer_Skullsmash
 		end
-	elseif current_phase == "Phase3.32" then
+	elseif current_phase == "Phase 3.32" then
 		-- This is expected to be hit twice, once per wave 3 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 3 bosses are dead, spawn wave 4 trash
-			event_counter = 0
-			current_phase = "Phase3.4"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.4")
 			-- spawn phase 3 wave 4
 			eq.spawn_condition("potimeb", instance_id, 5, 1)
 		end
-	elseif current_phase == "Phase3.4" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.42"
+	elseif current_phase == "Phase 3.4" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.42")
 			-- Disable wave 4 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 5, 0)
 			eq.clear_spawn_timers()
@@ -459,21 +473,25 @@ function ControlPhaseThree()
 			BossChange(223012, 223038, 1) -- Sinrunal_Gorgedreal
 			BossChange(223013, 223037, 2) -- Herlsoakian
 		end
-	elseif current_phase == "Phase3.42" then
+	elseif current_phase == "Phase 3.42" then
 		-- This is expected to be hit twice, once per wave 4 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 4 bosses are dead, spawn wave 5 trash
-			event_counter = 0
-			current_phase = "Phase3.5"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.5")
 			-- spawn phase 3 wave 5
 			eq.spawn_condition("potimeb", instance_id, 6, 1)
 		end
-	elseif current_phase == "Phase3.5" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.52"
+	elseif current_phase == "Phase 3.5" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.52")
 			-- Disable wave 5 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 6, 0)
 			eq.clear_spawn_timers()
@@ -481,21 +499,25 @@ function ControlPhaseThree()
 			BossChange(223011, 223046, 1) -- Deathbringer_Rianit
 			BossChange(223010, 223047, 2) -- A_Needletusk_Warboar
 		end
-	elseif current_phase == "Phase3.52" then
+	elseif current_phase == "Phase 3.52" then
 		-- This is expected to be hit twice, once per wave 5 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 5 bosses are dead, spawn wave 6 trash
-			event_counter = 0
-			current_phase = "Phase3.6"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.6")
 			-- spawn phase 3 wave 6
 			eq.spawn_condition("potimeb", instance_id, 7, 1)
 		end
-	elseif current_phase == "Phase3.6" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.62"
+	elseif current_phase == "Phase 3.6" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.62")
 			-- Disable wave 6 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 7, 0)
 			eq.clear_spawn_timers()
@@ -503,21 +525,25 @@ function ControlPhaseThree()
 			BossChange(223014, 223051, 1) -- Xerskel_Gerodnsal
 			BossChange(223015, 223050, 2) -- Dersool_Fal`Giersnaol
 		end
-	elseif current_phase == "Phase3.62" then
+	elseif current_phase == "Phase 3.62" then
 		-- This is expected to be hit twice, once per wave 6 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 6 bosses are dead, spawn wave 7 trash
-			event_counter = 0
-			current_phase = "Phase3.7"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.7")
 			-- spawn phase 3 wave 7 trash
 			eq.spawn_condition("potimeb", instance_id, 8, 1)
 		end
-	elseif current_phase == "Phase3.7" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.72"
+	elseif current_phase == "Phase 3.7" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.72")
 			-- Disable wave 7 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 8, 0)
 			eq.clear_spawn_timers()
@@ -525,21 +551,25 @@ function ControlPhaseThree()
 			BossChange(223021, 223057, 1) -- Undead_Squad_Leader
 			BossChange(223020, 223058, 2) -- Dark_Knight_of_Terris
 		end
-	elseif current_phase == "Phase3.72" then
+	elseif current_phase == "Phase 3.72" then
 		-- This is expected to be hit twice, once per wave 7 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 7 bosses are dead, spawn wave 8 trash
-			event_counter = 0
-			current_phase = "Phase3.8"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.8")
 			-- spawn phase 3 wave 8 trash
 			eq.spawn_condition("potimeb", instance_id, 9, 1)
 		end
-	elseif current_phase == "Phase3.8" then
-		event_counter = event_counter + 1
-		if event_counter == 8 then
-			event_counter = 0
-			current_phase = "Phase3.82"
+	elseif current_phase == "Phase 3.8" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 8 then
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.82")
 			-- Disable wave 8 trash spawns
 			eq.spawn_condition("potimeb", instance_id, 9, 0)
 			eq.clear_spawn_timers()
@@ -547,24 +577,28 @@ function ControlPhaseThree()
 			BossChange(223019, 223065, 1) -- Champion_of_Torment
 			BossChange(223018, 223066, 2) -- Dreamwarp
 		end
-	elseif current_phase == "Phase3.82" then
+	elseif current_phase == "Phase 3.82" then
 		-- This is expected to be hit twice, once per wave 8 boss
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			-- Both wave 8 bosses are dead, spawn golems
-			event_counter = 0
-			current_phase = "Phase3.9"
+			eq.get_zone():SetVariable("Counter", "0")
+			eq.get_zone():SetVariable("Current Phase", "Phase 3.9")
 			eq.spawn2(223073, 0, 0, 1492, 1110, 374.1, 391) -- Avatar_of_the_Elements
 			eq.spawn2(223074, 0, 0, 1563, 1110, 374.1, 391) -- Supernatural_Guardian
 		end
-	elseif current_phase == "Phase3.9" then
-		event_counter = event_counter + 1
-		if event_counter == 2 then
+	elseif current_phase == "Phase 3.9" then
+		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
+		local new_counter = event_counter + 1
+		eq.get_zone():SetVariable("Counter", tostring(new_counter))
+		if new_counter == 2 then
 			eq.get_zone():SetVariable("Phase", "3")
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
-			event_counter = 0
+			eq.get_zone():SetVariable("Counter", "0")
 			if expedition.valid and phase_variable == 3 then
-				current_phase = "Phase4"
+				eq.get_zone():SetVariable("Current Phase", "Phase 4")
 				-- sendsignal to flavor text NPC
 				eq.signal(223227, 4) -- Emoter
 				-- add 4 hours to the fail timer
