@@ -231,7 +231,10 @@ function event_signal(e)
 			end
 		end
 	elseif e.signal == 3 then -- signal 3 comes from the phase 2 mobs.
-		ControlPhaseTwo()
+		local bosses_are_dead = not eq.is_npc_spawned({223096, 223118, 223127, 223134, 223146})
+		if bosses_are_dead then
+			ControlPhaseTwo()
+		end
 	-- signal 4 comes from the phase 3 mobs.
 	elseif e.signal == 4 then
 		ControlPhaseThree()

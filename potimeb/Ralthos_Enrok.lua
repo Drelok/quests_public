@@ -30,7 +30,7 @@ function event_death_complete(e)
 	eq.depop_all(2231731);
 
 	eq.get_zone():SetVariable("Phase", "2")
-	eq.signal(223097, 3);	--signal zone_status that phase is complete
+	eq.signal(223097, 3);	--signal zone_status that boss is dead
 end
 
 function event_hp(e)
