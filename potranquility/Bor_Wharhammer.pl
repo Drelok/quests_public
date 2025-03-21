@@ -8,10 +8,10 @@ sub EVENT_SAY {
   }
   if ($text=~/emblem/i) {
     if ($ulevel <= 54) {
-      quest::say("Ye look mighty inexperienced t'be in this area. $name. Come an' seek me out when ye 'ave more knowledge o'the planes!");
+      quest::say("Ye look mighty inexperienced t'be in this area, $name. Come an' seek me out when ye 'ave more knowledge o'the planes!");
     }
     else {
-      quest::say("Well, the emblems dinnae be easy t'craft but I will gladly give ye one fer the price of 500 platinum pieces. They allow a planes traveler with no craftin' skills t'create many fine pieces o'planar armor in a special, magical kit I also 'ave an' will throw in with the price. The kit acts as a focal point fer the wild magic energy o'the Planes. Ye will only be able t'use each emblem an' kit once when ye create the piece, 'owever I dinnae be goin' anywhere soon! Just venture back when ye need another an' dinnae ferget the coin! An' if ye' be needin' an emblem fer another class, just tell me the name of tha' class.");
+      quest::say("Well, the emblems dinnae be easy t'craft but I will gladly give ye one fer the price of 500 platinum pieces. They allow a planes traveler with no craftin' skills t'create many fine pieces o'planar armor in a special, magical kit I also 'ave an' will throw in with the price. The kit acts as a focal point fer the wild magic energy o'the Planes. Ye will only be able t'use each emblem an' kit once when ye create the piece, 'owever I dinnae be goin' anywhere soon! Just venture back when ye need another an' dinnae ferget the coin! An' if ye be needin' an emblem fer a particular class, just mention tha' class's name and I'll trade ye that emblem fer the coin.");
     }
   }
   if ($text=~/chain/i) {
