@@ -32,11 +32,11 @@ function event_say(e)
 				if e.other:IsGrouped() then
 					local group = e.other:GetGroup()
 					local member_count = group:GroupCount()
-
 					for i = 0, member_count - 1 do
 						local member = group:GetMember(i)
-						if member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 150 then
-							member:MovePCInstance(201, eq.get_zone_instance_id(), 937, -703, 53, 300)
+						if member ~= nil and member.valid and member:IsClient() and member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 150 then
+							local client = member:CastToClient();
+							client:MovePCInstance(201, eq.get_zone_instance_id(), 937, -703, 53, 300)
 						end
 					end
 				else
