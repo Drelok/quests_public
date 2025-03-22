@@ -3,7 +3,7 @@ function event_say(e)
 	local vallon_bucket = tonumber(e.other:GetAccountBucket("pop.flags.vallon")) or 0
 	if tallon_bucket == 1 and vallon_bucket == 1 then
 		if e.message:findi("hail") then
-			local weapons_link = eq.silent_saylink("weapons")
+			local weapons_link = eq.silent_say_link("weapons")
 			e.self:Emote(
 				string.format(
 					"grins at you coldly. 'The twins lie bleeding at the feet of Rallos, and the halls of Drunder shiver with uncertainty. But one challenge lies before you. Face the warlord and his two injured acolytes and the power of Drunder is yours for the taking. The Warlord will not fall easily. The weapons of dark courage will not be enough, your [%s] will require the power of torment to topple the Warlord.",
@@ -11,7 +11,7 @@ function event_say(e)
 				)
 			)
 		elseif e.message:findi("weapons") then
-			local blood_link = eq.silent_saylink("blood")
+			local blood_link = eq.silent_say_link("blood")
 			e.self:Say(
 				string.format(
 					"Though your weapons may have been effective against the twins, they will prove of little use against the Warlord. Temper them with the Torment of Saryn and you may yet be able to cleave the armor of the warlord. Insanity is not easily manipulated though. You'll have to suspend it in the [%s] of zek.",

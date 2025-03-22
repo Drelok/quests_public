@@ -16,7 +16,7 @@ function event_say(e)
 					)
 				)
 			else
-				local portals_destination_link = eq.silent_saylink("portal's destination")
+				local portals_destination_link = eq.silent_say_link("portal's destination")
 				e.self:Say(
 					string.format(
 						"Greetings mortal. Are you here about this [%s]? I have been getting a lot of questions about it lately.",
@@ -25,7 +25,7 @@ function event_say(e)
 				)
 			end
 	elseif e.message:findi("portal's destination") then
-			local solusek_ro_link = eq.silent_saylink("Solusek Ro")
+			local solusek_ro_link = eq.silent_say_link("Solusek Ro")
 			e.self:Say(
 				string.format(
 					"As I suspected. This portal leads to Doomfire, the Burning Lands, home to Fennin Ro, the Tyrant of Fire. Or rather, it used to. His son, [%s], disapproved of the number of you mortals entering his father's plane, and so he sealed it. It's a shame really, I was starting to enjoy the sounds you mortals make when you fall into the lava.",
