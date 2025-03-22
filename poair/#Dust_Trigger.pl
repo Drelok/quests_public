@@ -9,7 +9,7 @@ sub EVENT_TIMER
 {
 	if($timer == 30) {
     		#A_Crystalline_Windwalker
-    		if (!defined($qglobals{dust_event_start}) && !defined($qglobals{dust_done}) && !$entity_list->IsMobSpawnedByNpcTypeID(215043) && !$entity_list->IsMobSpawnedByNpcTypeID(215044) && !$entity_list->IsMobSpawnedByNpcTypeID(215045) && !$entity_list->IsMobSpawnedByNpcTypeID(215060)) 
+    		if ($zone->GetVariable("dust_event_start") == "" && $zone->GetVariable("dust_done") == "" && !$entity_list->IsMobSpawnedByNpcTypeID(215043) && !$entity_list->IsMobSpawnedByNpcTypeID(215044) && !$entity_list->IsMobSpawnedByNpcTypeID(215045) && !$entity_list->IsMobSpawnedByNpcTypeID(215060)) 
     		{
 			quest::spawn2(215460,0,0,-356.8,591.3,436.3,418.8); # NPC: an_erratic_arachnid
 			quest::spawn2(215460,0,0,-282.1,663.4,442.4,459.6); # NPC: an_erratic_arachnid
@@ -27,7 +27,7 @@ sub EVENT_TIMER
 			quest::spawn2(215460,0,0,-363.4,747.4,435.2,310.8); # NPC: an_erratic_arachnid
 			quest::spawn2(215460,0,0,-480.3,574,435.6,37.6); # NPC: an_erratic_arachnid
 			quest::spawn2(215456,0,0,-443.7,642.6,435.1,117.6); # NPC: A_Vorladien_Archwalker
-			quest::setglobal("dust_event_start",1,3,"H2");
+			$zone->SetVariable("dust_event_start","1");
 			$counter=0;
 		}
 	}
@@ -35,7 +35,7 @@ sub EVENT_TIMER
 		
 sub EVENT_SIGNAL 
 {
-	if ($signal == 1 && defined($qglobals{dust_event_start}) && !defined($qglobals{dust_done})) 
+	if ($signal == 1 && $zone->GetVariable("dust_event_start") != "" && $zone->GetVariable("dust_done") == "") 
 	{
         	$counter+=1;
         	
@@ -56,7 +56,7 @@ sub EVENT_SIGNAL
         		quest::spawn2(215459,0,0,-434.1,548.7,439.6,497); #spawn
         	}
      	}	
-     	elsif ($signal == 2 && defined($qglobals{dust_event_start}) && !defined($qglobals{dust_done})) 
+     	elsif ($signal == 2 && $zone->GetVariable("dust_event_start") != "" && $zone->GetVariable("dust_done") == "") 
      	{
 		$counterone+=1;
 		
@@ -66,16 +66,16 @@ sub EVENT_SIGNAL
 			$counterone=0;
         	}
      	}
-     	elsif ($signal == 3 && defined($qglobals{dust_event_start}) && !defined($qglobals{dust_done})) 
+     	elsif ($signal == 3 && $zone->GetVariable("dust_event_start") != "" && $zone->GetVariable("dust_done") == "") 
      	{
 		quest::spawn2(215475,0,0,1671,527,356,384); # NPC: #Avatar_of_Dust
 		quest::depop_withtimer(215046);
 	}
-     	elsif ($signal == 4  && !defined($qglobals{dust_done})) 
+     	elsif ($signal == 4  && $zone->GetVariable("dust_done") == "") 
      	{
-     		quest::setglobal("dust_done",1,3,"F");
+     		$zone->SetVariable("dust_done","1");
      	}
-     	elsif ($signal == 5 && !defined($qglobals{dust_event_start}) && !defined($qglobals{dust_done})) 
+     	elsif ($signal == 5 && $zone->GetVariable("dust_event_start") == "" && $zone->GetVariable("dust_done") == "") 
      	{
      		#A_Crystalline_Windwalker, A_Pristine_Recluse, A_Vorladien_Webspinner, Lossenmachar
      		if(!$entity_list->IsMobSpawnedByNpcTypeID(215043) && !$entity_list->IsMobSpawnedByNpcTypeID(215044) && !$entity_list->IsMobSpawnedByNpcTypeID(215045) && !$entity_list->IsMobSpawnedByNpcTypeID(215060))
@@ -96,12 +96,13 @@ sub EVENT_SIGNAL
 			quest::spawn2(215460,0,0,-363.4,747.4,435.2,310.8); # NPC: an_erratic_arachnid
 			quest::spawn2(215460,0,0,-480.3,574,435.6,37.6); # NPC: an_erratic_arachnid
 			quest::spawn2(215456,0,0,-443.7,642.6,435.1,117.6); # NPC: A_Vorladien_Archwalker
-			quest::setglobal("dust_event_start",1,3,"H2");
+			$zone->SetVariable("dust_event_start","1");
 			$counter=0;
 		}
 	}
 	elsif ($signal == 6)
 	{
-	    quest::delglobal("dust_done");
+		$zone->DeleteVariable("dust_done");
+		$zone->DeleteVariable("dust_event_start");
 	}
 }
