@@ -12,8 +12,8 @@ end
 function event_say(e)
 	if e.message:findi("Hail") then
 		local xegony_bucket = tonumber(e.other:GetAccountBucket("pop.flags.xegony")) or 0
+		e.other:SummonItem(29164) -- Item: Amorphous Cloud of Air
 		if xegony_bucket == 0 then
-			e.other:SummonItem(29164) -- Item: Amorphous Cloud of Air
 			e.other:SetAccountBucket("pop.flags.xegony", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		else

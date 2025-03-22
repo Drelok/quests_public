@@ -13,8 +13,8 @@ end
 function event_say(e)
 	if e.message:findi("Hail") then
 		local fennin_bucket = tonumber(e.other:GetAccountBucket("pop.flags.fennin")) or 0
-		if fennin_bucket == 0 then
-			e.other:SummonItem(29147) -- Item: Globe of Dancing Flame
+		e.other:SummonItem(29147) -- Item: Globe of Dancing Flame
+		if fennin_bucket == 0 then			
 			e.other:SetAccountBucket("pop.flags.fennin", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		else
