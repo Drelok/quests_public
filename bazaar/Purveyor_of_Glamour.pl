@@ -213,40 +213,16 @@ sub get_random_armor {
     
     # Prepare the SQL statement
     my $sql = q{
-                SELECT id
-                    FROM (
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Heroic %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Elegant %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Elegant %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Elegant %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Elegant %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Ornate %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Ornate %'"
-                        UNION ALL
-                        SELECT i.id, i.Name FROM items i WHERE i.Name LIKE "Glamour - 'Resplendant %'"
-                    ) weighted_items
-                    ORDER BY RAND()
-                    LIMIT 1;
+        SELECT id 
+        FROM items
+        WHERE (
+            Name LIKE 'Glamour - \'Heroic %\'' OR
+            Name LIKE 'Glamour - \'Elegant %\'' OR
+            Name LIKE 'Glamour - \'Ornate %\'' OR
+            Name LIKE 'Glamour - \'Resplendant %\''
+        ) AND herosforgemodel
+        ORDER BY RAND()
+        LIMIT 1;
     };
 
     # Prepare the SQL statement
