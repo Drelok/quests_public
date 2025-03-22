@@ -19,7 +19,7 @@ function event_say(e)
 					local member_count = group:GroupCount()
 					for i = 0, member_count - 1 do
 						local member = group:GetMember(i)
-						if member and member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 100 then
+						if member ~= nil and member:IsClient() and member:CalculateDistance(e.self:GetX(), e.self:GetY(), e.self:GetZ()) <= 100 then
 						    member:MovePCInstance(207, eq.get_zone_instance_id(), -175, 815, -955,0)
 						end
 					end
@@ -32,7 +32,7 @@ function event_say(e)
 end
 
 function event_signal(e)
-		if e.signal == 0 then 
-			eq.depop_all(207014)
-		end
+	if e.signal == 0 then 
+		eq.depop_all(207014)
+	end
 end
