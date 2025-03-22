@@ -2,6 +2,10 @@ my $namedcount = 0; # Sets the named counter for later use
 
 sub EVENT_SPAWN { #Only needed for #repop during testing
   quest::stopalltimers();
+  if (!$npc->IsResumedFromZoneSuspend()) {
+    $zone->DeleteVariable("coirnav_wave");
+    $zone->DeleteVariable("coirnav_done");
+  }
 }
 
 sub EVENT_SIGNAL {
