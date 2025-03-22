@@ -117,7 +117,33 @@ local variables = {
 	[223168] = RALLOSZEK,
 }
 
+local p3TrashSpawns = {
+	{ x=1150, y=1035, z=358, h=385 },
+	{ x=1150, y=1085, z=358, h=385 },
+	{ x=1150, y=1135, z=358, h=385 },
+	{ x=1150, y=1185, z=358, h=385 },
+	{ x=1200, y=1035, z=358, h=385 },
+	{ x=1200, y=1085, z=358, h=385 },
+	{ x=1200, y=1135, z=358, h=385 },
+	{ x=1200, y=1185, z=358, h=385 }
+}
+
+local p3TrashByWave = {
+	[1] = { 223005, 223006 },
+	[2] = { 223026, 223027, 223028, 223029 },
+	[3] = { 223033, 223034, 223035, 223036 },
+	[4] = { 223039, 223040, 223041, 223042, 223043, 223044, 223045 },
+	[5] = { 223048, 223049 },
+	[6] = { 223052, 223053, 223054, 223055, 223056 },
+	[7] = { 223059, 223060, 223061, 223062, 223063, 223064 },
+	[8] = { 223067, 223068, 223069, 223070, 223071, 223072 }
+}
+
 function event_spawn(e)
+	e.self:SetTimer("spawn",1)
+end
+
+function do_the_spawn(e)
 	local phase_one_started = tonumber(eq.get_zone():GetVariable("Phase 1 Started")) or 0
 	if phase_one_started == 0 then
 		ResetVariables()
@@ -150,6 +176,7 @@ function event_spawn(e)
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 3) -- Emoter
 		-- begin Phase 3
+		eq.set_timer("p3unsticker",10000)
 		ControlPhaseThree()
 	elseif phase_variable == 3 then
 		UpdateFailTimer(240) -- TODO UPDATE TIMER BASED ON NUMBER OF P4 GODS UP
@@ -356,15 +383,21 @@ function SetupPhaseThree()
 	ControlPhaseThree()
 end
 
+function SpawnPhaseThreeTrash(wave)
+	for i, sp in ipairs(p3TrashSpawns) do
+		eq.spawn2(p3TrashByWave[wave][math.random(#p3TrashByWave[wave])],0,0,sp.x, sp.y, sp.z, sp.h);	
+	end
+end
+
 function ControlPhaseThree()
 	instance_id = eq.get_zone_instance_id()
 	local expedition = eq.get_expedition()
-	local current_phase = eq.get_zone():GetVariable("Current Phase")
-	if current_phase == "Phase 3" then
+	local p3wave = tonumber(eq.get_zone():GetVariable("p3wave")) or 0
+	--local event_counter = tonumber(eq.get_zone():GetVariable("P3Counter")) or 0
+	locs = {[1] = {1250, 1085, 360}, [2] = {1250, 1135, 360} }
+	if p3wave == 0 then
 		--spawn phase 3
-		locs = {[1] = {1250, 1085, 360}, [2] = {1250, 1135, 360} }	-- destination x, y, z locs only
-		-- set the spawn condition for the first wave
-		eq.spawn_condition("potimeb", instance_id, 2, 1)
+		SpawnPhaseThreeTrash(1);
 		-- spawn the untargetable version of the phase 3 named
 		eq.spawn2(223010, 0, 0, 1280, 1010, 359.38, 390) -- A_Needletusk_Warboar --
 		eq.spawn2(223011, 0, 0, 1280, 1030, 359.38, 390) -- Deathbringer_Rianit --
@@ -382,223 +415,133 @@ function ControlPhaseThree()
 		eq.spawn2(223023, 0, 0, 1230, 1310, 359.38, 350) -- Deathbringer_Skullsmash --
 		eq.spawn2(223155, 0, 0, 1250, 1135, 359.5, 384) -- A_Ferocious_Warboar --
 		eq.spawn2(223156, 0, 0, 1250, 1085, 359.5, 384) -- Deathbringer_Blackheart --
-		eq.get_zone():SetVariable("Current Phase", "Phase 3.1")
-	elseif current_phase == "Phase 3.1" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.12")
-			-- Disable wave 1 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 2, 0)
-			eq.clear_spawn_timers()
+		eq.get_zone():SetVariable("p3wave", "1")
+	elseif p3wave == 1 then
+		if not eq.is_npc_spawned(p3TrashByWave[1]) then
+			eq.get_zone():SetVariable("p3wave", "1.5")
 			-- depop untargetable and pop targetable versions
 			BossChange(223155, 223008, 1) -- A_Ferocious_Warboar
 			BossChange(223156, 223009, 2) -- Deathbringer_Blackheart
 		end
-	elseif current_phase == "Phase 3.12" then
+	elseif p3wave == 1.5 then
 		-- This is expected to be hit twice, once per wave 1 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223008, 223009 }) then
 			-- Both wave 1 bosses are dead, spawn wave 2 trash
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.2")
+			eq.get_zone():SetVariable("p3wave", "2")
 			-- spawn phase 3 wave 2 trash
-			eq.spawn_condition("potimeb", instance_id, 3, 1)
+			SpawnPhaseThreeTrash(2)
 		end
-	elseif current_phase == "Phase 3.2" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.22")
-			-- Disable wave 2 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 3, 0)
-			eq.clear_spawn_timers()
+	elseif p3wave == 2 then
+		if not eq.is_npc_spawned(p3TrashByWave[2]) then
+			eq.get_zone():SetVariable("p3wave", "2.5")
 			-- depop untargetable and pop targetable versions
 			BossChange(223017, 223024, 1) -- Kraksmaal_Fir`Dethsin
 			BossChange(223016, 223025, 2) -- Xeroan_Xi`Geruonask
 		end
-	elseif current_phase == "Phase 3.22" then
+	elseif p3wave == 2.5 then
 		-- This is expected to be hit twice, once per wave 2 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223024, 223025 }) then
 			-- Both wave 2 bosses are dead, spawn wave 3 trash
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.3")
+			eq.get_zone():SetVariable("p3wave", "3")
 			-- spawn phase 3 wave 3
-			eq.spawn_condition("potimeb", instance_id, 4, 1)
+			SpawnPhaseThreeTrash(3)
 		end
-	elseif current_phase == "Phase 3.3" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.32")
-			-- Disable wave 3 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 4, 0)
-			eq.clear_spawn_timers()
+	elseif p3wave == 3 then
+		if not eq.is_npc_spawned(p3TrashByWave[3]) then
+			eq.get_zone():SetVariable("p3wave", "3.5")
 			-- Depop untargetable and pop targetable versions
 			BossChange(223022, 223032, 1) -- A_Deadly_Warboar
 			BossChange(223023, 223031, 2) -- Deathbringer_Skullsmash
 		end
-	elseif current_phase == "Phase 3.32" then
+	elseif p3wave == 3.5 then
 		-- This is expected to be hit twice, once per wave 3 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223032, 223031 }) then
 			-- Both wave 3 bosses are dead, spawn wave 4 trash
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.4")
+			eq.get_zone():SetVariable("p3wave", "4")
 			-- spawn phase 3 wave 4
-			eq.spawn_condition("potimeb", instance_id, 5, 1)
+			SpawnPhaseThreeTrash(4)
 		end
-	elseif current_phase == "Phase 3.4" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.42")
-			-- Disable wave 4 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 5, 0)
-			eq.clear_spawn_timers()
+	elseif p3wave == 4 then
+		if not eq.is_npc_spawned(p3TrashByWave[4]) then
+			eq.get_zone():SetVariable("p3wave", "4.5")
 			-- Depop untargetable and pop targetable versions
 			BossChange(223012, 223038, 1) -- Sinrunal_Gorgedreal
 			BossChange(223013, 223037, 2) -- Herlsoakian
 		end
-	elseif current_phase == "Phase 3.42" then
+	elseif p3wave == 4.5 then
 		-- This is expected to be hit twice, once per wave 4 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223038, 223037 }) then
 			-- Both wave 4 bosses are dead, spawn wave 5 trash
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.5")
+			eq.get_zone():SetVariable("p3wave", "5")
 			-- spawn phase 3 wave 5
-			eq.spawn_condition("potimeb", instance_id, 6, 1)
+			SpawnPhaseThreeTrash(5)
 		end
-	elseif current_phase == "Phase 3.5" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.52")
-			-- Disable wave 5 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 6, 0)
-			eq.clear_spawn_timers()
+	elseif p3wave == 5 then
+		if not eq.is_npc_spawned(p3TrashByWave[5]) then
+			eq.get_zone():SetVariable("p3wave", "5.5")
 			-- Depop untargetable and pop targetable versions
 			BossChange(223011, 223046, 1) -- Deathbringer_Rianit
 			BossChange(223010, 223047, 2) -- A_Needletusk_Warboar
 		end
-	elseif current_phase == "Phase 3.52" then
+	elseif p3wave == 5.5 then
 		-- This is expected to be hit twice, once per wave 5 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223046, 223047 }) then
 			-- Both wave 5 bosses are dead, spawn wave 6 trash
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.6")
+			eq.get_zone():SetVariable("p3wave", "6")
 			-- spawn phase 3 wave 6
-			eq.spawn_condition("potimeb", instance_id, 7, 1)
+			SpawnPhaseThreeTrash(6)
 		end
-	elseif current_phase == "Phase 3.6" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.62")
-			-- Disable wave 6 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 7, 0)
-			eq.clear_spawn_timers()
+	elseif p3wave == 6 then
+		if not eq.is_npc_spawned(p3TrashByWave[6]) then
+			eq.get_zone():SetVariable("p3wave", "6.5")
 			-- Depop untargetable and pop targetable versions
 			BossChange(223014, 223051, 1) -- Xerskel_Gerodnsal
 			BossChange(223015, 223050, 2) -- Dersool_Fal`Giersnaol
 		end
-	elseif current_phase == "Phase 3.62" then
+	elseif p3wave == 6.5 then
 		-- This is expected to be hit twice, once per wave 6 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223051, 223050 }) then
 			-- Both wave 6 bosses are dead, spawn wave 7 trash
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.7")
+			eq.get_zone():SetVariable("p3wave", "7")
 			-- spawn phase 3 wave 7 trash
-			eq.spawn_condition("potimeb", instance_id, 8, 1)
+			SpawnPhaseThreeTrash(7);
 		end
-	elseif current_phase == "Phase 3.7" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.72")
-			-- Disable wave 7 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 8, 0)
-			eq.clear_spawn_timers()
+	elseif p3wave == 7 then
+		if not eq.is_npc_spawned(p3TrashByWave[7]) then
+			eq.get_zone():SetVariable("p3wave", "7.5")
 			-- Depop untargetable and pop targetable versions
 			BossChange(223021, 223057, 1) -- Undead_Squad_Leader
 			BossChange(223020, 223058, 2) -- Dark_Knight_of_Terris
 		end
-	elseif current_phase == "Phase 3.72" then
+	elseif p3wave == 7.5 then
 		-- This is expected to be hit twice, once per wave 7 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223057, 223058 }) then
 			-- Both wave 7 bosses are dead, spawn wave 8 trash
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.8")
+			eq.get_zone():SetVariable("p3wave", "8")
 			-- spawn phase 3 wave 8 trash
-			eq.spawn_condition("potimeb", instance_id, 9, 1)
+			SpawnPhaseThreeTrash(8);
 		end
-	elseif current_phase == "Phase 3.8" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 8 then
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.82")
-			-- Disable wave 8 trash spawns
-			eq.spawn_condition("potimeb", instance_id, 9, 0)
-			eq.clear_spawn_timers()
+	elseif p3wave == 8 then
+		if not eq.is_npc_spawned(p3TrashByWave[8]) then
+			eq.get_zone():SetVariable("p3wave", "8.5")
 			-- Depop untargetable and pop targetable versions
 			BossChange(223019, 223065, 1) -- Champion_of_Torment
 			BossChange(223018, 223066, 2) -- Dreamwarp
 		end
-	elseif current_phase == "Phase 3.82" then
+	elseif p3wave == 8.5 then
 		-- This is expected to be hit twice, once per wave 8 boss
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+		if not eq.is_npc_spawned({ 223065, 223066 }) then
 			-- Both wave 8 bosses are dead, spawn golems
-			eq.get_zone():SetVariable("Counter", "0")
-			eq.get_zone():SetVariable("Current Phase", "Phase 3.9")
+			eq.get_zone():SetVariable("p3wave", "9")
 			eq.spawn2(223073, 0, 0, 1492, 1110, 374.1, 391) -- Avatar_of_the_Elements
 			eq.spawn2(223074, 0, 0, 1563, 1110, 374.1, 391) -- Supernatural_Guardian
 		end
-	elseif current_phase == "Phase 3.9" then
-		local event_counter = tonumber(eq.get_zone():GetVariable("Counter")) or 0
-		local new_counter = event_counter + 1
-		eq.get_zone():SetVariable("Counter", tostring(new_counter))
-		if new_counter == 2 then
+	elseif p3wave == 9 then
+		if not eq.is_npc_spawned({ 223073, 223074 }) then
 			eq.get_zone():SetVariable("Phase", "3")
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 			eq.get_zone():SetVariable("Counter", "0")
+			eq.stop_timer("p3unsticker")
 			if expedition.valid and phase_variable == 3 then
 				eq.get_zone():SetVariable("Current Phase", "Phase 4")
 				-- sendsignal to flavor text NPC
@@ -726,7 +669,12 @@ function UpdateFailTimer(minutes_to_add)
 end
 
 function event_timer(e)
-	if e.timer == "event_hb" then
+	if e.timer == "spawn" then
+		eq.stop_timer("spawn")
+		do_the_spawn(e)
+	elseif e.timer == "p3unsticker" then
+		ControlPhaseThree()
+	elseif e.timer == "event_hb" then
 		if total_time == nil then
 			total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0
 		end

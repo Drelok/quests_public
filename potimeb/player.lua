@@ -375,7 +375,7 @@ buckets = {
 --GM ONLY CONTROLS--
 function event_say(e)
 	local expedition = eq.get_expedition()
-	
+	eq.get_zone():DeleteVariable("p3wave");	
 	if e.self:GetGM() then
 		instance_id = eq.get_zone_instance_id();
 		if e.message:find("help") then
