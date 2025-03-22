@@ -41,8 +41,8 @@ function event_click_door(e)
 
 			for flag, _ in pairs(flags_required) do
 				local flag_name = string.gsub(flag, "pop.flags.", "")
-				local flag_value = tonumber(e.other:GetAccountBucket(flag)) or 0
-				e.other:Message(
+				local flag_value = tonumber(e.self:GetAccountBucket(flag)) or 0
+				e.self:Message(
 					MT.Yellow,
 					string.format(
 						"Flag: %s Current: %d Required: 1",
