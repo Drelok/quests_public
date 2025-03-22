@@ -329,7 +329,7 @@ function event_signal(e)
 	-- signal 7 comes from Quarm
 	elseif e.signal == 7 then
 		eq.get_zone():SetVariable("Current Phase", "Quarm Dead")
-		eq.stop_timer("event_hb")
+		--eq.stop_timer("event_hb")
 		eq.set_timer("lockout", 50 * 60 * 1000)
 	-- signal 8 comes from Druzzil_Ro
 	elseif e.signal == 8 then
@@ -663,7 +663,7 @@ function UpdateFailTimer(minutes_to_add)
 	total_time = (total_time + minutes_to_add)
 	eq.stop_timer("player_check")
 	eq.set_timer("player_check", 10 * 1000) -- 10 Sec Player Check
-	eq.set_timer("event_hb", 60 * 1000) -- 60 Sec Timer Check
+	--eq.set_timer("event_hb", 60 * 1000) -- 60 Sec Timer Check
 
 	eq.set_data(eq.get_zone_instance_id() .. "-total_time", tostring(total_time), '7d')
 end
