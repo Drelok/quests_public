@@ -13,9 +13,9 @@ function event_say(e)
 	if e.message:findi("Hail") then
 		local aerin_bucket = tonumber(e.other:GetAccountBucket("pop.flags.aerin")) or 0
 		if aerin_bucket == 0 then
-			if not e.self:HasZoneFlag(Zone.hohonora) then
-				e.self:SetZoneFlag(Zone.hohonora)
-				e.self:Message(MT.LightBlue, "You receive a character flag!")
+			if not e.other:HasZoneFlag(Zone.hohonora) then
+				e.other:SetZoneFlag(Zone.hohonora)
+				e.other:Message(MT.LightBlue, "You receive a character flag!")
 			end	
 			e.other:SetAccountBucket("pop.flags.aerin", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
