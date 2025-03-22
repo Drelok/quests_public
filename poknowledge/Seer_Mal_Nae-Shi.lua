@@ -121,8 +121,8 @@ function event_say(e)
                 },
                 {
                     required_value = 2,
-                    set_message = "You have killed Bertox and talked to Adler Fuirstel.",
-                    unset_message = "You have NOT talked to Adler Fuirstel after killing Bertox."
+                    set_message = "You have killed Bertox and talked to Elder Fuirstel.",
+                    unset_message = "You have NOT talked to Elder Fuirstel after killing Bertox."
                 },
             }
         },
