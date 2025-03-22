@@ -455,6 +455,7 @@ sub EVENT_SAY {
                 my $current_value = $client->GetAccountBucket("pop.flags.$flag");
                 if ($current_value eq "") {
                     $current_value = 0;
+                    #resetpopf
                 }
 
                 $flag =~ s/pop\.flags\.//ig;

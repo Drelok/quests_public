@@ -26,7 +26,7 @@ end
 function event_say(e)
 	local construct_bucket = tonumber(e.other:GetAccountBucket("pop.flags.construct")) or 0
 	if e.message:findi("Hail") then
-		if construct_bucket == 0 and tostring(eq.get_zone_instance_version()) ~= eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+		if construct_bucket == 0 and tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
 			e.other:Message(MT.White, "Thelin Poxbourne tells you, 'Please destroy her for subjecting me to her hideous visions.'  Thelin closes his eyes and is swept away from his nightmare.  The land of pure thought begins to vanish from around you.")
 			e.other:SetAccountBucket("pop.flags.construct", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
