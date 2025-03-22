@@ -13,7 +13,7 @@ function event_say(e)
 	local grummus_bucket = tonumber(e.other:GetAccountBucket("pop.flags.grummus")) or 0
 	if e.message:findi("Hail") then
 		if grummus_bucket == 0 then
-			e.self:SetZoneFlag(Zone.codecay)
+			e.other:SetZoneFlag(Zone.codecay)
 			e.other:SetAccountBucket("pop.flags.grummus", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 			e.self:Say("You need to journey to the Crypt of Decay to continue.")
