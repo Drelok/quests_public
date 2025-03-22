@@ -8,7 +8,7 @@ sub EVENT_SIGNAL {
   if ($signal == 1) { #signal on death of #Guardian_of_Coirnav
     SPAWN_WAVE1();
   } elsif ($signal == 2) { # Called when the weak version of the 3 named die
-    if($qglobals{coirnav_wave} == 4) { # must be on wave 4
+    if($zone->GetVariable("coirnav_wave") + 0 == 4) { # must be on wave 4
       my $pweloncheck = $entity_list->GetMobByNpcTypeID(216109);
       my $nrindacheck = $entity_list->GetMobByNpcTypeID(216108);
       my $vamuilcheck = $entity_list->GetMobByNpcTypeID(216110);
@@ -19,7 +19,7 @@ sub EVENT_SIGNAL {
       }
     }
   } elsif($signal == 4) {
-    if ($qglobals{coirnav_wave} == 3) { #make sure we're on 3rd wave
+    if ($zone->GetVariable("coirnav_wave") + 0 == 3) { #make sure we're on 3rd wave
       my $check_trash1 = $entity_list->GetMobByNpcTypeID(216071); # - Triloun Vapourfiend
       my $check_trash2 = $entity_list->GetMobByNpcTypeID(216076); # - Hraquis Icefiend
       my $check_trash3 = $entity_list->GetMobByNpcTypeID(216060); # - Regura Waterfiend
@@ -30,7 +30,7 @@ sub EVENT_SIGNAL {
         quest::spawn2(216109,0,0,$x+5,$y-20,$z+5,138); # Repop weak Pwelon_of_Vapor
         quest::spawn2(216108,0,0,$x-10,$y,$z+5,138); # Repop weak Nrinda_of_Ice
         quest::spawn2(216110,0,0,$x+5,$y+20,$z+5,138); # Repop weak Vamuil_of_Water
-        quest::setglobal("coirnav_wave", 4, 7, "M10");
+        $zone->SetVariable("coirnav_wave", "4");
       }
     }
   } elsif($signal == 5) { #Signalled on death of the real coirnav
@@ -38,7 +38,7 @@ sub EVENT_SIGNAL {
     quest::depopall(216074); #Depop any remaining trash creatures Triloun-057, regrua-067, hraquis-074
     quest::depopall(216067);
     quest::depopall(216057);
-    quest::setglobal("coirnav_done", 3, 7, "D1"); # You can't attempt this again for 1 days
+    $zone->SetVariable("coirnav_done", "1"); # You can't attempt this again for 1 days
     if ($zone->GetInstanceVersion() == quest::get_rule("Custom:StaticInstanceVersion")){ # Only spawn in non-respawning dz
       quest::spawn2(216066,0,0,$x,$y,$z,138); #Spawn Essence of Water
     }
@@ -66,7 +66,7 @@ sub EVENT_TIMER {
     quest::depop(216108);
     quest::depop(216109);
     quest::depop(216110);
-    quest::setglobal("coirnav_done", 3, 7, "H1"); # You can't attempt this again for 1 hours
+    $zone->SetVariable("coirnav_done", "1"); # You can't attempt this again for 1 hours
     quest::settimer(7,45); # Reset kickout timer
   }
 
@@ -98,7 +98,7 @@ sub EVENT_TIMER {
 	KICK_ALL_PLAYERS();
   }
   if($timer == 8){ # Wave 4 check
-    if ($qglobals{coirnav_wave} == 3) { #make sure we're on 3rd wave
+    if ($zone->GetVariable("coirnav_wave") + 0 == 3) { #make sure we're on 3rd wave
       my $check_trash1 = $entity_list->GetMobByNpcTypeID(216071); # - Triloun Vapourfiend
       my $check_trash2 = $entity_list->GetMobByNpcTypeID(216076); # - Hraquis Icefiend
       my $check_trash3 = $entity_list->GetMobByNpcTypeID(216060); # - Regura Waterfiend
@@ -108,7 +108,7 @@ sub EVENT_TIMER {
     }
   }
   if($timer == 9) { #wave 5 check
-    if($qglobals{coirnav_wave} == 4) { # must be on wave 4
+    if($zone->GetVariable("coirnav_wave") + 0 == 4) { # must be on wave 4
       my $pweloncheck = $entity_list->GetMobByNpcTypeID(216109);
       my $nrindacheck = $entity_list->GetMobByNpcTypeID(216108);
       my $vamuilcheck = $entity_list->GetMobByNpcTypeID(216110);
@@ -159,7 +159,7 @@ sub SPAWN_WAVE1 {
     $count ++;
   }
   quest::spawn2(216070,0,0,$x+5,$y-20,$z+5,138); # Spawn #Pwelon_of_Vapor associated with this wave
-  quest::setglobal("coirnav_wave", 1, 7, "M15");
+  $zone->SetVariable("coirnav_wave", "1");
 }
 
 sub SPAWN_WAVE2 {
@@ -186,7 +186,7 @@ sub SPAWN_WAVE2 {
     $count ++;
   }
   quest::spawn2(216061,0,0,$x-10,$y,$z+5,138); # Spawn #Nrinda_of_Ice associated with this wave
-  quest::setglobal("coirnav_wave", 2, 7, "M12");
+  $zone->SetVariable("coirnav_wave", "2");
   quest::stoptimer(2); # Stop timer
 }
 
@@ -215,7 +215,7 @@ sub SPAWN_WAVE3 {
     $count ++;
   }
   quest::spawn2(216065,0,0,$x+5,$y+20,$z+5,138); # Spawn #Vamuil_of_Water associated with this wave
-  quest::setglobal("coirnav_wave", 3, 7, "M10");
+  $zone->SetVariable("coirnav_wave", "3");
   quest::stoptimer(3); # Stop timer
 }
 
@@ -226,7 +226,7 @@ sub SPAWN_WAVE4 {
   quest::spawn2(216109,0,0,$x+5,$y-20,$z+5,138); # Repop weak Pwelon_of_Vapor
   quest::spawn2(216108,0,0,$x-10,$y,$z+5,138); # Repop weak Nrinda_of_Ice
   quest::spawn2(216110,0,0,$x+5,$y+20,$z+5,138); # Repop weak Vamuil_of_Water
-  quest::setglobal("coirnav_wave", 4, 7, "M15");
+  $zone->SetVariable("coirnav_wave", "4");
   quest::stoptimer(8);
   quest::settimer(9,1); #timer to check for wave 4 to be dead and spawn wave 5. (safety check for failed signal)
 }
@@ -260,6 +260,6 @@ sub SPAWN_WAVE5 {
     $count ++;
   }
   quest::spawn2(216094,0,0,$x,$y,$z-10,138); # The Real Corinav
-  quest::setglobal("coirnav_wave", 5, 7, "M10");
+  $zone->SetVariable("coirnav_wave", "5");
   quest::stoptimer(9);
 }
