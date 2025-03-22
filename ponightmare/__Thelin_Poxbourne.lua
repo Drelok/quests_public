@@ -50,6 +50,24 @@ function event_trade(e)
 		e.self:Emote("takes the shard from you and places all of the pieces on the ground. The pieces reassemble and fuse back together into a completed dagger. Thelin picks the dagger up and hands it to you.")
 		e.other:SummonItem(9259) -- #Thelin's Dagger
 		eq.spawn2(204065,0,0,-4554,5018,5,260); -- # NPC: #Terris_Thule
+
+		if e.other:IsGrouped() then
+			local group = e.other:GetGroup()
+			local member_count = group:GroupCount()
+			for i = 0, member_count - 1 do
+				local member = group:GetMember(i)
+				if member ~= nil and member.valid and member:IsClient() then
+					if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
+						local construct_bucket = tonumber(e.other:GetAccountBucket("pop.flags.construct")) or 0
+						if construct_bucket == 0 then
+							local member_client = member:CastToClient();
+							member_client:SetAccountBucket("pop.flags.construct", "1")
+							member_client:Message(MT.LightBlue, "You receive a character flag!")
+						end
+					end
+				end
+			end
+		end
 	end
 
 	item_lib.return_items(e.self, e.other, e.trade);
