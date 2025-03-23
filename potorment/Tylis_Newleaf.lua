@@ -9,6 +9,12 @@ function event_say(e)
 					will_assist_you
 				)
 			)
+		else
+			e.self:Say(
+				string.format(
+					"...help ...end this torment ...will you come? I can show you the pain... it moves in the shadows of my mind... Fahlia... help me?"					
+				)
+			)
 		end
 	elseif e.message:findi("will assist you") then
 		if e.other:HasItem(22954) and shadyglade_bucket == 1 then
