@@ -19,10 +19,10 @@ end
 
 function event_signal(e)
 	if (e.signal == 1) then -- Rathe councilman died
-		local alldead = eq.is_npc_spawned({ 222013,222008 });
-		if not alldead and timedMode == true then
+		local anyCouncilUp = eq.is_npc_spawned({ 222013,222008 });
+		if not anyCouncilUp and timedMode == true then
 			eq.set_timer("timedKills",timedModeDurationSeconds*1000);
-		elseif not alldead then
+		elseif not anyCouncilUp then
 			eq.spawn_condition("poearthb",eq.get_zone_instance_id(),1,0); -- Disable councilman pops
 			eq.stop_timer("timedKills");
 			eq.zone_emote(15,"The ground shakes as the last councilman falls.  The Avatar has awaken...");
