@@ -448,11 +448,11 @@ sub EVENT_SAY {
             $client->Message(4, "Planes of Power flags reset for $client_name.");
         } elsif ($text=~/#pop/i) {
             my @flags = POPFlags();
-
-            quest::message(315, "Your Planes of Power flags are as follows:");
+            my $tar_client = $client->GetTarget() ? $client->GetTarget() : $client;
+            quest::message(315, "Target's Planes of Power flags are as follows:");
 
             foreach my $flag (sort {$a cmp $b} @flags) {
-                my $current_value = $client->GetAccountBucket("pop.flags.$flag");
+                my $current_value = $tar_client->GetAccountBucket("pop.flags.$flag");
                 if ($current_value eq "") {
                     $current_value = 0;
                     #resetpopf
