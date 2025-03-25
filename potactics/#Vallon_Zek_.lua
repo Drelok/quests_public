@@ -2,7 +2,7 @@
 function event_spawn(e)
 	eq.set_next_hp_event(51)
 	e.self:SetRunning(true)
-	eq.set_timer('depop', 60 * 1000) --1 minute of no combat on either one until vz/tz depop happens
+	eq.set_timer("depop", 60 * 1000) --1 minute of no combat on either one until vz/tz depop happens
 end
 
 function event_hp(e)
@@ -28,12 +28,12 @@ end
 
 function event_combat(e)
 	if e.joined then
-		if not eq.is_paused_timer('depop') then
-			eq.pause_timer('depop')
+		if not eq.is_paused_timer("depop") then
+			eq.pause_timer("depop")
 		end
 		eq.set_timer("OOBcheck", 6 * 1000)
 	else
-		eq.resume_timer('depop')
+		eq.resume_timer("depop")
 		eq.stop_timer("OOBcheck")
 	end
 end
