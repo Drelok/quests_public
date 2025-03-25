@@ -89,7 +89,7 @@ function event_timer(e)
 		eq.signal(214057, 0) -- NPC: Decorin_Grunhork
 		eq.get_zone():SetVariable("Berik", "0")
 		eq.get_zone():SetVariable("Grunhork", "0")
-	elseif e.timer = "Rallos Untargetable" then
+	elseif e.timer == "Rallos Untargetable" then
 		eq.stop_timer("Rallos Untargetable")
 		eq.unique_spawn(214052, 0, 0, 500, 11, 194, 129) -- NPC: #Rallos_Zek_ (Untargetable)
 	end
