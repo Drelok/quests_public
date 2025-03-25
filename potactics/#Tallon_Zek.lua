@@ -1,6 +1,6 @@
 -- #Tallon_Zek (214108) part of RZTWL script Huffin rewrite
 function event_spawn(e)
-	eq.set_timer("depop", 60 * 1000) --1 minute of no combat on either one until vz/tz depop happens
+	eq.set_timer("depop", 17 * 60 * 1000) --17 minutes of no combat on either one until vz/tz depop happens
 	e.self:SetRunning(true)
 end
 
