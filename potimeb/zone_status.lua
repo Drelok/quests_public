@@ -335,7 +335,6 @@ function event_signal(e)
 	elseif e.signal == 8 then
 		-- update the zone status
 		eq.get_zone():SetVariable("Phase", "6")
-		SetZoneLockout()
 		-- port everyone in the zone back to the PoK library top floor
 		local client_list = entity_list:GetClientList()
 		for c in client_list.entries do
@@ -739,7 +738,6 @@ function event_timer(e)
 		end
 	elseif e.timer == "lockout" then	--handles instance where Quarm killed but Zeb/Druzzil Ro script not completed
 		eq.stop_timer(e.timer)
-		SetZoneLockout()
 		-- port everyone in the zone back to PoTimeA
 		local expedition_id = 0
 		local client_list = eq.get_entity_list():GetClientList()
