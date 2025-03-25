@@ -61,10 +61,17 @@ end
 function SpawnAdds(num)	
 	--always spawns 4 adds
 	for n = 1,2 do
-		eq.spawn2(223229,0,0,262,-280,5,449);	--a_summoned_minion
-		eq.spawn2(223230,0,0,262,-280,5,449);	--a_summoned_boar
+		local id1 = eq.spawn2(223229,0,0,262,-280,5,449);	--a_summoned_minion
+		local id2 = eq.spawn2(223230,0,0,262,-280,5,449);	--a_summoned_boar
+		if ( id1 and id1.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+			id1:AddToHateList(e.self:GetTarget(), 1);
+		end
+		if ( id2 and id2.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+			id2:AddToHateList(e.self:GetTarget(), 1);
+		end
 	end
 	--5th add for last hp event
+
 	if (num == 5) then eq.spawn2(eq.ChooseRandom(223229,223230),0,0,262,-280,5,449); end
 end
 
