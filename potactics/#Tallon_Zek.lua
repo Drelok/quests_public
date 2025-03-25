@@ -34,7 +34,6 @@ function event_timer(e)
 		eq.depop_all(214086) --Hendin_Shadow_Master (214086)
 		eq.depop_all(214084) --Gindan_Flayer 214084
 		eq.depop()
-		e.self:SetHP(e.self:GetMaxHP())
 	elseif e.timer == "OOBcheck" then
 		if e.self:GetX() > 650 then
 			e.self:GMMove(365, 11, 181, 129) -- does not wipe hate list
