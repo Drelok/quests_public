@@ -2,7 +2,7 @@
 function event_spawn(e)
 	eq.set_next_hp_event(51);
 	e.self:SetRunning(true);
-	eq.set_timer('depop', 1020 * 1000); --17 minutes of no combat on either one until vz/tz depop happens
+	eq.set_timer('depop', 60 * 1000); --1 minute of no combat on either one until vz/tz depop happens
 end
 
 function event_hp(e)
