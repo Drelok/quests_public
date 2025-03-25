@@ -46,6 +46,7 @@ if (e.timer == 'depop') then
 	eq.depop_all(214086); --Hendin_Shadow_Master (214086)
 	eq.depop_all(214084); --Gindan_Flayer 214084
 	eq.depop();
+	e.self:SetHP(e.self:GetMaxHP())
 elseif(e.timer=="OOBcheck") then
 	if (e.self:GetX() > 650) then
 		e.self:CastSpell(2441, e.self:GetTarget():GetID()); -- Spell: Shadowblade
