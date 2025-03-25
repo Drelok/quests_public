@@ -1,3 +1,10 @@
+# Define dynamic zone coordinate overrides.
+# Format: zone_short_name => [ x, y, z, heading ]
+my %dz_coord_overrides = (
+    'potimeb' => [ -36, 1352, 496, 124 ],
+    # Add additional zones and coordinates as needed.
+);
+
 sub EVENT_CLICKDOOR {
     if ($doorid == 146) { # Magic Map
         my $attuned_shortname   = $client->GetEntityVariable("magic_map_attune");
@@ -61,6 +68,9 @@ sub EVENT_POPUPRESPONSE {
                 return;
             }
             
+            # Get the zone short name for the dynamic zone
+            my $zone_shortname = quest::GetZoneShortName($dz->GetZoneID());
+
             if ($popupid == 1461 && $group) {
                 my $expedition_members_ref = $dz->GetMembers();
                 my %expedition_members = %{$expedition_members_ref};
@@ -86,14 +96,27 @@ sub EVENT_POPUPRESPONSE {
                     my $player = $group->GetMember($count);
                     if ($player) {
                         $player->SpellEffect(218,1);
-                        $player->MovePCDynamicZone($dz->GetZoneID());
+                        # Check for a coordinate override for this zone
+                        if (exists $dz_coord_overrides{$zone_shortname}) {
+                            my ($x, $y, $z, $heading) = @{$dz_coord_overrides{$zone_shortname}};
+                            $player->MovePCInstance($dz->GetZoneID(), $dz->GetInstanceID(), $x, $y, $z, $heading);
+                        } else {
+                            $player->MovePCDynamicZone($dz->GetZoneID());
+                        }
                     }
                 }
             }
-
-            $client->SpellEffect(218,1);
-            $client->MovePCDynamicZone($dz->GetZoneID());
-        } else {
+            else {
+                $client->SpellEffect(218,1);
+                if (exists $dz_coord_overrides{$zone_shortname}) {
+                    my ($x, $y, $z, $heading) = @{$dz_coord_overrides{$zone_shortname}};
+                    $client->MovePCInstance($dz->GetZoneID(), $dz->GetInstanceID(), $x, $y, $z, $heading);
+                } else {
+                    $client->MovePCDynamicZone($dz->GetZoneID());
+                }
+            }
+        }
+        else {
             # Not moving to a DZ
             if (!$waypoint_data) {
                 plugin::YellowText("You have selected an invalid destination.");
