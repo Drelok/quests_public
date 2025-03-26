@@ -58,7 +58,7 @@ function event_signal(e)
 	elseif e.signal == 214108 then -- Event Tallon Death
 		eq.get_zone():SetVariable("Event Tallon", "1")
 
-		local vallon_variable = tonumber(eq.get_zone():GetVariable("Vallon")) or 0
+		local vallon_variable = tonumber(eq.get_zone():GetVariable("Event Vallon")) or 0
 		if vallon_variable == 1 then
 			eq.stop_timer("VTRZ")
 			eq.signal(214052, 0) -- Have Fake Rallos spawn Mini Rallos
