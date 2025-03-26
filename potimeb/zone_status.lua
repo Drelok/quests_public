@@ -579,6 +579,7 @@ function SpawnPhaseFour()
 
 	if expedition.valid then
 		if saryrn_variable == 0 and not eq.get_entity_list():GetMobByNpcTypeID(223076) then
+			eq.debug("Trying to spawn saryrn")
 			eq.spawn2(223076, 0, 0, -320, -316, 358, 65) -- Saryrn
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
