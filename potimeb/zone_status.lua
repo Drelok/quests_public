@@ -589,7 +589,7 @@ function SpawnPhaseFour()
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
-		eq.debug("Terris check: variable=" .. terris_variable .. ", mob exists=" .. tostring(eq.get_entity_list():GetMobByNpcTypeID(223075) ~= nil))
+		eq.debug("Terris check: variable=" .. terris_variable .. ", mob exists=" .. eq.is_npc_spawned({223075}))
 		if terris_variable == 0 and not eq.get_entity_list():GetMobByNpcTypeID(223075) then
 			eq.spawn2(223075, 0, 0, -310, 307, 365, 190) -- Terris Thule
 			UpdateFailTimer(60) -- 1 Hour per God
