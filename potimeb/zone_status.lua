@@ -203,7 +203,7 @@ function do_the_spawn(e)
 			eq.spawn2(223101, 0, 0, 244, -1106, -1.125, 194.0625)
 		end
 		-- spawn untargetable Zebuxoruk's Cage
-		if ~eq.entity_list:GetMobByNpcTypeID(223228) then
+		if not eq.entity_list:GetMobByNpcTypeID(223228) then
 			eq.spawn2(223228, 0, 0, -579, -1119, 60.625, 0)
 		end
 	end
