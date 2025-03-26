@@ -449,6 +449,12 @@ sub EVENT_SAY {
         } elsif ($text=~/#pop/i) {
             my @flags = POPFlags();
             my $tar_client = $client->GetTarget() ? $client->GetTarget() : $client;
+	    my $client_name = $tar_client->GetCleanName();
+            if ($tar_client && $tar_client->IsClient()) {
+                $tar_client = $tar_client->CastToClient();
+            } else {
+                return;
+            }
             quest::message(315, "Target's Planes of Power flags are as follows:");
 
             foreach my $flag (sort {$a cmp $b} @flags) {
