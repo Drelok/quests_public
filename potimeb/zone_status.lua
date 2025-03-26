@@ -197,13 +197,15 @@ function do_the_spawn(e)
 		eq.signal(223227, 6) -- Emoter
 		-- spawn Quarm
 		local quarm_variable = tonumber(eq.get_zone():GetVariable("Quarm")) or 0
-		if quarm_variable == 0 then -- If left DZ and zone before P6 Complete lockout
+		if quarm_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223201) then -- If left DZ and zone before P6 Complete lockout
 			eq.spawn2(223201, 0, 0, -401, -1106, 32.5, 22)
 			-- spawn #A_Servitor_of_Peace
 			eq.spawn2(223101, 0, 0, 244, -1106, -1.125, 194.0625)
 		end
 		-- spawn untargetable Zebuxoruk's Cage
-		eq.spawn2(223228, 0, 0, -579, -1119, 60.625, 0)
+		if ~eq.entity_list:GetMobByNpcTypeID(223228) then
+			eq.spawn2(223228, 0, 0, -579, -1119, 60.625, 0)
+		end
 	end
 end
 
@@ -576,22 +578,22 @@ function SpawnPhaseFour()
 	local vallon_variable = tonumber(eq.get_zone():GetVariable("Vallon")) or 0
 
 	if expedition.valid then
-		if saryrn_variable == 0 then
+		if saryrn_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223076) then
 			eq.spawn2(223076, 0, 0, -320, -316, 358, 65) -- Saryrn
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
-		if tallon_variable == 0 then
+		if tallon_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223077) then
 			eq.spawn2(223077, 0, 0, 405, -84, 358, 384) -- Tallon Zek
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
-		if terris_variable == 0 then
+		if terris_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223075) then
 			eq.spawn2(223075, 0, 0, -310, 307, 365, 190) -- Terris Thule
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
-		if vallon_variable == 0 then
+		if vallon_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223078) then
 			eq.spawn2(223078, 0, 0, 405, 75, 358, 384) -- Vallon Zek
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
@@ -621,7 +623,7 @@ function SpawnPhaseFive()
 			-- eq.spawn2(223098, 0, 0, -299, -297, 23.3, 62); -- Fake Bertoxxulous
 			-- UpdateFailTimer(60); -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 14, 1);	
-		if bertox_variable == 0 then
+		if bertox_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223142) then
 			eq.spawn2(223142, 0, 0, -299, -297, 23.3, 62); -- Real Bertoxxulous - 223098 - swapped
 			UpdateFailTimer(60); -- 1 Hour per God
 		end
@@ -630,7 +632,7 @@ function SpawnPhaseFive()
 			-- eq.spawn2(223165, 0, 0, -257, 255, 6, 203); -- Fake Cazic
 			-- UpdateFailTimer(60); -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 12, 1);	
-		if cazic_variable == 0 then
+		if cazic_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223166) then
 			eq.spawn2(223166, 0, 0, -257, 255, 6, 203); -- Real Cazic
 			UpdateFailTimer(60); -- 1 Hour per God
 		end
@@ -639,7 +641,7 @@ function SpawnPhaseFive()
 			-- eq.spawn2(223000, 0, 0, 303.3, 306, 13.3, 323) -- Fake Innoruuk
 			-- UpdateFailTimer(60) -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 11, 1)
-		if innoruuk_variable == 0 then
+		if innoruuk_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223167) then
 			eq.spawn2(223167, 0, 0, 303.3, 306, 13.3, 323) -- Real Innoruuk
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
@@ -648,7 +650,7 @@ function SpawnPhaseFive()
 			-- eq.spawn2(223001, 0, 0, 264, -279, 18.75, 435) -- Fake Rallos
 			-- UpdateFailTimer(60) -- 1 Hour per God
 			-- eq.spawn_condition("potimeb", instance_id, 13, 1)
-		if rallos_variable == 0 then
+		if rallos_variable == 0 and ~eq.entity_list:GetMobByNpcTypeID(223168) then
 			eq.spawn2(223168, 0, 0, 264, -279, 18.75, 435) -- Real Rallos
 			UpdateFailTimer(60) -- 1 Hour per God
 		end
