@@ -63,10 +63,10 @@ function SpawnAdds(num)
 	for n = 1,2 do
 		local id1 = eq.spawn2(223229,0,0,262,-280,5,449);	--a_summoned_minion
 		local id2 = eq.spawn2(223230,0,0,262,-280,5,449);	--a_summoned_boar
-		if ( id1 and id1.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+		if ( id1.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
 			id1:AddToHateList(e.self:GetTarget(), 1);
 		end
-		if ( id2 and id2.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+		if ( id2.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
 			id2:AddToHateList(e.self:GetTarget(), 1);
 		end
 	end
