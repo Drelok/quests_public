@@ -32,21 +32,21 @@ end
 function event_hp(e)
 	e.self:Emote("roars a mighty war cry and swings his axe with a vengeance.");
 	if (e.hp_event == 90) then
-		SpawnAdds();
+		SpawnAdds(e,2);
 		eq.set_next_hp_event(75);
 	elseif (e.hp_event == 75) then
-		SpawnAdds();
+		SpawnAdds(e,2);
 		e.self:ModifyNPCStat("attack_delay","11");	--slightly increase attack speed 
 		e.self:SetSpecialAbility(SpecialAbility.area_rampage,1);	--enable AE Rampage
 		e.self:SetSpecialAbilityParam(SpecialAbility.area_rampage,0,10);
 		eq.set_next_hp_event(50);
 	elseif (e.hp_event == 50) then
-		SpawnAdds();
+		SpawnAdds(e,2);
 		e.self:SetSpecialAbility(SpecialAbility.flurry,1);	--enable flurry
 		e.self:SetSpecialAbilityParam(SpecialAbility.flurry,0,10);	
 		eq.set_next_hp_event(25);
 	elseif (e.hp_event == 25) then
-		SpawnAdds(5);
+		SpawnAdds(e,5);
 		e.self:SetSpecialAbilityParam(SpecialAbility.area_rampage,0,20);
 		e.self:ModifyNPCStat("attack_delay","9");	--increase attack speed 
 	end
@@ -58,7 +58,7 @@ function SetDefaultStats(e)
 	e.self:ModifyNPCStat("attack_delay","13");	
 end
 
-function SpawnAdds(num)	
+function SpawnAdds(e, num)	
 	--always spawns 4 adds
 	for n = 1,2 do
 		local id1 = eq.spawn2(223229,0,0,262,-280,5,449);	--a_summoned_minion
