@@ -121,20 +121,20 @@ end
 
 function event_timer(e)
 	if e.timer == "Fail" then
-		for _, spawn2_id in ipairs(pit_spawn2_ids) do
-			eq.update_spawn_timer(spawn2_id, 30 * 60 * 1000) -- 30 Minutes
-			eq.enable_spawn2(spawn2_id)
-		end
+--		for _, spawn2_id in ipairs(pit_spawn2_ids) do
+--			eq.update_spawn_timer(spawn2_id, 30 * 60 * 1000) -- 30 Minutes
+--			eq.enable_spawn2(spawn2_id)
+--		end
 
-		eq.update_spawn_timer(157400, 30 * 60 * 1000) -- 30 Minutes
-		eq.enable_spawn2(157400)
+--		eq.update_spawn_timer(157400, 30 * 60 * 1000) -- 30 Minutes
+--		eq.enable_spawn2(157400)
 
-		eq.stop_timer("Adds")
-		eq.stop_timer("Fail")
+--		eq.stop_timer("Adds")
+--		eq.stop_timer("Fail")
 
-		eq.depop_all(214114)
+--		eq.depop_all(214114)
 
-		eq.depop()
+--		eq.depop()
 	elseif e.timer == "Adds" then
 		if e.self:IsEngaged() then
 			local npc_ids = { 214114, 214136 }
