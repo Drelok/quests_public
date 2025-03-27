@@ -64,7 +64,6 @@ function event_say(e)
 							e.other:GetCleanName()
 						)
 					)
-					e.other:SummonItem(16243) -- Item: Urn Patten
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
@@ -86,6 +85,17 @@ function event_say(e)
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
+			elseif e.message:findi("lose") then
+				local versed_in_the_art_of_smithing_link = eq.silent_say_link("versed in the art of smithing")
+				e.self:Say(
+					string.format(
+						"Aye then, let's start over. Are you well [%s]?",
+						versed_in_the_art_of_smithing_link
+					)
+				)
+				e.other:SetAccountBucket("pop.flags.aidgrimel", "0")
+			else
+				e.self:Say("Ye still don't have the component made. Did you [lose] it?")
 			end
 		else
 			e.self:Say("You do not seem experienced enough in the Planes.")
@@ -95,7 +105,8 @@ end
 
 function event_trade(e)
 	local item_lib = require("items")
-	if item_lib.check_turn_in(e.trade, {item1 = 15985}) then -- Item: Imbued Breastplate
+	local aid_grimel_flag = tonumber(e.other:GetAccountBucket("pop.flags.aidgrimel")) or 0
+	if aid_grimel_flag == 0 and item_lib.check_turn_in(e.trade, {item1 = 15985}) then -- Item: Imbued Breastplate
 		local brewing_skill_link = eq.silent_say_link("brewing skill")
 		e.self:Say(
 			string.format(
@@ -105,7 +116,7 @@ function event_trade(e)
 		)
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "1")
 		e.other:SummonItem(16249) -- Item: Hardened Leather Signet
-	elseif item_lib.check_turn_in(e.trade, {item1 = 15993, item2 = 17179}) then -- Item: Portable Drink, Portable Drink Barrel
+	elseif aid_grimel_flag == 1 item_lib.check_turn_in(e.trade, {item1 = 15993, item2 = 17179}) then -- Item: Portable Drink, Portable Drink Barrel
 		local put_my_jewel_craft_skills_to_the_test_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
 		e.self:Emote(
 			string.format(
@@ -115,8 +126,8 @@ function event_trade(e)
 		)
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "2")
 		e.other:SummonItem(16250) -- Item: Clay Signet
-	elseif item_lib.check_turn_in(e.trade, {item1 = 15991}) then -- Item: Velium Blue Diamond Ring
-		local ready_to_use_some_clay_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
+	elseif aid_grimel_flag == 2 and item_lib.check_turn_in(e.trade, {item1 = 15991}) then -- Item: Velium Blue Diamond Ring
+		local ready_to_use_some_clay_link = eq.silent_say_link("ready to use some clay")
 		e.self:Emote(
 			string.format(
 				"grins. 'Quite a nice ring you have made for me %s. May it serve me as well as my old ring. Here take this signet. We seem to be finishing the tasks on my list at a nice pace. Tell me when you are [%s].",
@@ -126,7 +137,7 @@ function event_trade(e)
 		)
 		e.other:SummonItem(16251) -- Item: Wooden Signet
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "3")
-	elseif item_lib.check_turn_in(e.trade, {item1 = 16246}) then -- Item: Filled Sacred Urn
+	elseif aid_grimel_flag == 3 and item_lib.check_turn_in(e.trade, {item1 = 16246}) then -- Item: Filled Sacred Urn
 		local skilled_with_the_needle_link = eq.silent_say_link("skilled with the needle")
 		e.self:Say(
 			string.format(
@@ -137,7 +148,7 @@ function event_trade(e)
 		)
 		e.other:SummonItem(16252) -- Item: Metal Signet
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "4")
-	elseif item_lib.check_turn_in(e.trade, {item1 = 15986}) then -- Item: Fire Undergarment Tunic
+	elseif aid_grimel_flag == 4 and item_lib.check_turn_in(e.trade, {item1 = 15986}) then -- Item: Fire Undergarment Tunic
 		local skills_with_a_fletching_knife_link = eq.silent_say_link("skills with a fletching knife")
 		e.self:Say(
 			string.format(
@@ -148,7 +159,7 @@ function event_trade(e)
 		)
 		e.other:SummonItem(32800) -- Item: Marked Signet
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "5")
-	elseif item_lib.check_turn_in(e.trade, {item1 = 16247}) then -- Item: Signet Featherwood Bow
+	elseif aid_grimel_flag == 5 and item_lib.check_turn_in(e.trade, {item1 = 16247}) then -- Item: Signet Featherwood Bow
 		local master_chef_link = eq.silent_say_link("master chef")
 		e.self:Say(
 			string.format(
@@ -159,7 +170,7 @@ function event_trade(e)
 		)
 		e.other:SummonItem(16254) -- Item: Runed Signet
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "6")
-	elseif item_lib.check_turn_in(e.trade, {item1 = 16248}) then -- Item: Food Satchel
+	elseif aid_grimel_flag == 6 and item_lib.check_turn_in(e.trade, {item1 = 16248}) then -- Item: Food Satchel
 		e.self:Say("Truly amazing! Now the Councilman and I can be off on our expedition to the Elemental Planes!' He takes out a tool and marks his signet before handing it to you, 'Before we depart you may want to ask the Councilman about the signet.")
 		e.other:SummonItem(16256) -- Item: Marked Runed Signet
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "0")
