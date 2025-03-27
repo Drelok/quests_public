@@ -40,12 +40,12 @@ end
 
 function event_timer(e)
 	if e.timer == "depop" then
-		eq.signal(214123, 777) --  tell trigger mob tz/vz failed, reset sequence
-		eq.depop_all(214129) -- depop VZ splits
-		eq.depop_all(214108) -- depop #Tallon_Zek (214108)
-		eq.depop_all(214086) --Hendin_Shadow_Master (214086)
-		eq.depop_all(214084) --Gindan_Flayer 214084
-		eq.depop()
+--		eq.signal(214123, 777) --  tell trigger mob tz/vz failed, reset sequence
+--		eq.depop_all(214129) -- depop VZ splits
+--		eq.depop_all(214108) -- depop #Tallon_Zek (214108)
+--		eq.depop_all(214086) --Hendin_Shadow_Master (214086)
+--		eq.depop_all(214084) --Gindan_Flayer 214084
+--		eq.depop()
 	elseif e.timer == "OOBcheck" then
 		if e.self:GetX() > 650 then
 			e.self:CastSpell(2441, e.self:GetTarget():GetID()) -- Spell: Shadowblade
