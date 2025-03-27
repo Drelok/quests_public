@@ -1,6 +1,6 @@
 -- #Tallon_Zek (214108) part of RZTWL script Huffin rewrite
 function event_spawn(e)
-	eq.set_timer("depop", 17 * 60 * 1000) --17 minutes of no combat on either one until vz/tz depop happens
+--	eq.set_timer("depop", 17 * 60 * 1000) --17 minutes of no combat on either one until vz/tz depop happens
 	e.self:SetRunning(true)
 end
 
@@ -11,13 +11,13 @@ end
 
 function event_combat(e)
 	if e.joined then
-		if not eq.is_paused_timer("depop") then
-			eq.pause_timer("depop")
-		end
+--		if not eq.is_paused_timer("depop") then
+--			eq.pause_timer("depop")
+--		end
 		eq.set_timer("OOBcheck", 6 * 1000)
 		eq.set_timer("barb", math.random(1, 4) * 1000)
 	else
-		eq.resume_timer("depop")
+--		eq.resume_timer("depop")
 		eq.stop_timer("barb")
 		eq.stop_timer("OOBcheck")
 	end
@@ -27,7 +27,7 @@ function event_timer(e)
 	if e.timer == "barb" then
 		e.self:CastSpell(eq.ChooseRandom(2449, 2450, 2451, 2452), e.self:GetTarget():GetID())
 		eq.set_timer("barb", math.random(1, 6) * 1000)
-	elseif e.timer == "depop" then
+--	elseif e.timer == "depop" then
 --		eq.signal(214123, 777) --  tell trigger mob tz/vz failed, reset sequence
 --		eq.depop_all(214129) -- depop VZ splits
 --		eq.depop_all(214111) -- #Vallon_Zek_ (214111)
