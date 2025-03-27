@@ -28,12 +28,12 @@ function event_timer(e)
 		e.self:CastSpell(eq.ChooseRandom(2449, 2450, 2451, 2452), e.self:GetTarget():GetID())
 		eq.set_timer("barb", math.random(1, 6) * 1000)
 	elseif e.timer == "depop" then
-		eq.signal(214123, 777) --  tell trigger mob tz/vz failed, reset sequence
-		eq.depop_all(214129) -- depop VZ splits
-		eq.depop_all(214111) -- #Vallon_Zek_ (214111)
-		eq.depop_all(214086) --Hendin_Shadow_Master (214086)
-		eq.depop_all(214084) --Gindan_Flayer 214084
-		eq.depop()
+--		eq.signal(214123, 777) --  tell trigger mob tz/vz failed, reset sequence
+--		eq.depop_all(214129) -- depop VZ splits
+--		eq.depop_all(214111) -- #Vallon_Zek_ (214111)
+--		eq.depop_all(214086) --Hendin_Shadow_Master (214086)
+--		eq.depop_all(214084) --Gindan_Flayer 214084
+--		eq.depop()
 	elseif e.timer == "OOBcheck" then
 		if e.self:GetX() > 650 then
 			e.self:GMMove(365, 11, 181, 129) -- does not wipe hate list
