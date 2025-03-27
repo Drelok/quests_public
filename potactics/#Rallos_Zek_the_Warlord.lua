@@ -74,7 +74,7 @@ local pit_spawn2_ids = {
 
 function event_spawn(e)
 	eq.zone_emote(0, "A great cry echoes across the field of blood and through the halls of Drunder. The creatures in the arena flee to avoid the impending doom.")
-	eq.set_timer("Fail", 30 * 60 * 1000) --30 Minutes
+--	eq.set_timer("Fail", 30 * 60 * 1000) --30 Minutes
 	for _, spawn2_id in ipairs(pit_spawn2_ids) do
 		-- Disable the spawn2 entry for all the pit mobs
 		eq.disable_spawn2(spawn2_id)
@@ -97,7 +97,7 @@ function event_death_complete(e)
 	if tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then -- Only flag in non-respawning dz
 		eq.spawn2(214105, 0, 0, 699, 8, -294, 128) -- #A_Planar_Projection
 	end
-	eq.stop_timer("Fail")
+--	eq.stop_timer("Fail")
 	eq.stop_timer("Adds")
 	eq.signal(214123, 214113)
 	for _, spawn2_id in ipairs(pit_spawn2_ids) do
@@ -120,7 +120,7 @@ function event_killed_merit(e)
 end
 
 function event_timer(e)
-	if e.timer == "Fail" then
+--	if e.timer == "Fail" then
 --		for _, spawn2_id in ipairs(pit_spawn2_ids) do
 --			eq.update_spawn_timer(spawn2_id, 30 * 60 * 1000) -- 30 Minutes
 --			eq.enable_spawn2(spawn2_id)
@@ -135,7 +135,7 @@ function event_timer(e)
 --		eq.depop_all(214114)
 
 --		eq.depop()
-	elseif e.timer == "Adds" then
+	if e.timer == "Adds" then
 		if e.self:IsEngaged() then
 			local npc_ids = { 214114, 214136 }
 			eq.spawn2(npc_ids[math.random(#npc_ids)], 0, 0, 519, 216, -293, 132)
