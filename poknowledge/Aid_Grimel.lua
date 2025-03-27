@@ -115,8 +115,8 @@ function event_trade(e)
 			)
 		)
 		e.other:SetAccountBucket("pop.flags.aidgrimel", "1")
-		e.other:SummonItem(16249) -- Item: Hardened Leather Signet
-	elseif aid_grimel_flag == 1 item_lib.check_turn_in(e.trade, {item1 = 15993, item2 = 17179}) then -- Item: Portable Drink, Portable Drink Barrel
+		e.other:SummonItem(16249) -- Item: Hardened Leather Signet.
+	elseif aid_grimel_flag == 1 and item_lib.check_turn_in(e.trade, {item1 = 15993, item2 = 17179}) then -- Item: Portable Drink, Portable Drink Barrel
 		local put_my_jewel_craft_skills_to_the_test_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
 		e.self:Emote(
 			string.format(
