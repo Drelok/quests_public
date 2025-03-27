@@ -136,7 +136,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16251) -- Item: Wooden Signet
-		e.other:SetAccountBucket("pop.flags.aidgrimel", "3").
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "3")
 	elseif aid_grimel_flag == 3 and item_lib.check_turn_in(e.trade, {item1 = 16246}) then -- Item: Filled Sacred Urn
 		local skilled_with_the_needle_link = eq.silent_say_link("am skilled with the needle", "skilled with the needle")
 		e.self:Say(
