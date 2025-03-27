@@ -2,7 +2,7 @@
 function event_spawn(e)
 	eq.set_next_hp_event(51)
 	e.self:SetRunning(true)
-	eq.set_timer("depop", 17 * 60 * 1000) --17 minutes of no combat on either one until vz/tz depop happens
+--	eq.set_timer("depop", 17 * 60 * 1000) --17 minutes of no combat on either one until vz/tz depop happens
 end
 
 function event_hp(e)
@@ -28,25 +28,25 @@ end
 
 function event_combat(e)
 	if e.joined then
-		if not eq.is_paused_timer("depop") then
-			eq.pause_timer("depop")
-		end
+--		if not eq.is_paused_timer("depop") then
+--			eq.pause_timer("depop")
+--		end
 		eq.set_timer("OOBcheck", 6 * 1000)
 	else
-		eq.resume_timer("depop")
+--		eq.resume_timer("depop")
 		eq.stop_timer("OOBcheck")
 	end
 end
 
 function event_timer(e)
-	if e.timer == "depop" then
-		eq.signal(214123, 777) --  tell trigger mob tz/vz failed, reset sequence
-		eq.depop_all(214129) -- depop VZ splits
-		eq.depop_all(214108) -- depop #Tallon_Zek (214108)
-		eq.depop_all(214086) --Hendin_Shadow_Master (214086)
-		eq.depop_all(214084) --Gindan_Flayer 214084
-		eq.depop()
-	elseif e.timer == "OOBcheck" then
+--	if e.timer == "depop" then
+--		eq.signal(214123, 777) --  tell trigger mob tz/vz failed, reset sequence
+--		eq.depop_all(214129) -- depop VZ splits
+--		eq.depop_all(214108) -- depop #Tallon_Zek (214108)
+--		eq.depop_all(214086) --Hendin_Shadow_Master (214086)
+--		eq.depop_all(214084) --Gindan_Flayer 214084
+--		eq.depop()
+	if e.timer == "OOBcheck" then
 		if e.self:GetX() > 650 then
 			e.self:CastSpell(2441, e.self:GetTarget():GetID()) -- Spell: Shadowblade
 			e.self:Emote("'s image fades into the shadows of Drunder.")

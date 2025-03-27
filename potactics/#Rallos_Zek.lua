@@ -2,7 +2,7 @@
 function event_spawn(e)
 	eq.zone_emote(0, "A tremor rumbles through the halls of Drunder. Terror wells up inside you as you struggle to keep your footing.");
 	eq.set_next_hp_event(55);
-	eq.set_timer('depop', 1020 * 1000); --17 minutes until depop
+--	eq.set_timer('depop', 1020 * 1000); --17 minutes until depop
 end
 
 function event_hp(e)
@@ -15,9 +15,9 @@ end
 
 function event_combat(e)
 	if (e.joined == true) then
-		if(not eq.is_paused_timer('depop')) then
-			eq.pause_timer('depop');
-		end
+--		if(not eq.is_paused_timer('depop')) then
+--			eq.pause_timer('depop');
+--		end
 	eq.set_timer('adds', 120 * 1000);
 	eq.set_timer("OOBcheck", 6 * 1000);
 	else
@@ -28,10 +28,10 @@ function event_combat(e)
 end
 
 function event_timer(e)
-	if (e.timer == 'depop') then
-		eq.signal(214123,500); --  tell trigger mob mini Rallos depopped
-		eq.depop();
-	elseif (e.timer == 'adds') then
+--	if (e.timer == 'depop') then
+--		eq.signal(214123,500); --  tell trigger mob mini Rallos depopped
+--		eq.depop();
+	if (e.timer == 'adds') then
 		eq.spawn2(214130,0,0,978,-560,133,385); -- NPC: A_Decorin_Elite
 		eq.spawn2(214130,0,0,978,580,133,385); -- NPC: A_Decorin_Elite
 	elseif(e.timer=="OOBcheck") then
