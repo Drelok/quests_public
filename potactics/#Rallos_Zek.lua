@@ -29,8 +29,8 @@ end
 
 function event_timer(e)
 	if (e.timer == 'depop') then
-		eq.signal(214123,500); --  tell trigger mob mini Rallos depopped
-		eq.depop();
+--		eq.signal(214123,500); --  tell trigger mob mini Rallos depopped
+--		eq.depop();
 	elseif (e.timer == 'adds') then
 		eq.spawn2(214130,0,0,978,-560,133,385); -- NPC: A_Decorin_Elite
 		eq.spawn2(214130,0,0,978,580,133,385); -- NPC: A_Decorin_Elite
