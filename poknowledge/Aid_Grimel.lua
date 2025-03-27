@@ -9,6 +9,7 @@ function event_say(e)
 			)
 		)
 	else
+		local aid_grimel_flag = tonumber(e.other:GetAccountBucket("pop.flags.aidgrimel")) or 0
 		local codecay_bucket = tonumber(e.other:GetAccountBucket("pop.flags.codecay")) or 0
 		if codecay_bucket == 2 then
 			if e.message:findi("willing to help") then
@@ -19,7 +20,7 @@ function event_say(e)
 						versed_in_the_art_of_smithing_link
 					)
 				)
-			elseif e.message:findi("versed in the art of smithing") then
+			elseif e.message:findi("versed in the art of smithing") and aid_grimel_flag == 0 then
 				if e.other:GetRawSkill(63) >= 220 then -- Skill: Blacksmithing
 					e.self:Say(
 						string.format(
@@ -31,7 +32,7 @@ function event_say(e)
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
-			elseif e.message:findi("brewing skill") and e.other:CountItem(16249) > 0 then -- Item: Hardened Leather Signet
+			elseif e.message:findi("brewing skill") and aid_grimel_flag == 1 then
 				if e.other:GetRawSkill(65) >= 220 then -- Skill: Brewing
 					e.self:Say("I bet you could make a wicked brew! However I am forced to drink a refreshing drink while out adventuring. I do have this powder that will give the best drinks quite a bite though. Mix the powder in with two Kaladim Constitutionals and a flask of pure water. If you need more dust just ask for it! Put three twice brewed constitutionals and the signet in this drink barrel. As hard as drink barrels are to get these days, you need to return it to me along with the drink you create with it.")
 					e.other:SummonItem(17179) -- Item: Portable Drink Barrel
@@ -41,21 +42,21 @@ function event_say(e)
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
-			elseif e.message:findi("put my jewel craft skills to the test") and e.other:CountItem(16250) > 0 then -- Item: Clay Signet
+			elseif e.message:findi("put my jewel craft skills to the test") and aid_grimel_flag == 2 then
 				if e.other:GetRawSkill(68) >= 220 then -- Skill: Jewelry Making
 					e.self:Say("My hand was crushed when I used it to deflect a blow from a War Boar that was headed towards Taldarius's back. For some time afterwards my hand was crippled but Brell saw to it I regained full use of it. The ring I used to wear was damaged beyond repair and my hand was never steady enough to etch a new one. If you would make me a new one by combining a mounted blue diamond, the etching dust and etching tools in a jewelry kit. Then take the faceted gem and combine it with a bar of pure enchanted velium and my signet. I have no idea how the pure bars are made. You may want to seek the help of the ice dwarves.")
 					e.other:SummonItem(15988) -- Item: Etching Dust
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
-			elseif e.message:findi("ready to use some clay") and e.other:CountItem(16251) > 0 then -- Item: Wooden Signet
+			elseif e.message:findi("ready to use some clay") and aid_grimel_flag == 3 then
 				if e.other:GetRawSkill(69) >= 220 then -- Skill: Pottery
 					e.self:Say("On our last tome gathering expedition a stray arrow in the Plane of War struck our urn filled with sacred water. It was quite a waste of sacred water! Three large enchanted blocks of clay, three lacquered opals, a vial of purified mana, a ceramic lining, sculpting tools and the urn pattern should make an unfired urn. The urn is so large you will need to fire it with three divine crystalline glazes. Once you have the urn it needs to be filled with three sacred waters and the signet as a cap.")
 					e.other:SummonItem(16243) -- Item: Urn Patten
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
-			elseif e.message:findi("am skilled with the needle") and e.other:CountItem(16252) > 0 then -- Item: Metal Signet
+			elseif e.message:findi("am skilled with the needle") and aid_grimel_flag == 4 then
 				if e.other:GetRawSkill(61) >= 220 then -- Skill: Tailoring
 					e.self:Say(
 						string.format(
@@ -67,7 +68,7 @@ function event_say(e)
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
-			elseif e.message:findi("skills with a fletching knife") and e.other:CountItem(32800) > 0 then -- Item: Marked Signet
+			elseif e.message:findi("skills with a fletching knife") and aid_grimel_flag == 5 then
 				if e.other:GetRawSkill(64) >= 220 then -- Skill: Fletching
 					e.self:Say(
 						string.format(
@@ -78,7 +79,7 @@ function event_say(e)
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
-			elseif e.message:findi("master chef") and e.other:CountItem(16254) > 0 then -- Item: Runed Signet
+			elseif e.message:findi("master chef")  and aid_grimel_flag == 6 then
 				if e.other:GetRawSkill(60) >= 220 then -- Skill: Baking
 					e.self:Say("When we adventure in the Planes there is only one meal that keeps us in top fighting shape. It is called a Bristlebane's Party Platter. Unfortunately the platter is awkward and not easy to adventure with so you need to place them in this satchel. I know not how to make the Platter, a rather nice female Halfling cleric always used to deliver them to us but I heard she was crushed by a Regrua while hunting for a rare component in the Plane of Water. Brell bless her soul! Combine three of the platters and the signet inside the satchel.")
 					e.other:SummonItem(17180) -- Item: Field Satchel
@@ -102,6 +103,7 @@ function event_trade(e)
 				brewing_skill_link
 			)
 		)
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "1")
 		e.other:SummonItem(16249) -- Item: Hardened Leather Signet
 	elseif item_lib.check_turn_in(e.trade, {item1 = 15993, item2 = 17179}) then -- Item: Portable Drink, Portable Drink Barrel
 		local put_my_jewel_craft_skills_to_the_test_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
@@ -111,6 +113,7 @@ function event_trade(e)
 				put_my_jewel_craft_skills_to_the_test_link
 			)
 		)
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "2")
 		e.other:SummonItem(16250) -- Item: Clay Signet
 	elseif item_lib.check_turn_in(e.trade, {item1 = 15991}) then -- Item: Velium Blue Diamond Ring
 		local ready_to_use_some_clay_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
@@ -122,6 +125,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16251) -- Item: Wooden Signet
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "3")
 	elseif item_lib.check_turn_in(e.trade, {item1 = 16246}) then -- Item: Filled Sacred Urn
 		local skilled_with_the_needle_link = eq.silent_say_link("skilled with the needle")
 		e.self:Say(
@@ -132,6 +136,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16252) -- Item: Metal Signet
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "4")
 	elseif item_lib.check_turn_in(e.trade, {item1 = 15986}) then -- Item: Fire Undergarment Tunic
 		local skills_with_a_fletching_knife_link = eq.silent_say_link("skills with a fletching knife")
 		e.self:Say(
@@ -142,6 +147,7 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(32800) -- Item: Marked Signet
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "5")
 	elseif item_lib.check_turn_in(e.trade, {item1 = 16247}) then -- Item: Signet Featherwood Bow
 		local master_chef_link = eq.silent_say_link("master chef")
 		e.self:Say(
@@ -152,9 +158,11 @@ function event_trade(e)
 			)
 		)
 		e.other:SummonItem(16254) -- Item: Runed Signet
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "6")
 	elseif item_lib.check_turn_in(e.trade, {item1 = 16248}) then -- Item: Food Satchel
 		e.self:Say("Truly amazing! Now the Councilman and I can be off on our expedition to the Elemental Planes!' He takes out a tool and marks his signet before handing it to you, 'Before we depart you may want to ask the Councilman about the signet.")
 		e.other:SummonItem(16256) -- Item: Marked Runed Signet
+		e.other:SetAccountBucket("pop.flags.aidgrimel", "0")
 	end
 
 	item_lib.return_items(e.self, e.other, e.trade)
