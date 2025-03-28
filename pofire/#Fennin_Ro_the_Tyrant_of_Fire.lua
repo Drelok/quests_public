@@ -27,8 +27,9 @@ function event_timer(e)
                 }
                 local entityList = eq.get_entity_list()
                 for _, npcTypeID in ipairs(mobIDs) do
-                        if not entityList:IsMobSpawnedByNpcTypeID(npcTypeID) then
+                        if entityList:IsMobSpawnedByNpcTypeID(npcTypeID) then
                                 spawnwave = false
+                                break
                         end
                 end
                 if spawnwave then
