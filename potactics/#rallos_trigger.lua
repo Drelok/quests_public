@@ -30,8 +30,8 @@ function event_signal(e)
 
 			eq.get_zone():SetVariable("Berik", "0")
 			eq.get_zone():SetVariable("Grunhork", "0")
-		else
-			eq.set_timer("Decorin", 6 * 60 * 1000) -- 6 Minutes
+--		else
+--			eq.set_timer("Decorin", 6 * 60 * 1000) -- 6 Minutes
 		end
 	elseif e.signal == 214057 then -- Decorin Grunhork Death
 		eq.get_zone():SetVariable("Grunhork", "1")
@@ -52,8 +52,8 @@ function event_signal(e)
 
 			eq.get_zone():SetVariable("Berik", "0")
 			eq.get_zone():SetVariable("Grunhork", "0")
-		else
-			eq.set_timer("Decorin", 6 * 60 * 1000) -- 6 Minutes
+--		else
+--			eq.set_timer("Decorin", 6 * 60 * 1000) -- 6 Minutes
 		end
 	elseif e.signal == 214108 then -- Event Tallon Death
 		eq.get_zone():SetVariable("Event Tallon", "1")
@@ -83,13 +83,13 @@ function event_signal(e)
 end
 
 function event_timer(e)
-	if e.timer == "Decorin" then
-		eq.stop_timer("Decorin")
-		eq.signal(214056, 0) -- NPC: Decorin_Berik
-		eq.signal(214057, 0) -- NPC: Decorin_Grunhork
-		eq.get_zone():SetVariable("Berik", "0")
-		eq.get_zone():SetVariable("Grunhork", "0")
-	elseif e.timer == "Rallos Untargetable" then
+--	if e.timer == "Decorin" then
+--		eq.stop_timer("Decorin")
+--		eq.signal(214056, 0) -- NPC: Decorin_Berik
+--		eq.signal(214057, 0) -- NPC: Decorin_Grunhork
+--		eq.get_zone():SetVariable("Berik", "0")
+--		eq.get_zone():SetVariable("Grunhork", "0")
+	if e.timer == "Rallos Untargetable" then
 		eq.stop_timer("Rallos Untargetable")
 		eq.unique_spawn(214052, 0, 0, 500, 11, 194, 129) -- NPC: #Rallos_Zek_ (Untargetable)
 	end

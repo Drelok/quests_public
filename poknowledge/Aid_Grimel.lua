@@ -13,13 +13,67 @@ function event_say(e)
 		local codecay_bucket = tonumber(e.other:GetAccountBucket("pop.flags.codecay")) or 0
 		if codecay_bucket == 2 then
 			if e.message:findi("willing to help") then
-				local versed_in_the_art_of_smithing_link = eq.silent_say_link("versed in the art of smithing")
-				e.self:Say(
+				if aid_grimel_flag == 0 then
+					local versed_in_the_art_of_smithing_link = eq.silent_say_link("versed in the art of smithing")
+					e.self:Say(
 					string.format(
 						"Excellent! I am looking for a smith to add a special imbue to Councilman Taldarius's armor. Are you well [%s]?",
 						versed_in_the_art_of_smithing_link
+						)
 					)
-				)
+				elseif aid_grimel_flag == 1 then
+					local brewing_skill_link = eq.silent_say_link("brewing skill")
+					e.self:Say(
+						string.format(
+							"If you are not too busy I have another task, do you have any [%s]?",
+							brewing_skill_link
+						)
+					)
+				elseif aid_grimel_flag == 2 then
+					local put_my_jewel_craft_skills_to_the_test_link = eq.silent_say_link("put my jewel craft skills to the test", "put your jewel craft spells to the test")
+					e.self:Emote(
+						string.format(
+							"I see you are quite deft of hand, perhaps you would care to [%s]?'",
+							put_my_jewel_craft_skills_to_the_test_link
+						)
+					)
+				elseif aid_grimel_flag == 3 then
+							local ready_to_use_some_clay_link = eq.silent_say_link("ready to use some clay")
+					e.self:Emote(
+						string.format(
+							"grins. 'Quite a nice ring you made for me %s. We seem to be finishing the tasks on my list at a nice pace. Tell me when you are [%s].",
+							e.other:GetCleanName(),
+							ready_to_use_some_clay_link
+						)
+					)
+				elseif aid_grimel_flag == 4 then
+					local skilled_with_the_needle_link = eq.silent_say_link("am skilled with the needle", "skilled with the needle")
+					e.self:Say(
+						string.format(
+							"Outstanding work %s!  Are ye [%s] as well as an accomplished potter?",
+							e.other:GetCleanName(),
+							skilled_with_the_needle_link
+						)
+					)
+				elseif aid_grimel_flag == 5 then
+					local skills_with_a_fletching_knife_link = eq.silent_say_link("skills with a fletching knife")
+					e.self:Say(
+						string.format(
+							"Good work %s. If you have [%s] I may have a job for you to do.",
+							e.other:GetCleanName(),
+							skills_with_a_fletching_knife_link
+						)
+					)
+				elseif aid_grimel_flag == 6 then
+					local master_chef_link = eq.silent_say_link("master chef")
+					e.self:Say(
+						string.format(
+							"Masterful work %s! The last item I need before we can be off is some food. I warn you this will truly test your skills. Do you fancy yourself a [%s]?",
+							e.other:GetCleanName(),
+							master_chef_link
+						)
+					)
+				end
 			elseif e.message:findi("versed in the art of smithing") and aid_grimel_flag == 0 then
 				if e.other:GetRawSkill(63) >= 220 then -- Skill: Blacksmithing
 					e.self:Say(

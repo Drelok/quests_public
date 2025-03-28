@@ -10,10 +10,10 @@ end
 
 function event_hp(e)
 	if (e.hp_event == 75) then
-		SpawnAdds(3,4);
+		SpawnAdds(e,3,4);
 		eq.set_next_hp_event(20);
 	elseif (e.hp_event == 20) then
-		SpawnAdds(4,5);
+		SpawnAdds(e,4,5);
 	end
 end
 
@@ -35,14 +35,37 @@ function event_timer(e)
 	end
 end
 
-function SpawnAdds(min_adds,max_adds)	--spawns 4 adds (2 sets of same type)	
+function SpawnAdds(e,min_adds,max_adds)	--spawns 4 adds (2 sets of same type)	
 	local rand = math.random(min_adds,max_adds);
-	eq.spawn2(223231,0,0,210,315,5,257);	--guardian of the dark prince
-	eq.spawn2(223232,0,0,300,215,5,387);	--Hatebringer of Innoruuk
+	local id1 = eq.spawn2(223231,0,0,210,315,5,257);	--guardian of the dark prince
+	if ( id1.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+		id1:AddToHateList(e.self:GetTarget(), 1);
+	end
 	
-	if (rand >= 3) then eq.spawn2(223231,0,0,280,330,15,324); end
-	if (rand >= 4) then eq.spawn2(223232,0,0,325,280,15,324); end
-	if (rand == 5) then eq.spawn2(eq.ChooseRandom(223231,223232),0,0,255,255,5,324); end
+	local id2 = eq.spawn2(223232,0,0,300,215,5,387);	--Hatebringer of Innoruuk
+	if ( id2.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+		id2:AddToHateList(e.self:GetTarget(), 1);
+	end
+	
+	if (rand >= 3) then 
+		local id3 = eq.spawn2(223231,0,0,280,330,15,324)
+		if ( id3.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+			id3:AddToHateList(e.self:GetTarget(), 1);
+		end
+	end
+	
+	if (rand >= 4) then
+		local id4 = eq.spawn2(223232,0,0,325,280,15,324)
+		if ( id4.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+			id4:AddToHateList(e.self:GetTarget(), 1);
+		end
+	end
+	if (rand == 5) then 
+		local id5 = eq.spawn2(eq.ChooseRandom(223231,223232),0,0,255,255,5,324)
+		if ( id5.valid and e.self:GetTarget() and e.self:GetTarget().valid ) then
+			id5:AddToHateList(e.self:GetTarget(), 1);
+		end
+	end
 end
 
 function event_death_complete(e)
