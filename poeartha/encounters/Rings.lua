@@ -650,7 +650,7 @@ end
 function Follower_Death(e)
         if not eq.is_npc_spawned({ 218122 }) then
 	    eq.get_zone():SetVariable("dust_counter","1");
-	    eq.debug(PrintStatus());
+	    eq.debug(PrintProgress());
             if AllRingsComplete() and eq.is_npc_spawned({ 218094 }) then -- Are Stone/Dust/Vine/Mud all complete & is the Final Trigger mob Up? If so spawn Arbitor.
                     eq.spawn2(218053,0,0,1520.9,-2745.2,6.1,376.4); -- Spawn Mystical Arbitor of Earth
                     eq.depop_with_timer(218094); -- Despawn the Trigger mob ##Final_Trigger## so event can't be repeated multiple times.
