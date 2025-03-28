@@ -139,7 +139,7 @@ function event_click_door(e)
 	elseif (door_id == 51) then
 		if expedition.valid then
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
-			if (!zeb.valid or zeb:GetHateListCount() == 0) and phase_variable >= 5 or e.self:GetGM() then
+			if (not zeb.valid or zeb:GetHateListCount() == 0) and phase_variable >= 5 or e.self:GetGM() then
 				e.self:MovePCInstance(223,eq.get_zone_instance_id(),245,-1115,0,387);
 			else
 				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
