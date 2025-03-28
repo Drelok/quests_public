@@ -83,7 +83,7 @@ function event_click_door(e)
 	local entity_list = eq.get_entity_list();
 	local open_type = entity_list:FindDoor(door_id):GetOpenType();
 	local lock_pick = entity_list:FindDoor(door_id):GetLockPick();
-	local zeb = entity_list:GetMobByNPCTypeID(223238);
+	local zeb = entity_list:GetMobByNpcTypeID(223238);
 	local tbl_id = nil;	--identifies slot in p1 & p2 & p3 door tables
 	--e.self:Message(MT.Lime,"Door ID is: [" .. door_id .. "] Open Type: [" .. e.door:GetOpenType() .. "] Phase: [" .. phase .. "]");   --debug to easily check door IDs
 	if ((door_id >= 5 and door_id <= 8) or (door_id >= 25 and door_id <= 32) or (door_id >= 42 and door_id <= 49)) then
