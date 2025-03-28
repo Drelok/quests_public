@@ -83,6 +83,7 @@ function event_click_door(e)
 	local entity_list = eq.get_entity_list();
 	local open_type = entity_list:FindDoor(door_id):GetOpenType();
 	local lock_pick = entity_list:FindDoor(door_id):GetLockPick();
+	local zeb = entity_list:GetMobByNPCTypeID(223238):
 	local tbl_id = nil;	--identifies slot in p1 & p2 & p3 door tables
 	--e.self:Message(MT.Lime,"Door ID is: [" .. door_id .. "] Open Type: [" .. e.door:GetOpenType() .. "] Phase: [" .. phase .. "]");   --debug to easily check door IDs
 	if ((door_id >= 5 and door_id <= 8) or (door_id >= 25 and door_id <= 32) or (door_id >= 42 and door_id <= 49)) then
@@ -138,7 +139,7 @@ function event_click_door(e)
 	elseif (door_id == 51) then
 		if expedition.valid then
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
-			if phase_variable >= 5 or e.self:GetGM() then
+			if (!zeb.valid or zeb:GetHateListCount() == 0) and phase_variable >= 5 or e.self:GetGM() then
 				e.self:MovePCInstance(223,eq.get_zone_instance_id(),245,-1115,0,387);
 			else
 				e.self:Message(MT.NPCQuestSay,"The wall feels both insubstantial and solid at the same time, almost as if you were not in phase with it.");
