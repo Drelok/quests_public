@@ -139,17 +139,25 @@ function event_say(e)
 				else
 					e.self:Say("You do not seem to be skilled enough.")
 				end
-			elseif e.message:findi("lose") then
-				local versed_in_the_art_of_smithing_link = eq.silent_say_link("versed in the art of smithing")
+--			elseif e.message:findi("lose") then
+--				local versed_in_the_art_of_smithing_link = eq.silent_say_link("versed in the art of smithing")
+--				e.self:Say(
+--					string.format(
+--						"Aye then, let's start over. Are you well [%s]?",
+--						versed_in_the_art_of_smithing_link
+--					)
+--				)
+--				e.other:SetAccountBucket("pop.flags.aidgrimel", "0")
+			else
+				local willing_to_help_link = eq.silent_say_link("willing to help")
 				e.self:Say(
 					string.format(
-						"Aye then, let's start over. Are you well [%s]?",
-						versed_in_the_art_of_smithing_link
+						"Greetings and Salutations %s! I am Grimel, aid to the mighty paladin Councilman Taldarius. In between his duties to the city, Taldarius and I spend most of our time in the Planes cleansing evil. Even now I am preparing for battle. Taldarius intends to go further into the Planes than ever before on our next trip and I am working on gathering the special supplies we need. If you are [%s] I may have some use for your skills if you are a master of trades and have traveled in the Planes.",
+						e.other:GetCleanName(),
+						willing_to_help_link
 					)
 				)
-				e.other:SetAccountBucket("pop.flags.aidgrimel", "0")
-			else
-				e.self:Say("Ye still don't have the component made. Did you [lose] it?")
+--				e.self:Say("Ye still don't have the component made. Did you [lose] it?")
 			end
 		else
 			e.self:Say("You do not seem experienced enough in the Planes.")
