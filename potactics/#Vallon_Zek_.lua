@@ -14,10 +14,14 @@ end
 
 function event_waypoint_arrive(e)
 	if e.wp == 9 then
-		eq.spawn2(214084, 0, 0, 359, 73, 169, 255) --Gindan_Flayer 214084
-		eq.spawn2(214084, 0, 0, 383, 73, 169, 255) --Gindan_Flayer 214084
-		eq.spawn2(214084, 0, 0, 308, 73, 169, 255) --Gindan_Flayer 214084
-		eq.spawn2(214084, 0, 0, 283, 73, 169, 255) --Gindan_Flayer 214084
+		local adds = tonumber(eq.get_zone():GetVariable("vzflayers")) or 0
+		if adds == 0 then
+			eq.spawn2(214084, 0, 0, 359, 73, 169, 255) --Gindan_Flayer 214084
+			eq.spawn2(214084, 0, 0, 383, 73, 169, 255) --Gindan_Flayer 214084
+			eq.spawn2(214084, 0, 0, 308, 73, 169, 255) --Gindan_Flayer 214084
+			eq.spawn2(214084, 0, 0, 283, 73, 169, 255) --Gindan_Flayer 214084
+		end
+		eq.get_zone():SetVariable("vzflayers", "1")
 	end
 end
 
@@ -34,6 +38,7 @@ function event_combat(e)
 		eq.set_timer("OOBcheck", 6 * 1000)
 	else
 --		eq.resume_timer("depop")
+		eq.depop_all(214129) -- depop VZ splits when combat ends with #Vallon_zek_
 		eq.stop_timer("OOBcheck")
 	end
 end
