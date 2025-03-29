@@ -738,24 +738,6 @@ function event_timer(e)
 				end
 			end
 		end
-	elseif e.timer == "lockout" then	--handles instance where Quarm killed but Zeb/Druzzil Ro script not completed
-		eq.stop_timer(e.timer)
-		-- port everyone in the zone back to PoTimeA
-		local expedition_id = 0
-		local client_list = eq.get_entity_list():GetClientList()
-		for c in client_list.entries do
-			if c.valid and not c:GetGM() then
-				c:MovePCInstance(219, 0, -37, -110, 9, 0)
-				local expedition = c:GetExpedition()
-				if expedition.valid then
-					expedition_id = expedition:GetID()
-				end
-			end
-		end
-
-		eq.get_zone():SetVariable("Phase", "6")
-
-		ControllerDepop()
 	end
 end
 
