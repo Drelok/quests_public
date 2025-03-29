@@ -38,7 +38,7 @@ function event_combat(e)
 		eq.set_timer("OOBcheck", 6 * 1000)
 	else
 --		eq.resume_timer("depop")
-		eq.depop_all(214129) -- depop VZ splits when combat ends with #Vallon_zek_
+--		eq.depop_all(214129) -- depop VZ splits when combat ends with #Vallon_zek_
 		eq.stop_timer("OOBcheck")
 	end
 end
