@@ -75,6 +75,12 @@ sub PurpleText {
 
 sub WorldAnnounce {
 	my $message = shift;
+
+    my $client  = plugin::val('client');
+    if ($client->GetGM()) {
+        return;
+    }
+
 	quest::discordsend("ooc", $message);
 	quest::we(335, $message);
 }
@@ -93,6 +99,12 @@ sub convert_seconds {
 # TODO - UPDATE THIS URL WHEN OUR ALLACLONE IS UP
 sub WorldAnnounceItem {
     my ($message, $item_id) = @_;
+
+    my $client  = plugin::val('client');
+    if ($client->GetGM()) {
+        return;
+    }
+
     my $itemname = quest::getitemname($item_id);
 
     my $eqgitem_link = quest::varlink($item_id);
