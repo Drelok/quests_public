@@ -1,6 +1,6 @@
 #Primalist Saosith.pl
 #Beastlord PoP Spells
-# items: 29112, 28544, 28545, 21629, 28547, 28548, 29131, 28549, 28550, 21630, 28551, 28552, 29132, 28553, 28554
+# items: 29112, 28544, 28545, 21629, 28547, 28548, 29131, 28549, 28550, 21630, 28551, 28552, 29132, 28553, 28554, 59652
 
 sub EVENT_SAY {
   if($text=~/hail/i) {
@@ -19,7 +19,7 @@ sub EVENT_ITEM {
     quest::say("The magic you have given me is quite potent, it should be a simple task to use primal forces to focus its magic into a spell.");
     quest::emote("closes her eyes and the object glows slightly in her hands.");
     quest::say("Here, I hope this will prove of some use to you.");
-    quest::summonitem(quest::ChooseRandom(28549, 28550, 21630, 28551, 28552)); #Level 63 or 64 Beastlord spell, PoP (Arag's Celerity, Spirit of Rellic, Frost Spear, Spiritual Dominion, Spirit of Sorsha)
+    quest::summonitem(quest::ChooseRandom(28549, 28550, 21630, 28551, 28552, 59652)); #Level 63 or 64 Beastlord spell, PoP (Arag's Celerity, Spirit of Rellic, Frost Spear, Spiritual Dominion, Spirit of Sorsha)
   }
   elsif(plugin::check_handin(\%itemcount, 29132 => 1)) { #Glyphed Rune Word
     quest::say("The magic you have given me is quite potent, it should be a simple task to use primal forces to focus its magic into a spell.");

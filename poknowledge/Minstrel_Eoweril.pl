@@ -1,6 +1,6 @@
 #Minstrel Eoweril.pl
 #Bard PoP Spells/Songs
-# items: 29112, 28471, 28473, 28476, 21636, 28474, 28475, 28484, 16391, 29131, 28478, 28480, 28483, 28472, 28479, 28481, 28482, 21650, 29132, 28477, 28485, 28486
+# items: 59808, 29112, 28471, 28473, 28476, 21636, 28474, 28475, 28484, 16391, 29131, 28478, 28480, 28483, 28472, 28479, 28481, 28482, 21650, 29132, 28477, 28485, 28486
 
 sub EVENT_SAY {
   if($text=~/Hail/i) {
@@ -22,7 +22,7 @@ sub EVENT_ITEM {
   elsif (plugin::check_handin(\%itemcount, 29132 => 1)) {#Glyphed Rune Word
     quest::emote("takes the curious parchment and examines it."); #Real text still needed
     quest::say("Very interesting, I will share this with the other academics. Take this as a reward for your discovery."); #Real text still needed
-    quest::summonitem(quest::ChooseRandom(28477, 28485, 28486)); #Level 65 Bard spell, PoP (Tuyen's Chant of Fire, Harmony of Sound, Lullaby of Morell)
+    quest::summonitem(quest::ChooseRandom(28477, 28485, 28486, 59808)); #Level 65 Bard spell, PoP (Tuyen's Chant of Fire, Harmony of Sound, Lullaby of Morell)
   }
   plugin::return_items(\%itemcount);
 }

@@ -1,6 +1,6 @@
 #Reaver_Nydlil.pl
 #Shadowknight PoP Spells
-# items: 29112, 26920, 26924, 26921, 26925, 26937, 29131, 21651, 26922, 26923, 21632, 21634, 21633, 29132, 26926, 26927, 26928, 21635
+# items: 59592, 4063, 29112, 26920, 26924, 26921, 26925, 26937, 29131, 21651, 26922, 26923, 21632, 21634, 21633, 29132, 26926, 26927, 26928, 21635
 
 
 sub EVENT_SAY {
@@ -23,7 +23,7 @@ sub EVENT_ITEM {
     quest::emote("carefully takes the planar arcane item from you. With a careful eye, he inspects every portion of the incorporeal item before nodding to himself in satisfaction. The Shadowknight then closes his eyes and chants lowly in an unfamiliar language.");
     $client->Message(15, "You feel the coalescing of spirits around you in the area as the Shadowknight calls them forth to bless the arcane item in his grip. Dark runes of a rusted color begin to carve themselves onto a parchment that grows more real and tangible with each syllable uttered by the Shadowknight. Eventually, his chant comes to a close and the completed item is handed to you without expectation of further aid on your behalf.");
     quest::say("Do not use this power without caution, $name. It is quite powerful indeed for it is power forged upon the planar worlds but may affect both astral and prime alike.");
-    quest::summonitem(quest::ChooseRandom(21651, 26922, 26923, 21632, 21634, 21633)); #Level 63 or 64 Class spell, PoP (Shroud of Chaos, Aura of Pain, Terror of Thule, Blood of Hate, Pact of Hate, Spear of Decay)
+    quest::summonitem(quest::ChooseRandom(59592, 21651, 26922, 26923, 21632, 21634, 21633, 4063)); #Level 63 or 64 Class spell, PoP (Shroud of Chaos, Aura of Pain, Terror of Thule, Blood of Hate, Pact of Hate, Spear of Decay)
   }
   elsif(plugin::check_handin(\%itemcount, 29132 => 1)) { #Glyphed Rune Word
     quest::emote("carefully takes the planar arcane item from you. With a careful eye, he inspects every portion of the incorporeal item before nodding to himself in satisfaction. The Shadowknight then closes his eyes and chants lowly in an unfamiliar language.");

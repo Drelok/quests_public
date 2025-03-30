@@ -1,6 +1,6 @@
 #Vicar Ceraen.pl
 #Cleric PoP Spells
-# items: 29112, 28646, 28557, 28561, 28572, 21690, 26945, 26946, 28558, 28563, 28566, 28567, 28564, 26947, 29131, 21647, 28569, 28571, 28573, 28559, 28560, 28562, 29132, 21689, 28555, 28565, 28568, 28570
+# items: 59579, 59578, 28556, 29112, 28646, 28557, 28561, 28572, 21690, 26945, 26946, 28558, 28563, 28566, 28567, 28564, 26947, 29131, 21647, 28569, 28571, 28573, 28559, 28560, 28562, 29132, 21689, 28555, 28565, 28568, 28570
 
 
 sub EVENT_SAY {
@@ -15,13 +15,13 @@ sub EVENT_ITEM {
   if(plugin::check_handin(\%itemcount, 29112 => 1)) {#Ethereal Parchment
     quest::emote("Vicar Ceraen takes the arcane item with great care and respect from you. For several moments the priest seems to enter a state of contemplative meditiation upon the arcane planar item. Suddenly, he begins a slow, soft chant -- a prayer whose dialect is unknown to your ears. Eventually, the arcane item in his hand begins to waver into this existence, its corporeal state rendered beneath the priest's chanting.");
 quest::emote("As he grows quiet and calm once more, the priest hands the corporeal item to you -- the runes of divine power etched upon the tangible scroll, 'This should be of great use to you, $name. Use its power wisely.'");
-    quest::summonitem(quest::ChooseRandom(28646, 28557, 28561, 28572, 21690, 26945,26946,28558, 28563, 28566, 28567, 28564, 26947)); #Level 61 or 62 Cleric spell, PoP (Faith, Symbol of Kazad, Ward of Gallantry, Tarnation, Sermon of Penitence, Petrifying Earth, Greater Immobilize, Virtue, Blessing of Reverence, Supernal Elixir, Condemnation, Catastrophe, Pacification)
+    quest::summonitem(quest::ChooseRandom(59578, 28556, 28646, 28557, 28561, 28572, 21690, 26945, 26946, 28558, 28563, 28566, 28567, 28564, 26947)); #Level 61 or 62 Cleric spell, PoP (Faith, Symbol of Kazad, Ward of Gallantry, Tarnation, Sermon of Penitence, Petrifying Earth, Greater Immobilize, Virtue, Blessing of Reverence, Supernal Elixir, Condemnation, Catastrophe, Pacification)
   }
   
   elsif(plugin::check_handin(\%itemcount, 29131 => 1)) {#Spectral Parchment
     quest::emote("Vicar Ceraen takes the arcane item with great care and respect from you. For several moments the priest seems to enter a state of contemplative meditiation upon the arcane planar item. Suddenly, he begins a slow, soft chant -- a prayer whose dialect is unknown to your ears. Eventually, the arcane item in his hand begins to waver into this existence, its corporeal state rendered beneath the priest's chanting.");
 quest::emote("As he grows quiet and calm once more, the priest hands the corporeal item to you -- the runes of divine power etched upon the tangible scroll, 'This should be of great use to you, $name. Use its power wisely.'");
-    quest::summonitem(quest::ChooseRandom(21647, 28569, 28571, 28573, 28559, 28560, 28562)); #Level 63 or 64 Cleric spell, PoP (Kazad's Mark, Hammer of Damnation, Supernal Light, Sound of Might, Destroy Undead, Mark of Kings, Word of Replenishment)
+    quest::summonitem(quest::ChooseRandom(59579, 21647, 28569, 28571, 28573, 28559, 28560, 28562)); #Level 63 or 64 Cleric spell, PoP (Kazad's Mark, Hammer of Damnation, Supernal Light, Sound of Might, Destroy Undead, Mark of Kings, Word of Replenishment)
   }
   
   elsif(plugin::check_handin(\%itemcount, 29132 => 1)) {#Glyphed Rune Word
