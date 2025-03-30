@@ -68,7 +68,7 @@ function event_click_door(e)
 						return
 					end
 
-					expedition:AddLockout("Plane of Time", 14 * 60 * 60) -- 14 Hours
+					expedition:AddReplayLockout(14 * 60 * 60) -- 14 Hours
 
 					local expedition_identifier = string.format("potime-%d-phase", expedition:GetID())
 					eq.set_data(expedition_identifier, "0", "14H")
