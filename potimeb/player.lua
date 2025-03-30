@@ -376,7 +376,6 @@ buckets = {
 --GM ONLY CONTROLS--
 function event_say(e)
 	local expedition = eq.get_expedition()
-	eq.get_zone():DeleteVariable("p3wave");	
 	if e.self:GetGM() then
 		instance_id = eq.get_zone_instance_id();
 		if e.message:find("help") then
@@ -399,6 +398,7 @@ function event_say(e)
 			e.self:Message(MT.Guild,string.format("- [%s] -",eq.say_link("tb_p5",false,"Phase 5")));
 			e.self:Message(MT.Guild,string.format("- [%s] -",eq.say_link("tb_p6",false,"Phase 6")));
 		elseif e.message:find("tb_p1") then
+			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "0")
 			eq.get_zone():DeleteVariable("Kazrok of Fire");
 			eq.get_zone():DeleteVariable("Terlok of Earth");
@@ -409,6 +409,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 1 Loading]");
 		elseif e.message:find("tb_p2") then
+			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "1")
 			eq.get_zone():DeleteVariable("War Shapen Emissary");
 			eq.get_zone():DeleteVariable("Gutripping War Beast");
@@ -419,6 +420,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 2 Loading]");
 		elseif e.message:find("tb_p3") then
+			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "2")
 			ResetLockouts(99);
 			SetLockouts(1);
@@ -426,6 +428,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 3 Loading]");
 		elseif e.message:find("tb_p4") then
+			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "3")
 			eq.get_zone():DeleteBucket("Saryrn");
 			eq.get_zone():DeleteBucket("Tallon Zek");
@@ -438,6 +441,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 4 Loading]");
 		elseif e.message:find("tb_p5") then
+			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "4")
 			eq.get_zone():DeleteBucket("Bertoxxulous");
 			eq.get_zone():DeleteBucket("Cazic-Thule");
@@ -451,6 +455,7 @@ function event_say(e)
 			ZoneReset(e);
 			e.self:Message(MT.Lime,"[Phase 5 Loading]");
 		elseif e.message:find("tb_p6") then
+			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "5")
 			ResetLockouts(99);
 			SetLockouts(1);
