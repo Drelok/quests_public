@@ -55,6 +55,9 @@ function event_timer(e)
                                 eq.zone_emote(1,"A maddened call of endless fury erupts as a burning creature of pure destructions stands tall before you. The creature then speaks in the loud booming voice of immense power saying, 'You are fools to have come this far. Prepare to tremble at the might of Doomfire!'")
                                 eq.stop_timer("Wave")
                                 eq.spawn2(217054, 0, 0, -1578.1, -904.1, -185.8, 265.6) -- NPC: Fennin_Ro_the_Tyrant_of_Fire
+                                eq.get_zone():SetVariable("Fennin", "4")
+                        else
+                                eq.stop_timer("Wave")
                         end
                 end
         end
