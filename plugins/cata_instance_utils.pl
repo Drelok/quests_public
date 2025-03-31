@@ -110,8 +110,13 @@ sub ScaleInstanceNPC {
 		return;
 	}
 
+	my $scale_percentage = 0.25;
+	if ($npc->GetEntityVariable("scale_percentage")) {
+		$scale_percentage = $npc->GetEntityVariable("scale_percentage")
+	}
+
 	$player_count -= 2;
-	my $player_scale_factor = ($player_count * 0.25);
+	my $player_scale_factor = ($player_count * $scale_percentage);
 
 	# Ensure original stats are stored
 	if (!$npc->GetEntityVariable("original_max_hp")) {
