@@ -15,6 +15,8 @@ sub EVENT_TIMER {
 }
 
 sub EVENT_DEATH_COMPLETE {
-    quest::signal(207014,0); # NPC: Tylis_Newleaf
+    if ($zone->GetInstanceVersion() ne quest::get_rule("Custom:StaticInstanceVersion")+0){
+	quest::signal(207014,0); # NPC: Tylis_Newleaf, depop only in open world
+    }
     quest::spawn2(207066,0,0,$x,$y,$z,$h); # NPC: #Tylis_Newleaf
 }

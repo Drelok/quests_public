@@ -1,16 +1,7 @@
 ##An_Unimaginable_Horror (207031)
 
-sub EVENT_SPAWN {
-	quest::settimer(2,1800); #fail timer; 30 minutes
-}
-
-sub EVENT_TIMER {
-	if($timer == 2) {
-		quest::depop();
-	}
-}
-
 sub EVENT_DEATH_COMPLETE {
+	quest::signalwith(207028,1);
 	quest::spawn2(207082,0,0,1,-1021,-27,0); #Real #Baraguj_Szuul
 	my @clientlist = $entity_list->GetClientList();
 	foreach $ent (@clientlist) {

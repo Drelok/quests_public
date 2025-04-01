@@ -1,12 +1,18 @@
 function event_spawn(e)
-	eq.set_timer("Depop", 1200 * 1000) -- 20 Minutes
+	if not tostring(eq.get_zone_instance_version()) == eq.get_rule("Custom:StaticInstanceVersion") then
+		eq.set_timer("Depop", 1200 * 1000) -- 20 minutes in OW only
+	end
+	e.self:SetSpecialAbility(19, 1); -- Immune to melee
+	e.self:SetSpecialAbility(20, 1); -- Immune to magic
+	e.self:SetSpecialAbility(24, 1); -- Will not aggro
+	e.self:SetSpecialAbility(35, 1); -- No harm from players
 end
 
 function event_timer(e)
-	if e.timer == "Depop" then
-		eq.stop_timer("Depop")
-		eq.depop()
-	end
+        if e.timer == "Depop" then
+                eq.stop_timer("Depop")
+                eq.depop()
+        end
 end
 
 function event_say(e)
@@ -23,7 +29,10 @@ function event_say(e)
 			e.other:SetAccountBucket("pop.flags.newleaf", "1")
 			e.other:Message(MT.LightBlue, "You receive a character flag!")
 		else
-			e.self:Say("It looks like we've already spoken.")
+			local ready_link = eq.silent_say_link("ready")
+			e.self:Say(
+				string.format(
+					"It looks like we've already spoken.  Are you %s to continue?",ready_link))
 		end
 	elseif e.message:findi("ready") then
 		e.other:Message(MT.LightBlue, "Your tormented visions have ended.")
