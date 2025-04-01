@@ -19,6 +19,12 @@ if(e.timer == 'xegoevent') then
 		eq.depop_all(215444); -- Nuquernal_Belegrodian
 		eq.depop_all(215479); -- #Servant_of_Air
 		eq.depop_all(215445); -- #Wesreh_Galleantan
+		eq.depop_all(215050); -- untargettable An_Air_Infused_Defender
+		eq.depop_all(215052); -- untargettable #A_Knight_of_Air
+		eq.depop_all(215049); --  untargettable #An_Air_Phoenix_Scout
+		eq.depop_all(215051); --  untargettable #Servant_of_Air
+		eq.depop_all(215048); -- untargettable #A_Deadly_Cloudwalker
+		eq.depop_all(215047); -- untargettable #A_Djinni_Air_Defender
   	eq.spawn2(215050,0,0,-401,-327,1440.25,49); -- untargettable An_Air_Infused_Defender
   	eq.spawn2(215050,0,0,-433,-306,1440.25,49); -- untargettable An_Air_Infused_Defender
   	eq.spawn2(215050,0,0,-487,-270,1445.38,49); -- untargettable An_Air_Infused_Defender
