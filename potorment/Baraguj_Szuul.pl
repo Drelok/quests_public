@@ -1,14 +1,10 @@
-sub EVENT_COMBAT {
-	my @clientlist = $entity_list->GetClientList();
-	foreach $ent (@clientlist) {
-		#distance restriction so the members need to be reasonably close.
-		if ($ent->CalculateDistance($npc->GetX(),$npc->GetY(),$npc->GetZ()) <= 100) {
-		$ent->MovePCInstance(207, $instanceid, -1094,910,-746,0); # Zone: potorment
-		}
+sub EVENT_ENTER {
+	quest::ze(14,"Baraguj Szuul lunges forward to devour his prey");
+	if (!($zone->VariableExists("stomach"))){
+		quest::signal(207071);
+		$zone->SetVariable("stomach","1");
 	}
-	#signal mouth_trigger that spawns all the mobs in stomach
-	quest::signal(207071);
-	quest::settimer(1,5);
+	$client->MovePCInstance(207, $instanceid, -1094,910,-748,0);
 }
 
 sub EVENT_TIMER {
@@ -16,5 +12,17 @@ sub EVENT_TIMER {
 }
 
 sub EVENT_SPAWN {
-	$npc->SetSpecialAbility(1,0); # disable summon special attack on the "fake" Baraguj to prevent instant summon back to him in case player deals massive damage on initial engage
+	my $mb = $entity_list->GetMobByNpcTypeID(207028);
+	$mb->SetSpecialAbility(19,1); # immune to melee
+	$mb->SetSpecialAbility(20,1); # immune to magic
+	$mb->SetSpecialAbility(24,1); # will not aggro
+	quest::set_proximity_range(40,40,10); # set proximity range
+}
+
+sub EVENT_SIGNAL {
+	if ($signal == 1) {
+		# Mouth has been cleared, depop
+		$zone->DeleteVariable("stomach");
+		quest::settimer(1,5);
+	}
 }
