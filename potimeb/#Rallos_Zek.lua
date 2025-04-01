@@ -13,7 +13,7 @@ function event_combat(e)
 	if e.joined then
 		eq.stop_timer("reset");
 	else
-		eq.set_timer("reset",5 * 60 * 1000);
+		eq.set_timer("reset",1 * 60 * 1000);
 	end
 end
 
