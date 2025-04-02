@@ -38,7 +38,7 @@ sub EVENT_WAYPOINT_ARRIVE {
 	elsif ($wp == 5) {
 		quest::say("Many thanks to all who aided in this battle. I offer you this, a weapon I found on a slain Erudite paladin. May Marr watch over his soul and may Marr guide yours. Now I must go.");
 		#:: Give  a 5414 - Deepwater Harpoon instead of groundspawn
-		quest::summonitem(5414);
+		$client->SummonItem(5414);
 		#:: Depop
 		quest::depop();			
 	}
