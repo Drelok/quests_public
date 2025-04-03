@@ -1,4 +1,5 @@
 local thunder_dome_locs 		= {[1] = {-1833.56, -1077.92, -16.87, 133}, [2] = {-1831.30, 1639.81, -16.87, 133}, [3] = {-66.72, 1639.5, -18.12, 133} };
+local hut_locs = {-629.07, 289.83, -13.75, 133};
 local controllers				= {281145, 281164, 281185};
 local mass_of_stones			= {281146, 281076, 281041};
 local encounter_names			= {"thunder_dome_one", "thunder_dome_two", "thunder_dome_three"};
@@ -14,8 +15,24 @@ function event_say(e)
 	local event_up_1 = eq.get_entity_list():GetMobByNpcTypeID(mass_of_stones[1]);
 	local event_up_2 = eq.get_entity_list():GetMobByNpcTypeID(mass_of_stones[2]);
 	local event_up_3 = eq.get_entity_list():GetMobByNpcTypeID(mass_of_stones[3]);
+	local x = e.self:GetX();
+	local y = e.self:GetY();
 
-	if qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] > "2" then
+	if qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] == "3" and x ~= -640 and y ~= 257 then
+		if e.message:findi("depart") then
+			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan nods his head and focuses on the small piece of rock.  In a flash, you are transported back to his hut.")
+			local instance_id = eq.get_zone_instance_id();
+			local event_group = e.other:GetGroup();
+			if (event_group ~= nil and event_group.valid) then
+				MoveGroup(event_group, e.self:GetX(), e.self:GetY(), e.self:GetZ(), 75, unpack(hut_locs));
+			else 
+				e.other:MovePCInstance(zone_id, instance_id, unpack(hut_locs));
+			end
+		elseif e.message:findi("hail") then
+			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Amazing!  I did not believe that anyone could stand up to the commanders of these muramite forces and live to tell the tale!  I hope you found something useful in your search of her body.  If you are ready to [depart] this place, please just say so.'");
+		end
+
+	elseif qglobals["bic_qin"] ~= nil and qglobals["bic_qin"] > "2" then
 		if e.message:findi("ritual") then
 			e.other:Message(MT.NPCQuestSay, "While animating stone comes easy for us, sometimes we need an extremely powerful stone worker to help with the city. These stone servants were made through a ritual which combined the power of eight geomancers into a ninth. This geomancer would then imbue a stone worker with this power, resulting in a more powerful construct. We stopped doing the ritual when we discovered that it could take away our ability over time. If [she] has somehow figured out a way to absorb this power, then my people could be in more danger than I thought possible.'");
 		elseif e.message:findi("she") then
@@ -58,6 +75,7 @@ function event_say(e)
 			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'Gaining access to such a private place has always been reserved for the elders of my people. While the legion may have destroyed our home, they have yet to figure out a way around many of our wards that bar access to our sacred areas. Unfortunately, their frustration at gaining entry resulted in the painful torture of many of my people until they were given the keys to enter. The courtroom requires one of these keys and while the invaders hold all of the existing keys, I can create one if you can retrieve the proper [items].'");
 		elseif e.message:findi("items") then
 			e.other:Message(MT.NPCQuestSay, "Councilman Sislono Nislan says, 'The key consists of mud, some stonedust particles, and a piece of chalk. The mud can be found in the sewers beneth the city. The stonedust is plentiful near the coliseum, and the chalk can be found all over this area. Bring these to me and I will make you a temporary key which will grant you access to the courtroom. I implore you to hurry. I fear the one you seek may not be alive much longer.'");
+
 		end
 	else
 		if e.message:findi("hail") then

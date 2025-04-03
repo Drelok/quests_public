@@ -17,6 +17,7 @@ local dummy_krvne					=	281077; --
 local fake_krvne					=	281149; --
 local real_krvne					=	281150; --
 local final_krvne					=	281151; --
+local sislono						=	281051;
 -- Adjust for location
 local min_x							=	-1840;
 local max_x							=	-1640;
@@ -24,6 +25,7 @@ local min_y							=	-1178;
 local max_y							=	-978;
 
 -- Locs
+local entry_loc = {-1833.56, -1077.92, -16.07, 133};
 local center_loc					=	{-1745.66,-1078.70,-16.50,128};
 local dummy_krvne_loc				=	{dummy_krvne,0,0,-1745.66,-1078.70,31.88,128};
 local sacrafice_loc					=	{
@@ -371,6 +373,7 @@ function event_win(e)
 	eq.stop_timer("fail_2");
 	eq.signal(thunderdome_controller, 20); -- Event Win
 	cleanup(e); -- Clear Trash
+	eq.spawn2(sislono,0,0,unpack(entry_loc));
 end
 
 function KickPlayers(e)
@@ -404,6 +407,7 @@ function cleanup(e)
 	for i=1,8 do
 		eq.depop_all(non_combat_ikkav_locations[i][1]);
 	end
+	eq.depop_with_timer(sislono);
 end
 
 function event_end(e)
