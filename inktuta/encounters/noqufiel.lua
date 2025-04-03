@@ -133,12 +133,10 @@ function reveal(e,realnoq)
 	if realnoq then
 		e.self:TempName("True Image of Noqufiel");
 		e.self:SendIllusionPacket({race=385,gender=0,texture=0,helmtexture=47,beard=255,face=255});
-		eq.stop_timer("banish");
 		e.self:AddAISpell(0, 2376, 64, -1, 2, -150); -- Spell: Spectral Quintessence
 	else -- Mirror Noq
 		e.self:TempName("Mirror Image of Noqufiel");
 		e.self:SendIllusionPacket({race=385,gender=0,texture=0,helmtexture=47,beard=255,face=255});
-		eq.stop_timer("banish");
 		eq.set_timer("set_hp", 2 * 1000);
 		e.self:SetPseudoRoot(true);
 		e.self:ModifyNPCStat("max_hit", "600");
@@ -154,10 +152,8 @@ function TrueCombat(e)
 			event_started = true;
 		end
 		eq.set_timer("leash",1*1000);
-		eq.set_timer("banish",(30 + math.random(15)) * 1000); -- 15-30s banish while in Noq Form
 		eq.set_timer("cursecallers",(30 + math.random(15)) * 1000); -- 15-30s Cursecallers
 	else
-		eq.stop_timer("banish");
 		eq.stop_timer("leash");
 		eq.stop_timer("cursecallers");
 	end
@@ -166,10 +162,8 @@ end
 function MirrorCombat(e)
 	if e.joined then
 		eq.set_timer("leash",1*1000);
-		eq.set_timer("banish",(30 + math.random(15)) * 1000); -- 15-30s banish while in Noq Form
 		eq.set_timer("cursecallers",(30 + math.random(15)) * 1000); -- 15-30s Cursecallers
 	else
-		eq.stop_timer("banish");
 		eq.stop_timer("leash");
 		eq.stop_timer("cursecallers");
 	end
@@ -181,18 +175,6 @@ function TrueTimer(e)
 			e.self:GotoBind();
 			e.self:WipeHateList();
 		end
-	elseif e.timer == "banish" then
-		eq.stop_timer(e.timer);
-		local top_hate = e.self:GetHateTop()
-		if top_hate.valid and top_hate:IsClient() then
-			local top_hate_v = top_hate:CastToClient()
-			if top_hate_v.valid then
-				e.self:Say("I will deal with you later.")
-				e.self:SetHate(top_hate_v, 1, 1)
-				--top_hate_v:MovePCInstance(296, eq.get_zone_instance_id(), -117, -912, -127, 128)
-			end
-		end
-		eq.set_timer("banish",(15 + math.random(15)) * 1000); -- 15-30s banish while in Noq Form
 	elseif e.timer == "cursecallers" then
 		eq.stop_timer(e.timer);
 		if math.random(100) > 75 then -- 25% chance to spawn cursecaller, these were very sporadic on live which leads me to believe low chance to spawn.
@@ -208,18 +190,6 @@ function MirrorTimer(e)
 			e.self:GotoBind();
 			e.self:WipeHateList();
 		end
-	elseif e.timer == "banish" then
-		eq.stop_timer(e.timer);
-		local top_hate = e.self:GetHateTop()
-		if top_hate.valid and top_hate:IsClient() then
-			local top_hate_v = top_hate:CastToClient()
-			if top_hate_v.valid then
-				e.self:Say("I will deal with you later.")
-				e.self:SetHate(top_hate_v, 1, 1)
-				--top_hate_v:MovePCInstance(296, eq.get_zone_instance_id(), -117, -912, -127, 128)
-			end
-		end
-		eq.set_timer("banish",(30 + math.random(15)) * 1000); -- 15-30s banish while in Noq Form
 	elseif e.timer == "set_hp" then
 		eq.stop_timer(e.timer);
 		mirror_shake_hp = e.self:GetHP();

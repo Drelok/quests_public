@@ -54,12 +54,6 @@ function KeleSignal(e)
 	elseif e.signal == 111 then
 			eq.spawn2(eq.ChooseRandom(296025,296026,296084,296083),0,0,unpack(add_locs[math.random(1,4)])):AddToHateList(eq.get_entity_list():GetRandomClient(kele:GetX(),kele:GetY(),kele:GetZ(),500*500));
 			count = count + 1;
-
-	-- Banish Signal (Make sure running timer as Kele)
-	elseif e.signal == 200 then
-		eq.set_timer("banish", 30 * 1000)
-	elseif e.signal == 201 then
-		eq.stop_timer("banish")
 	end
 end
 
@@ -77,28 +71,16 @@ function check_active(e)
 
 	if not mob_list:IsMobSpawnedByNpcTypeID(296025) and not mob_list:IsMobSpawnedByNpcTypeID(296026) and not mob_list:IsMobSpawnedByNpcTypeID(296084) and not mob_list:IsMobSpawnedByNpcTypeID(296083) then -- Activate Keld
 		kele:ModifyNPCStat("special_abilities",abilities_active);
-		eq.signal(296024,200);
 	end
 end
 
 function KeleTimer(e)
-	if e.timer == "banish" then
-		local random_hate = kele:GetHateTop();
-		if random_hate.valid and random_hate:IsClient() then
-			local random_client = random_hate:CastToClient();
-			if random_client.valid then
-				kele:Say("I tire of these games. We shall see you in the afterlife.");
-				eq.get_entity_list():RemoveFromHateLists(random_hate);
-				--random_client:MovePCInstance(296, eq.get_zone_instance_id(), 210, -500, -26, 490);
-			end
-		end
-	elseif e.timer == "adds" then
+	if e.timer == "adds" then
 		eq.stop_timer(e.timer);
 		if count < 4 then
 			eq.zone_emote(MT.Yellow, "Kelekdrix, Herald of Trushar laughs as her body is wrapped in a rocky protection, 'Bury them, my minions.  Offer a full demonstration of our geomantic magics.'")
 			kele:ModifyNPCStat("special_abilities",abilities_inactive);
 			kele:WipeHateList();
-			eq.signal(296024,201);
 			eq.signal(296024,111,10 * 1000);
 		end
 		eq.set_timer("adds", (90 + math.random(130)) * 1000); -- Observed 90s to 220s respawn timer
