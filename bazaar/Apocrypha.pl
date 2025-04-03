@@ -5,6 +5,8 @@
 # 3) Zone and Login methods in global_player apply the requested buffs with the requested durations
 
 sub EVENT_SAY {
+    quest::Say("I'm out of reagents! Try coming back tomorrow!");
+    return;
     my $response = "";
     my $clientName = $client->GetCleanName();
     my @buffs = ();  # Array to store buff IDs
