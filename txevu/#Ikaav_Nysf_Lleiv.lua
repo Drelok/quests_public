@@ -16,7 +16,6 @@ function event_combat(e)
 	else
 		--wipe
 		eq.stop_all_timers()
-		e.self:RemoveAISpell(1236) -- Charm Spell
 		e.self:SetHP(e.self:GetMaxHP())
 		eq.set_next_hp_event(75)
 		stonemasters = 0
@@ -84,7 +83,6 @@ end
 function event_hp(e)
 	-- 75/50/25 each of the stonemasters becomes killable
 	if e.hp_event == 75 then
-    	e.self:AddAISpell(0, 1236, 1, -1, 45, -350)
 		if eq.get_entity_list():IsMobSpawnedByNpcTypeID(297089) then
 			eq.get_entity_list():MessageClose(e.self,false,120,MT.SayEcho,"The shielding on one of the stonemasters falters as Ikaav Nysf Lliev focuses her energies inward, intensifying her own powers.")
 			eq.signal(297089,1) --#Vrex_Stonemaster_Hateq (297089)

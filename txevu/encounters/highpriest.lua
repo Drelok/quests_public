@@ -134,10 +134,8 @@ end
 function Shadeone_Combat(e)
 	if e.joined then
 		eq.set_timer("OOBcheck", 3 * 1000)
-		eq.set_timer("charm", 15 * 1000)
 	else
 		eq.stop_timer("OOBcheck")
-		eq.stop_timer("charm")
 	end
 end
 
@@ -150,30 +148,6 @@ function Shadeone_Timer(e)
 			e.self:WipeHateList()
 		else
 			eq.set_timer("OOBcheck", 6 * 1000)
-		end
-	elseif e.timer == "charm" then
-		eq.stop_timer("charm")
-		eq.local_emote(
-			{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-			0,
-			150,
-			"Deathly hands reach deep within the body of the shade's victim as it draws itself forward and quickly fades from view.  The only sign of its passage is a cold flame flickering in the eyes of its new host."
-		)
-		e.self:CastedSpellFinished(891, e.self:GetHateTop()) -- Spell: Spiritual Possession
-		eq.set_timer("checkcharm", 5 * 1000)
-	elseif e.timer == "checkcharm" then
-		eq.stop_timer("checkcharm")
-		if e.self:HasPet() then
-			eq.set_timer("checkcharm", 5 * 1000)
-		else
-			eq.spawn2(297213, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading())
-			eq.local_emote(
-				{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-				0,
-				150,
-				"Having satiated itself on its previous host, the Shade of a Vrex Invoker reforms looking noticeably stronger."
-			)
-			eq.depop()
 		end
 	elseif e.timer == "progress" then
 		eq.stop_timer("progress")
@@ -218,10 +192,8 @@ end
 function Shadetwo_Combat(e)
 	if e.joined then
 		eq.set_timer("OOBcheck", 3 * 1000)
-		eq.set_timer("charm", 15 * 1000)
 	else
 		eq.stop_timer("OOBcheck")
-		eq.stop_timer("charm")
 	end
 end
 
@@ -234,30 +206,6 @@ function Shadetwo_Timer(e)
 			e.self:WipeHateList()
 		else
 			eq.set_timer("OOBcheck", 6 * 1000)
-		end
-	elseif e.timer == "charm" then
-		eq.stop_timer("charm")
-		eq.local_emote(
-			{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-			0,
-			150,
-			"Deathly hands reach deep within the body of the shade's victim as it draws itself forward and quickly fades from view.  The only sign of its passage is a cold flame flickering in the eyes of its new host."
-		)
-		e.self:CastedSpellFinished(891, e.self:GetHateTop()) -- Spell: Spiritual Possession
-		eq.set_timer("checkcharm", 5 * 1000)
-	elseif e.timer == "checkcharm" then
-		eq.stop_timer("checkcharm")
-		if e.self:HasPet() then
-			eq.set_timer("checkcharm", 5 * 1000)
-		else
-			eq.spawn2(297214, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading())
-			eq.local_emote(
-				{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-				0,
-				150,
-				"Having satiated itself on its previous host, the Shade of a Vrex Invoker reforms looking noticeably stronger."
-			)
-			eq.depop()
 		end
 	elseif e.timer == "progress" then
 		eq.stop_timer("progress")
@@ -302,10 +250,8 @@ end
 function Shadethree_Combat(e)
 	if e.joined then
 		eq.set_timer("OOBcheck", 3 * 1000)
-		eq.set_timer("charm", 15 * 1000)
 	else
 		eq.stop_timer("OOBcheck")
-		eq.stop_timer("charm")
 	end
 end
 
@@ -318,30 +264,6 @@ function Shadethree_Timer(e)
 			e.self:WipeHateList()
 		else
 			eq.set_timer("OOBcheck", 6 * 1000)
-		end
-	elseif e.timer == "charm" then
-		eq.stop_timer("charm")
-		eq.local_emote(
-			{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-			0,
-			150,
-			"Deathly hands reach deep within the body of the shade's victim as it draws itself forward and quickly fades from view.  The only sign of its passage is a cold flame flickering in the eyes of its new host."
-		)
-		e.self:CastedSpellFinished(891, e.self:GetHateTop()) -- Spell: Spiritual Possession
-		eq.set_timer("checkcharm", 5 * 1000)
-	elseif e.timer == "checkcharm" then
-		eq.stop_timer("checkcharm")
-		if e.self:HasPet() then
-			eq.set_timer("checkcharm", 5 * 1000)
-		else
-			eq.spawn2(297215, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading())
-			eq.local_emote(
-				{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-				0,
-				150,
-				"Having satiated itself on its previous host, the Shade of a Vrex Invoker reforms looking noticeably stronger."
-			)
-			eq.depop()
 		end
 	elseif e.timer == "progress" then
 		eq.stop_timer("progress")
@@ -386,10 +308,8 @@ end
 function Shadefour_Combat(e)
 	if e.joined then
 		eq.set_timer("OOBcheck", 3 * 1000)
-		eq.set_timer("charm", 15 * 1000)
 	else
 		eq.stop_timer("OOBcheck")
-		eq.stop_timer("charm")
 	end
 end
 
@@ -402,30 +322,6 @@ function Shadefour_Timer(e)
 			e.self:WipeHateList()
 		else
 			eq.set_timer("OOBcheck", 6 * 1000)
-		end
-	elseif e.timer == "charm" then
-		eq.stop_timer("charm")
-		eq.local_emote(
-			{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-			0,
-			150,
-			"Deathly hands reach deep within the body of the shade's victim as it draws itself forward and quickly fades from view.  The only sign of its passage is a cold flame flickering in the eyes of its new host."
-		)
-		e.self:CastedSpellFinished(891, e.self:GetHateTop()) -- Spell: Spiritual Possession
-		eq.set_timer("checkcharm", 5 * 1000)
-	elseif e.timer == "checkcharm" then
-		eq.stop_timer("checkcharm")
-		if e.self:HasPet() then
-			eq.set_timer("checkcharm", 5 * 1000)
-		else
-			eq.spawn2(297216, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading())
-			eq.local_emote(
-				{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-				0,
-				150,
-				"Having satiated itself on its previous host, the Shade of a Vrex Invoker reforms looking noticeably stronger."
-			)
-			eq.depop()
 		end
 	elseif e.timer == "progress" then
 		eq.stop_timer("progress")
@@ -469,10 +365,8 @@ end
 function Shadefive_Combat(e)
 	if e.joined then
 		eq.set_timer("OOBcheck", 3 * 1000)
-		eq.set_timer("charm", 15 * 1000)
 	else
 		eq.stop_timer("OOBcheck")
-		eq.stop_timer("charm")
 	end
 end
 
@@ -485,30 +379,6 @@ function Shadefive_Timer(e)
 			e.self:WipeHateList()
 		else
 			eq.set_timer("OOBcheck", 6 * 1000)
-		end
-	elseif e.timer == "charm" then
-		eq.stop_timer("charm")
-		eq.local_emote(
-			{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-			0,
-			150,
-			"Deathly hands reach deep within the body of the shade's victim as it draws itself forward and quickly fades from view.  The only sign of its passage is a cold flame flickering in the eyes of its new host."
-		)
-		e.self:CastedSpellFinished(891, e.self:GetHateTop()) -- Spell: Spiritual Possession
-		eq.set_timer("checkcharm", 5 * 1000)
-	elseif e.timer == "checkcharm" then
-		eq.stop_timer("checkcharm")
-		if e.self:HasPet() then
-			eq.set_timer("checkcharm", 5 * 1000)
-		else
-			eq.spawn2(297217, 0, 0, e.self:GetX(), e.self:GetY(), e.self:GetZ(), e.self:GetHeading())
-			eq.local_emote(
-				{e.self:GetX(), e.self:GetY(), e.self:GetZ()},
-				0,
-				150,
-				"Having satiated itself on its previous host, the Shade of a Vrex Invoker reforms looking noticeably stronger."
-			)
-			eq.depop()
 		end
 	elseif e.timer == "progress" then
 		eq.stop_timer("progress")
