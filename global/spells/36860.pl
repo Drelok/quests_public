@@ -1,6 +1,7 @@
 my $emarr_sign = 36853;
 
 sub EVENT_SPELL_EFFECT_CLIENT {
+    #temporarily disabled
     my $base_add = 30 * 60; # 30 minutes in seconds
 
     my $expiration_time = quest::add_global_buff($emarr_sign, $base_add);
