@@ -164,14 +164,12 @@ function do_the_spawn(e)
 		eq.spawn2(223172, 0, 0, 11.5, 857, 492.5, 0) -- water trigger
 		eq.spawn2(223173, 0, 0, 13.2, 574.2, 492.3, 0) -- fire trigger
 	elseif phase_variable == 1 then
-		UpdateFailTimer(60)
 		eq.get_zone():SetVariable("Current Phase", "Phase 2")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 2) -- Emoter
 		-- spawn phase 2 controller
 		eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
 	elseif phase_variable == 2 then
-		UpdateFailTimer(75)
 		eq.get_zone():SetVariable("Current Phase", "Phase 3")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 3) -- Emoter
@@ -179,19 +177,16 @@ function do_the_spawn(e)
 		eq.set_timer("p3unsticker",10000)
 		ControlPhaseThree()
 	elseif phase_variable == 3 then
-		UpdateFailTimer(240) -- TODO UPDATE TIMER BASED ON NUMBER OF P4 GODS UP
 		eq.get_zone():SetVariable("Current Phase", "Phase 4")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 4) -- Emoter
 		SpawnPhaseFour()
 	elseif phase_variable == 4 then
-		UpdateFailTimer(240) -- TODO UPDATE TIMER BASED ON NUMBER OF P5 GODS UP
 		eq.get_zone():SetVariable("Current Phase", "Phase 5")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 5) -- Emoter
 		SpawnPhaseFive()
 	elseif phase_variable == 5 then
-		UpdateFailTimer(120)
 		eq.get_zone():SetVariable("Current Phase", "Phase 6")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 6) -- Emoter
@@ -228,7 +223,6 @@ function event_signal(e)
 		eq.get_zone():SetVariable("Current Phase", "Phase 1")
 		-- sendsignal to flavor text NPC
 		eq.signal(223227, 1) -- Emoter
-		UpdateFailTimer(60)
 	-- signal 2 comes from the mobs in the final wave of each phase 1 event
 	elseif e.signal == 2 then
 		-- check that all 5 phase 1 events are down.
@@ -245,7 +239,6 @@ function event_signal(e)
 			if phase_variable == 0 then -- Moving to Phase 2
 				eq.get_zone():SetVariable("Phase", "1")
 				eq.get_zone():SetVariable("Counter", "0")
-				UpdateFailTimer(60) -- Add 60 Minutes to fail timer
 				eq.unique_spawn(2231731, 0, 0, 190, 1070, 494, 0) --phase_two_controller (2231731)
 				eq.signal(223227, 2) -- Emoter
 			elseif phase_variable == 2 then -- Moving to Phase 3
@@ -284,8 +277,6 @@ function event_signal(e)
 			local phase_variable = tonumber(eq.get_zone():GetVariable("Phase")) or 0
 			eq.get_zone():SetVariable("Phase", "4")
 			eq.get_zone():SetVariable("Current Phase", "Phase 5")
-			-- add 4 hours to the fail timer
-			UpdateFailTimer(240) -- 60 Minutes per God
 			-- sendsignal to flavor text NPC
 			eq.signal(223227, 5) -- Emoter
 			-- reset counter for later use
@@ -316,8 +307,6 @@ function event_signal(e)
 			local quarm_variable = tonumber(eq.get_zone():GetVariable(QUARM)) or 0
 			if quarm_variable == 0 or phase_variable < 6 then
 				eq.get_zone():SetVariable("Current Phase", "Phase 6")
-				-- add 2 hours to the fail timer
-				UpdateFailTimer(120)
 				-- sendsignal to flavor text NPC
 				eq.signal(223227, 6) -- Emoter
 				-- spawn Quarm
@@ -331,20 +320,7 @@ function event_signal(e)
 	-- signal 7 comes from Quarm
 	elseif e.signal == 7 then
 		eq.get_zone():SetVariable("Current Phase", "Quarm Dead")
-		--eq.stop_timer("event_hb")
 		eq.set_timer("lockout", 50 * 60 * 1000)
-	-- signal 8 comes from Druzzil_Ro
-	elseif e.signal == 8 then
-		-- update the zone status
-		eq.get_zone():SetVariable("Phase", "6")
-		-- port everyone in the zone back to the PoK library top floor
-		local client_list = entity_list:GetClientList()
-		for c in client_list.entries do
-			if (c.valid) and (not c:GetGM()) then
-				c:MovePCInstance(202, 0, 1015, 20, 392, 264)
-			end
-		end
-		ControllerDepop()
 	end
 end
 
@@ -373,8 +349,6 @@ function ControlPhaseTwo()
 			ControlPhaseThree()
 			-- sendsignal to flavor text NPC
 			eq.signal(223227, 3) -- Emoter
-			-- add 1 hour and 15 minutes to the fail timer
-			UpdateFailTimer(75)
 		end
 	end
 end
@@ -547,8 +521,6 @@ function ControlPhaseThree()
 				eq.get_zone():SetVariable("Current Phase", "Phase 4")
 				-- sendsignal to flavor text NPC
 				eq.signal(223227, 4) -- Emoter
-				-- add 4 hours to the fail timer
-				UpdateFailTimer(240) -- Switching to adding time based on number of gods up to prevent dropping and re-joining to reset time to 240 min
 				-- spawn phase 4
 				SpawnPhaseFour()
 			end
@@ -580,22 +552,18 @@ function SpawnPhaseFour()
 	if expedition.valid then
 		if saryrn_variable == 0 and not eq.is_npc_spawned({223076}) then
 			eq.spawn2(223076, 0, 0, -320, -316, 358, 65) -- Saryrn
-			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
 		if tallon_variable == 0 and not eq.is_npc_spawned({223077}) then
 			eq.spawn2(223077, 0, 0, 405, -84, 358, 384) -- Tallon Zek
-			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
 		if terris_variable == 0 and not eq.is_npc_spawned({223075}) then
 			eq.spawn2(223075, 0, 0, -310, 307, 365, 190) -- Terris Thule
-			UpdateFailTimer(60) -- 1 Hour per God
 		end
 
 		if vallon_variable == 0 and not eq.is_npc_spawned({223078}) then
 			eq.spawn2(223078, 0, 0, 405, 75, 358, 384) -- Vallon Zek
-			UpdateFailTimer(60) -- 1 Hour per God
 		end
 	end
 end
@@ -610,63 +578,27 @@ function SpawnPhaseFive()
 	local expedition = eq.get_expedition()
 
 	local bertox_variable = tonumber(eq.get_zone():GetVariable(BERTOXXULOUOS)) or 0
-	-- local bertox_trash_variable = tonumber(eq.get_zone():GetVariable(BERTOXXULOUOSTRASH)) or 0
 	local cazic_variable = tonumber(eq.get_zone():GetVariable(CAZICTHULE)) or 0
-	-- local cazic_trash_variable = tonumber(eq.get_zone():GetVariable(CAZICTHULETRASH)) or 0
 	local innoruuk_variable = tonumber(eq.get_zone():GetVariable(INNORUUK)) or 0
-	-- local innoruuk_trash_variable = tonumber(eq.get_zone():GetVariable(INNORUUKTRASH)) or 0
 	local rallos_variable = tonumber(eq.get_zone():GetVariable(RALLOSZEK)) or 0
-	-- local rallos_trash_variable = tonumber(eq.get_zone():GetVariable(RALLOSZEKTRASH)) or 0
 
 	if expedition.valid then
-		-- if bertox_variable == 0 and bertox_trash_variable == 0 then
-			-- eq.spawn2(223098, 0, 0, -299, -297, 23.3, 62); -- Fake Bertoxxulous
-			-- UpdateFailTimer(60); -- 1 Hour per God
-			-- eq.spawn_condition("potimeb", instance_id, 14, 1);	
 		if bertox_variable == 0 and not eq.is_npc_spawned({223142}) then
 			eq.spawn2(223142, 0, 0, -299, -297, 23.3, 62); -- Real Bertoxxulous - 223098 - swapped
-			UpdateFailTimer(60); -- 1 Hour per God
 		end
-		
-		-- if cazic_variable == 0 and cazic_trash_variable == 0 then
-			-- eq.spawn2(223165, 0, 0, -257, 255, 6, 203); -- Fake Cazic
-			-- UpdateFailTimer(60); -- 1 Hour per God
-			-- eq.spawn_condition("potimeb", instance_id, 12, 1);	
+
 		if cazic_variable == 0 and not eq.is_npc_spawned({223166}) then
 			eq.spawn2(223166, 0, 0, -257, 255, 6, 203); -- Real Cazic
-			UpdateFailTimer(60); -- 1 Hour per God
 		end
 		
-		-- if innoruuk_variable == 0 and innoruuk_trash_variable == 0 then
-			-- eq.spawn2(223000, 0, 0, 303.3, 306, 13.3, 323) -- Fake Innoruuk
-			-- UpdateFailTimer(60) -- 1 Hour per God
-			-- eq.spawn_condition("potimeb", instance_id, 11, 1)
 		if innoruuk_variable == 0 and not eq.is_npc_spawned({223167}) then
 			eq.spawn2(223167, 0, 0, 303.3, 306, 13.3, 323) -- Real Innoruuk
-			UpdateFailTimer(60) -- 1 Hour per God
 		end
 		
-		-- if rallos_variable == 0 and rallos_trash_variable == 0 then
-			-- eq.spawn2(223001, 0, 0, 264, -279, 18.75, 435) -- Fake Rallos
-			-- UpdateFailTimer(60) -- 1 Hour per God
-			-- eq.spawn_condition("potimeb", instance_id, 13, 1)
 		if rallos_variable == 0 and not eq.is_npc_spawned({223168}) then
 			eq.spawn2(223168, 0, 0, 264, -279, 18.75, 435) -- Real Rallos
-			UpdateFailTimer(60) -- 1 Hour per God
 		end
 	end
-end
-
-function UpdateFailTimer(minutes_to_add)
-	if total_time == nil then
-		total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0
-	end
-	total_time = (total_time + minutes_to_add)
-	eq.stop_timer("player_check")
-	eq.set_timer("player_check", 10 * 1000) -- 10 Sec Player Check
-	--eq.set_timer("event_hb", 60 * 1000) -- 60 Sec Timer Check
-
-	eq.set_data(eq.get_zone_instance_id() .. "-total_time", tostring(total_time), '7d')
 end
 
 function event_timer(e)
@@ -675,96 +607,5 @@ function event_timer(e)
 		do_the_spawn(e)
 	elseif e.timer == "p3unsticker" then
 		ControlPhaseThree()
-	elseif e.timer == "event_hb" then
-		if total_time == nil then
-			total_time = tonumber(eq.get_data(eq.get_zone_instance_id() .. "-total_time")) or 0
-		end
-
-		total_time = total_time - 1
-
-		eq.set_data(eq.get_zone_instance_id() .. "-total_time", tostring(total_time), '7d')
-		
-		--check failure timer
-		if total_time <= 0 then
-			EventFailed()
-			return
-		end
-		
-		
-		--announce time remaining in hourly increments
-		if (total_time ~= nil and total_time > 0 and total_time % 60 == 0) then
-			local hours_left = ""
-			if total_time / 60 == 8 then
-				hours_left = "eight hours"
-			elseif total_time / 60 == 7 then
-				hours_left = "seven hours"
-			elseif total_time / 60 == 6 then
-				hours_left = "six hours"
-			elseif total_time / 60 == 5 then
-				hours_left = "five hours"
-			elseif total_time / 60 == 4 then
-				hours_left = "four hours"
-			elseif total_time / 60 == 3 then
-				hours_left = "three hours"
-			elseif total_time / 60 == 2 then
-				hours_left = "two hours"
-			elseif total_time / 60 == 1 then
-				hours_left = "one hour"
-			end
-			eq.zone_emote(MT.LightGray, string.format("In the distance, an hourglass appears, the grains of sand falling methodically into place.  As quickly as the image was formed, it dissipates.  You have %s left.", hours_left))
-		end
-
-		if total_time == 10 then
-			eq.zone_emote(MT.LightGray, "In the distance, an hourglass appears, the grains of sand falling methodically into place.  As quickly as the image was formed, it dissipates.  You have ten minutes left.")
-		end
-	elseif e.timer == "player_check" then
-		local player_list = eq.get_entity_list():GetClientList()
-		local count = 0
-
-		local is_any_npc_spawned = eq.is_npc_spawned({223169, 223170, 223171, 223172, 223173, 223242})
-		if is_any_npc_spawned then
-			player_limit = 54
-		else
-			player_limit = 72
-		end
-		
-		if player_list ~= nil then
-			for pc in player_list.entries do
-				if not pc:GetGM() then
-					count = count + 1
-					if count > player_limit then
-						pc:MovePC(219, -37, -110, 13, 0)--boot to Time A
-					end
-				end
-			end
-		end
 	end
-end
-
-function ControllerDepop()
-	--depop zone_status and zone_emoters with timers
-	eq.depop_with_timer(223097)
-	eq.depop_with_timer(223227) -- Emoter
-	
-	--set respawn based on 1 hr lockout + 5 sec delay
-	respawn = 3600000 + 5000
-	eq.update_spawn_timer(371157, respawn)
-	
-	-- depop the rest of zone on event fail.
-	eq.depop_zone(false)
-end
-
-function EventFailed()
-	eq.zone_emote(MT.LightGray, "An hourglass appears in the distance, the few remaining sands trickling down.  As the last grain falls, multicolored lights erupt from it, surrounding you in a -- lliant flash.")
-
-	-- port everyone in the zone back to the PoTimeA 
-	local client_list = eq.get_entity_list():GetClientList()
-	for c in client_list.entries do
-		if c.valid and not c:GetGM() then
-			c:MovePCInstance(219, 0, -37, -110, 9, 0)
-		end
-	end
-
-	ResetSpawnConditions()
-	ControllerDepop()
 end
