@@ -28,10 +28,10 @@ sub EVENT_SAY {
             plugin::NPCTell("You have set upon a path of rememberence. Are you [ready] to proceed?");
         } else {
             plugin::NPCTell("Hail, Adventurer. I am here in order to grant you access certain [Fabled Memories], through which you can experience past events in a new light.");
-            if (quest::get_data($client->AccountID() . "-season-1-participation") && !plugin::check_hasitem($client, 200000) && $client->IsSeasonal()) {
+            if ($client->GetAccountBucket("season-1-participation") && !plugin::check_hasitem($client, 200000) && $client->IsSeasonal()) {
                 plugin::NPCTell("It also appears as if you have lost your [".quest::saylink("First Orb of Retribution", 1)."]. Would you like me to replace it?");
             }
-            quest::debug(quest::get_data($client->AccountID() . "-season-1-participation") .":". !plugin::check_hasitem($client, 200000) .":". $client->IsSeasonal());
+            quest::debug($client->GetAccountBucket("season-1-participation") .":". !plugin::check_hasitem($client, 200000) .":". $client->IsSeasonal());
         }        
         # Never continue after handling a basic hail.
         return;
@@ -42,7 +42,7 @@ sub EVENT_SAY {
         return;
     }
 
-    if ($text=~/First Orb of Retribution/i && quest::get_data($client->AccountID() . "-season-1-participation") && !plugin::check_hasitem($client, 200000)) {
+    if ($text=~/First Orb of Retribution/i && $client->GetAccountBucket("season-1-participation") && !plugin::check_hasitem($client, 200000)) {
         plugin::NPCTell("But of course. Here, try to be more careful with this one.");
         $client->SummonFixedItem(200000);
     }

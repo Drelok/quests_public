@@ -364,7 +364,7 @@ sub SetSubflag {
             plugin::BlueText("Your memories gain sudden, sharp focus. You see the path forward.");
 
             if (plugin::IsSeasonal($client)) {
-                quest::set_data($client->AccountID() . "-progression-title-$stage", 1);
+                $client->SetAccountBucket("progression-title-$stage", 1);
             }
 
             if ($stage eq 'SoV') {
@@ -662,7 +662,7 @@ sub ConvertFlags {
     my $client = shift;
     
     # Old Flag Data
-    $expansion = quest::get_data($client->AccountID() . "-kunark-flag") || 0;
+    $expansion = $client->GetAccountBucket("kunark-flag") || 0;
 
     if ($expansion && !plugin::IsSeasonal($client)) {
         # Kunark
@@ -755,7 +755,7 @@ sub ConvertFlags {
 
         # Gates of Discord
         if (!is_stage_complete($client, 'GoD')) {
-            if ($expansion >= 20 || quest::get_data($client->AccountID() . "-saryrn-flag") || quest::get_data($client->AccountID() . "-quarm-kill")) {
+            if ($expansion >= 20 || $client->GetAccountBucket("saryrn-flag") || $client->GetAccountBucket("quarm-kill")) {
                 SetSubflag($client, 'GoD', 'Saryrn', 1);
             }
         }
@@ -800,42 +800,41 @@ sub delete_all_flags {
 
     # Go through each flag and delete it
     foreach my $flag_suffix (keys %flags_to_delete) {
-        my $key = $client->AccountID() . $flag_suffix;
-        quest::delete_data($key);  # Assuming quest::delete_data is the correct method to remove data
+        $client->DeleteAccountBucket($flag_suffix);
     }
 }
 
 
 sub UpdateRaceClassLocks {
     my $client = shift;
-    my $account_progression = quest::get_data($client->AccountID() . "-account-progression") || 0;
+    my $account_progression = $client->GetAccountBucket("account-progression") || 0;
 
     if ($account_progression < 1 && is_stage_complete($client, 'RoK')) {
-        quest::set_data($client->AccountID() . "-account-progression", 1);
+        $client->SetAccountBucket("account-progression", 1);
     }
 
     if ($account_progression < 2 && is_stage_complete($client, 'SoV')) {
-        quest::set_data($client->AccountID() . "-account-progression", 2);
+        $client->SetAccountBucket("account-progression", 2);
     }
 
     if ($account_progression < 3 && is_stage_complete($client, 'SoL')) {
-        quest::set_data($client->AccountID() . "-account-progression", 3);
+        $client->SetAccountBucket("account-progression", 3);
     }
 
     if ($account_progression < 4 && is_stage_complete($client, 'PoP')) {
-        quest::set_data($client->AccountID() . "-account-progression", 4);
+        $client->SetAccountBucket("account-progression", 4);
     }
 
     if ($account_progression < 5 && is_stage_complete($client, 'GoD')) {
-        quest::set_data($client->AccountID() . "-account-progression", 5);
+        $client->SetAccountBucket("account-progression", 5);
     }
 
     if ($account_progression < 6 && is_stage_complete($client, 'OoW')) {
-        quest::set_data($client->AccountID() . "-account-progression", 6);
+        $client->SetAccountBucket("account-progression", 6);
     }
 
     if ($account_progression < 7 && is_stage_complete($client, 'DoN')) {
-        quest::set_data($client->AccountID() . "-account-progression", 7);
+        $client->SetAccountBucket("account-progression", 7);
     }
 }
 

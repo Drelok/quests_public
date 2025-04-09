@@ -113,11 +113,11 @@ my %waypoints = (
 
 sub AwardBonusUnlocks {
     my $client = plugin::val('$client');
-    my $eligible = quest::get_data($client->AccountID() . "-TL-Account-A") ||
-                   quest::get_data($client->AccountID() . "-TL-Account-O") ||
-                   quest::get_data($client->AccountID() . "-TL-Account-F") ||
-                   quest::get_data($client->AccountID() . "-TL-Account-K") ||
-                   quest::get_data($client->AccountID() . "-TL-Account-V");
+    my $eligible = $client->GetAccountBucket("TL-Account-A") ||
+                   $client->GetAccountBucket("TL-Account-O") ||
+                   $client->GetAccountBucket("TL-Account-F") ||
+                   $client->GetAccountBucket("TL-Account-K") ||
+                   $client->GetAccountBucket("TL-Account-V");
 
     if ($eligible && !$client->IsSeasonal() && !$client->IsHardcore() && !plugin::IsTHJ()) {
         AddWaypoint('qeynos2');
