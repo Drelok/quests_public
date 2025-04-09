@@ -653,7 +653,8 @@ sub UpdateCharMaxLevel
     }
 
     if (($client->GetBucket("CharMaxLevel") || 0) != $CharMaxLevel) {
-        $client->SetBucket("CharMaxlevel", $CharMaxLevel);        
+        # why is this set to the wrong case ?
+        $client->SetBucket("CharMaxLevel", $CharMaxLevel);        
         plugin::YellowText("Your Level Cap has been set to $CharMaxLevel.");
     }
 }
