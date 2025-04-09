@@ -247,13 +247,13 @@ sub AddWaypoint {
 
     if ($client) {
         if (plugin::is_eligible_for_zone($client, $waypoint, 0)) {
-            my %account_data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
+            my %account_data = map { $_ => 1 } split(',', $client->GetAccountBucket("Waypoints"));
             my %character_data = map { $_ => 1 } split(',', $client->GetBucket("Waypoints"));        
 
             if (exists $waypoints{$waypoint}) {
                 if (!exists $account_data{$waypoint}) {
                     $account_data{$waypoint} = 1;
-                    quest::set_data("Waypoints-" . $client->AccountID(), join(',', keys %account_data));
+                    $client->GetAccountBucket("Waypoints"), join(',', keys %account_data));
                     $return_feedback = 1;
                 }
 
@@ -306,7 +306,7 @@ sub GetWaypoints {
     my %return;
 
     if ($client) {
-        %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
+        %data = map { $_ => 1 } split(',', $client->GetAccountBucket("Waypoints"));
 
         foreach my $key (keys %waypoints) {
             if (exists $data{$key} &&
@@ -369,7 +369,7 @@ sub GetWaypointCapturePattern {
     my @eligible_keys;  # Array to store the keys for the regex pattern
 
     if ($client) {
-        %data = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
+        %data = map { $_ => 1 } split(',', $client->GetAccountBucket("Waypoints"));
 
         # Get race-specific waypoints for the client's base race
         my $race_specific_waypoints = GetRaceSpecificWaypoint($client->GetBaseRace());
@@ -418,7 +418,7 @@ sub GetWaypoint {
         # Check if the client is eligible for this waypoint
         if (plugin::is_eligible_for_zone($client, $shortname, 0)) {
             # Check if the waypoint is attuned for the client or is one of the race-specific waypoints
-            my %attuned_waypoints = map { $_ => 1 } split(',', quest::get_data("Waypoints-" . $client->AccountID()));
+            my %attuned_waypoints = map { $_ => 1 } split(',', $client->GetAccountBucket("Waypoints"));
             if (exists $attuned_waypoints{$shortname} || grep { $_ eq $shortname } @$race_specific_waypoints) {
                 return $waypoints{$shortname};  # Return the array reference for the waypoint
             }
