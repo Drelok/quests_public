@@ -1,5 +1,6 @@
 use List::Util 'min';
 sub EVENT_SAY {
+
     if (plugin::CustomEventSayEntry($text, $npc, $client)) {
         return;
     }
@@ -188,7 +189,6 @@ sub EVENT_DAMAGE_GIVEN
 sub EVENT_KILLED_MERIT {
     if (plugin::IsTHJ()) {
         my $con_color = $client->GetConsiderColor($npc);
-        my $rare_scale = min($client->GetBucket("eom-event-scale") || 1, 5);
 
         if ($con_color eq "Red" || $con_color eq "Yellow" || $con_color eq "White") {
             my $eom_drop_chance = (quest::get_rule("Custom:EventEOMDropChance")) * $rare_scale;
@@ -197,12 +197,6 @@ sub EVENT_KILLED_MERIT {
             if (defined $eom_drop_chance && $eom_drop_chance > 0 && int(rand($eom_drop_chance)) == 0) {
                 plugin::LootEOM($client, $eom_loot_amount);
                 $client->SendSound();
-
-                $client->SetBucket("eom-event-scale", ($client->GetBucket("eom-event-scale") || 0) + 1);
-            } else {
-                if ($client->GetGM()) {
-                    quest::debug("Failed to roll out of $eom_drop_chance");
-                }
             }
         }
         plugin::ProcessSlayerCredit($client, $npc, $entity_list);
