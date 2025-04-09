@@ -40,7 +40,7 @@ sub EVENT_CLICKDOOR {
 
 sub EVENT_POPUPRESPONSE {
     if ($popupid == 1460 || $popupid == 1461) {
-        my $group_flg           = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";
+        my $group_flg           = $client->GetAccountBucket("group-ports-enabled") || "";
         my $attuned_shortname   = $client->GetEntityVariable("magic_map_attune");
         my $waypoint_data       = plugin::GetWaypoint($attuned_shortname, $client);
         my $group               = $client->GetGroup();
