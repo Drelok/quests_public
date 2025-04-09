@@ -1,5 +1,5 @@
 sub EVENT_SAY {
-  my $group_flg       = quest::get_data($client->AccountID() ."-group-ports-enabled") || "";  
+  my $group_flg       = $client->GetAccountBucket("group-ports-enabled") || "";  
   my $eom_link        = quest::varlink(46779);
 
   my $bind_loc        = $client->GetBucket("baz_and_back_bind") || 'bazaar';
@@ -68,7 +68,7 @@ sub EVENT_SAY {
       plugin::NPCTell("You already have performed this ritual, and have these abilities available to you.");
     } else {
       if (plugin::SpendEOM($client, 5)) {
-        quest::set_data($client->AccountID() ."-group-ports-enabled", 1);
+        $client->SetAccountBucket("group-ports-enabled", 1);
         plugin::NPCTell("$name, forevermore you and yours can transport your entire group to anywhere you have [attuned].");
       } else {
         plugin::NPCTell("I'm sorry, $name, you do not have enough [".$eom_link."] available to you right now. When you have more...");
