@@ -898,10 +898,9 @@ sub GetProgressFlag {
             $client->SetAccountBucket("season-$season_id-progress-flag-$stage", $character_flag);           
         }
 
-
         return $account_flag;        
     } else {
-        return $client->SetAccountBucket("progress-flag-$stage");
+        return $client->GetAccountBucket("progress-flag-$stage");
     }
 }
 
@@ -912,16 +911,16 @@ sub SetProgressFlag {
 
     if ($seasonal && $season_id) {
         # Set the Serialized account flag for the current season
-        quest::set_data($client->AccountID() . "-season-$season_id-progress-flag-$stage", $flag_value);
+        $client->SetAccountBucket("season-$season_id-progress-flag-$stage", $flag_value);
 
-        my $regular_flag = quest::get_data($client->AccountID() . "-progress-flag-$stage");
+        my $regular_flag = $client->GetAccountBucket("progress-flag-$stage");
 
         if (length($flag_value) > length ($regular_flag)) {
             # also set the regular flag
-            quest::set_data($client->AccountID() . "-progress-flag-$stage", $flag_value);
+            $client->SetAccountBucket("progress-flag-$stage", $flag_value);
         }
     } else {
         # Set the regular progress flag
-        quest::set_data($client->AccountID() . "-progress-flag-$stage", $flag_value);
+        $client->SetAccountBucket("progress-flag-$stage", $flag_value);
     }
 }
