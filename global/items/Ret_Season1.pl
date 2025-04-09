@@ -1,24 +1,24 @@
 sub EVENT_SCALE_CALC {
-    my $participation_value = $client->GetAccountBucket("season-1-participation") || 0;
+    my $participation_value = quest::get_data($client->AccountID() . "-season-1-participation") || 0;
     my $participation_max   = 100;
 
-    if ($client->GetAccountBucket("season-1-participation-RoK")) {
+    if (quest::get_data($client->AccountID() . "-season-1-participation-RoK")) {
         $participation_value += 10;
     }
 
-    if ($client->GetAccountBucket("season-1-participation-SoV")) {
+    if (quest::get_data($client->AccountID() . "-season-1-participation-SoV")) {
         $participation_value += 10;
     }
 
-    if ($client->GetAccountBucket("season-1-participation-SoL")) {
+    if (quest::get_data($client->AccountID() . "-season-1-participation-SoL")) {
         $participation_value += 10;
     }
 
-    if ($client->GetAccountBucket("season-1-participation-PoP")) {
+    if (quest::get_data($client->AccountID() . "-season-1-participation-PoP")) {
         $participation_value += 10;
     }
 
-    if ($client->GetAccountBucket("season-1-participation-FNagafen")) {
+    if (quest::get_data($client->AccountID() . "-season-1-participation-FNagafen")) {
         $participation_value += 10;
     }
 

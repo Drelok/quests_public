@@ -10,7 +10,7 @@ sub AddTitleFlag {
     my $client = shift || plugin::val('$client');
 
     # Retrieve and deserialize the account and character title lists
-    my @account_titles = plugin::DeserializeList($client->GetAccountBucket("titles-unlocked"));
+    my @account_titles = plugin::DeserializeList(quest::get_data($client->AccountID() . "-titles-unlocked"));
     my @character_titles = plugin::DeserializeList($client->GetBucket("titles-unlocked"));
 
     # Add the new title ID to both lists if it is not already present
@@ -22,7 +22,7 @@ sub AddTitleFlag {
     my $serialized_character_titles = plugin::SerializeList(@character_titles);
 
     # Store the updated lists
-    $client->SetAccountBucket("titles-unlocked", $serialized_account_titles);
+    quest::set_data($client->AccountID() . "-titles-unlocked", $serialized_account_titles);
     $client->SetBucket("titles-unlocked", $serialized_character_titles);
 
     EnableTitles($client);
@@ -33,7 +33,7 @@ sub EnableTitles {
     my $new_title = undef;
     
     # Retrieve and deserialize the account and character title lists
-    my @account_titles = plugin::DeserializeList($client->GetAccountBucket("titles-unlocked"));
+    my @account_titles = plugin::DeserializeList(quest::get_data($client->AccountID() . "-titles-unlocked"));
     my @character_titles = plugin::DeserializeList($client->GetBucket("titles-unlocked"));
 
     if (!plugin::IsSeasonal($client)) {

@@ -35,8 +35,8 @@ sub AwardSeasonalItems
 
     if (IsSeasonal($client)) {
         # Set basic account reward entitlement
-        if (!$client->GetAccountBucket("season-1-entitlement")) {
-            $client->SetAccountBucket("season-1-entitlement", "1");
+        if (!quest::get_data($client->AccountID() . "-season-1-entitlement")) {
+            quest::set_data($client->AccountID() . "-season-1-entitlement", "1");
         }
 
         if (!plugin::check_hasitem($client, $portable_hole)) {
@@ -53,34 +53,34 @@ sub RegisterSeasonalLogin {
 
     if ($client->IsSeasonal()) {
         #login tracker        
-        my $last_date = $client->GetAccountBucket("season-1-date-flag") || 0;
+        my $last_date = quest::get_data($client->AccountID() . "-season-1-date-flag") || 0;
         my ($sec, $min, $hour, $day, $mon, $year) = localtime();
         $year += 1900; # Adjust year to get the current year
         $mon++;
 
         if ($last_date ne "$day-$mon-$year") {
-            $client->SetAccountBucket("season-1-date-flag", "$day-$mon-$year");
-            $client->SetAccountBucket("season-1-participation", ($client->GetAccountBucket("season-1-participation") || 0) + 1);
+            quest::set_data($client->AccountID() . "-season-1-date-flag", "$day-$mon-$year");
+            quest::set_data($client->AccountID() . "-season-1-participation", (quest::get_data($client->AccountID() . "-season-1-participation") || 0) + 1);
         }
 
-        if (!$client->GetAccountBucket("season-1-participation-RoK") && plugin::is_stage_complete($client, 'RoK')) {
-            $client->SetAccountBucket("season-1-participation-RoK", 1);
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-RoK") && plugin::is_stage_complete($client, 'RoK')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-RoK", 1);
         }
 
-        if (!$client->GetAccountBucket("season-1-participation-SoV") && plugin::is_stage_complete($client, 'SoV')) {
-            $client->SetAccountBucket("season-1-participation-SoV", 1);
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-SoV") && plugin::is_stage_complete($client, 'SoV')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-SoV", 1);
         }
 
-        if (!$client->GetAccountBucket("season-1-participation-SoL") && plugin::is_stage_complete($client, 'SoL')) {
-            $client->SetAccountBucket("season-1-participation-SoL", 1);
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-SoL") && plugin::is_stage_complete($client, 'SoL')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-SoL", 1);
         } 
         
-        if (!$client->GetAccountBucket("season-1-participation-PoP") && plugin::is_stage_complete($client, 'PoP')) {
-            $client->SetAccountBucket("season-1-participation-PoP", 1);
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-PoP") && plugin::is_stage_complete($client, 'PoP')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-PoP", 1);
         } 
 
-        if (!$client->GetAccountBucket("season-1-participation-FNagafen") && plugin::is_stage_complete($client, 'FNagafen')) {
-            $client->SetAccountBucket("season-1-participation-FNagafen", 1);
+        if (!quest::get_data($client->AccountID() . "-season-1-participation-FNagafen") && plugin::is_stage_complete($client, 'FNagafen')) {
+            quest::set_data($client->AccountID() . "-season-1-participation-FNagafen", 1);
         }
     }
 }

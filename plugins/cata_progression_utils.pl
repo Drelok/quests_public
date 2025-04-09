@@ -364,7 +364,7 @@ sub SetSubflag {
             plugin::BlueText("Your memories gain sudden, sharp focus. You see the path forward.");
 
             if (plugin::IsSeasonal($client)) {
-                $client->SetAccountBucket("progression-title-$stage", 1);
+                quest::set_data($client->AccountID() . "-progression-title-$stage", 1);
             }
 
             if ($stage eq 'SoV') {
@@ -653,8 +653,7 @@ sub UpdateCharMaxLevel
     }
 
     if (($client->GetBucket("CharMaxLevel") || 0) != $CharMaxLevel) {
-        # why is this set to the wrong case ?
-        $client->SetBucket("CharMaxLevel", $CharMaxLevel);        
+        $client->SetBucket("CharMaxlevel", $CharMaxLevel);        
         plugin::YellowText("Your Level Cap has been set to $CharMaxLevel.");
     }
 }
@@ -663,7 +662,7 @@ sub ConvertFlags {
     my $client = shift;
     
     # Old Flag Data
-    $expansion = $client->GetAccountBucket("kunark-flag") || 0;
+    $expansion = quest::get_data($client->AccountID() . "-kunark-flag") || 0;
 
     if ($expansion && !plugin::IsSeasonal($client)) {
         # Kunark
@@ -756,7 +755,7 @@ sub ConvertFlags {
 
         # Gates of Discord
         if (!is_stage_complete($client, 'GoD')) {
-            if ($expansion >= 20 || $client->GetAccountBucket("saryrn-flag") || $client->GetAccountBucket("quarm-kill")) {
+            if ($expansion >= 20 || quest::get_data($client->AccountID() . "-saryrn-flag") || quest::get_data($client->AccountID() . "-quarm-kill")) {
                 SetSubflag($client, 'GoD', 'Saryrn', 1);
             }
         }
@@ -801,41 +800,42 @@ sub delete_all_flags {
 
     # Go through each flag and delete it
     foreach my $flag_suffix (keys %flags_to_delete) {
-        $client->DeleteAccountBucket($flag_suffix);
+        my $key = $client->AccountID() . $flag_suffix;
+        quest::delete_data($key);  # Assuming quest::delete_data is the correct method to remove data
     }
 }
 
 
 sub UpdateRaceClassLocks {
     my $client = shift;
-    my $account_progression = $client->GetAccountBucket("account-progression") || 0;
+    my $account_progression = quest::get_data($client->AccountID() . "-account-progression") || 0;
 
     if ($account_progression < 1 && is_stage_complete($client, 'RoK')) {
-        $client->SetAccountBucket("account-progression", 1);
+        quest::set_data($client->AccountID() . "-account-progression", 1);
     }
 
     if ($account_progression < 2 && is_stage_complete($client, 'SoV')) {
-        $client->SetAccountBucket("account-progression", 2);
+        quest::set_data($client->AccountID() . "-account-progression", 2);
     }
 
     if ($account_progression < 3 && is_stage_complete($client, 'SoL')) {
-        $client->SetAccountBucket("account-progression", 3);
+        quest::set_data($client->AccountID() . "-account-progression", 3);
     }
 
     if ($account_progression < 4 && is_stage_complete($client, 'PoP')) {
-        $client->SetAccountBucket("account-progression", 4);
+        quest::set_data($client->AccountID() . "-account-progression", 4);
     }
 
     if ($account_progression < 5 && is_stage_complete($client, 'GoD')) {
-        $client->SetAccountBucket("account-progression", 5);
+        quest::set_data($client->AccountID() . "-account-progression", 5);
     }
 
     if ($account_progression < 6 && is_stage_complete($client, 'OoW')) {
-        $client->SetAccountBucket("account-progression", 6);
+        quest::set_data($client->AccountID() . "-account-progression", 6);
     }
 
     if ($account_progression < 7 && is_stage_complete($client, 'DoN')) {
-        $client->SetAccountBucket("account-progression", 7);
+        quest::set_data($client->AccountID() . "-account-progression", 7);
     }
 }
 
@@ -889,18 +889,19 @@ sub GetProgressFlag {
 
     if ($seasonal && $season_id) {
         # Get the Serialized account flag
-        my $account_flag = $client->GetAccountBucket("season-$season_id-progress-flag-$stage");
+        my $account_flag = quest::get_data($client->AccountID() . "-season-$season_id-progress-flag-$stage");
         my $character_flag = $client->GetBucket("progress-flag-$stage");
 
         if (length($character_flag) > length($account_flag)) {  
             quest::debug("Adapting Character Seasonal flag.");
             $account_flag = $character_flag;
-            $client->SetAccountBucket("season-$season_id-progress-flag-$stage", $character_flag);           
+            quest::set_data($client->AccountID() . "-season-$season_id-progress-flag-$stage", $character_flag);           
         }
+
 
         return $account_flag;        
     } else {
-        return $client->GetAccountBucket("progress-flag-$stage");
+        return quest::get_data($client->AccountID() . "-progress-flag-$stage");
     }
 }
 
@@ -911,16 +912,16 @@ sub SetProgressFlag {
 
     if ($seasonal && $season_id) {
         # Set the Serialized account flag for the current season
-        $client->SetAccountBucket("season-$season_id-progress-flag-$stage", $flag_value);
+        quest::set_data($client->AccountID() . "-season-$season_id-progress-flag-$stage", $flag_value);
 
-        my $regular_flag = $client->GetAccountBucket("progress-flag-$stage");
+        my $regular_flag = quest::get_data($client->AccountID() . "-progress-flag-$stage");
 
         if (length($flag_value) > length ($regular_flag)) {
             # also set the regular flag
-            $client->SetAccountBucket("progress-flag-$stage", $flag_value);
+            quest::set_data($client->AccountID() . "-progress-flag-$stage", $flag_value);
         }
     } else {
         # Set the regular progress flag
-        $client->SetAccountBucket("progress-flag-$stage", $flag_value);
+        quest::set_data($client->AccountID() . "-progress-flag-$stage", $flag_value);
     }
 }

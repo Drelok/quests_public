@@ -19,8 +19,8 @@ sub EVENT_ITEM {
             quest::summonfixeditem($reward);
         }
 
-        my $account_key 	= "ess-items-returned";
-        $client->SetAccountBucket($account_key, ($client->GetAccountBucket($account_key) || 0) + 1);
+        my $account_key 	= $client->AccountID() . "-ess-items-returned";
+        quest::set_data($account_key, (quest::get_data($account_key) || 0) + 1);
     }
 
     plugin::return_items(\%itemcount);
@@ -63,8 +63,8 @@ sub EVENT_ITEM {
             quest::summonfixeditem($reward);
         }
 
-        my $account_key 	= "ess-items-returned";
-        $client->SetAccountBucket($account_key, ($client->GetAccountBucket($account_key) || 0) + 1);
+        my $account_key 	= $client->AccountID() . "-ess-items-returned";
+        quest::set_data($account_key, (quest::get_data($account_key) || 0) + 1);
     }
 
     plugin::return_items(\%itemcount);

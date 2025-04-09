@@ -193,10 +193,10 @@ sub EVENT_WARP {
     my $current_y = $client->GetY();
     my $current_z = $client->GetZ();
     my $distance = sqrt(($current_x - $from_x) ** 2 + ($current_y - $from_y) ** 2 + ($current_z - $from_z) ** 2);
-    my $account_key = "WarpCount";
-    my $soulmark = $client->GetAccountBucket("CheaterFlag");
+    my $account_key = $client->AccountID() . "-WarpCount";
+    my $soulmark = quest::get_data($client->AccountID() . "-CheaterFlag");
 
-    my @warp_events = plugin::DeserializeList($client->GetAccountBucket($account_key));
+    my @warp_events = plugin::DeserializeList(quest::get_data($account_key));
 
     # Enqueue the current warp event with timestamp
     push @warp_events, time();
@@ -210,7 +210,7 @@ sub EVENT_WARP {
 
     my $enforcement = 0;
 
-    $client->SetAccountBucket($account_key, plugin::SerializeList(@warp_events));
+    quest::set_data($account_key, plugin::SerializeList(@warp_events));
 
     if ($distance > 100 || $soulmark) {
         my $admin_message = "Large Warp Detected. Character: $name Zone: $zonesn From: $from_x, $from_y, $from_z To: $current_x, $current_y, $current_z Distance: $distance";

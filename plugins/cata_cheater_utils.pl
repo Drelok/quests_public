@@ -1,7 +1,7 @@
 sub GetSoulmark {
     my $client = shift;
 
-    my $soulmark = $client->GetAccountBucket("CheaterFlag");
+    my $soulmark = quest::get_data($client->AccountID() . "-CheaterFlag");
 
     return $soulmark;
 }
