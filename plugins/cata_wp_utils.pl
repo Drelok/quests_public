@@ -200,29 +200,10 @@ sub AddDefaultAttunement {
         AddWaypoint('sharvahl');
         AddWaypoint('paineel');
         AddWaypoint('ecommons');
-        AddWaypoint('bazaar');
-
-        if (!plugin::IsTHJ()) {
-            AddWaypoint("lavastorm");
-            AddWaypoint("northkarana");
-            AddWaypoint("tox");
-            AddWaypoint("iceclad");
-            AddWaypoint("cobaltscar");
-            AddWaypoint("twilight");
-            AddWaypoint("wallofslaughter");
-            AddWaypoint("barindu");
-            AddWaypoint("potimea");
-            AddWaypoint("fieldofbone");
-            AddWaypoint("westwastes");
-            AddWaypoint("scarlet");
-            AddWaypoint("everfrost");
-        }
+        AddWaypoint('bazaar');       
 
         if ($client->GetLevel() >= 46) {
             AddWaypoint("hateplaneb");
-        }
-
-        if ($client->GetLevel() >= 46) {
             AddWaypoint("airplane");
         }
     }
@@ -253,7 +234,7 @@ sub AddWaypoint {
             if (exists $waypoints{$waypoint}) {
                 if (!exists $account_data{$waypoint}) {
                     $account_data{$waypoint} = 1;
-                    $client->GetAccountBucket("Waypoints"), join(',', keys %account_data));
+                    $client->GetAccountBucket("Waypoints");
                     $return_feedback = 1;
                 }
 
