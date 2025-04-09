@@ -29,7 +29,7 @@ function event_timer(e)
 				emote_pc_1:Message(MT.Yellow,"Out of the corner of your eye you perceive movement. Within the recession on the door a mechanical lock rotated counter-clockwise. It was visible for only a fraction of a second, but that was long enough to make an educated guess to which key it now accepts.")
 				emote_pc_1:Message(MT.Yellow,"The Cracked Key must unlock the door to the next room.")
 			end
-			if emote_pc_2.valid then
+			if emote_pc_2.valid and emote_pc_1 ~= emote_pc_2 then
 				emote_pc_2:Message(MT.Yellow,"Amidst the ambient noise of grinding stone, your sharp hearing picks up the sound of several gears rotating into place. The pattern of repetitive clicks suddenly makes sense.")
 				emote_pc_2:Message(MT.Yellow,"It must be either the Cracked Key or Dusty Key that unlocks the door to the next room.")
 			end
@@ -39,7 +39,7 @@ function event_timer(e)
 				emote_pc_1:Message(MT.Yellow,"Out of the corner of your eye you perceive movement. Within the recession on the door a mechanical lock rotated counter-clockwise. It was visible for only a fraction of a second, but that was long enough to make an educated guess to which key it now accepts.")
 				emote_pc_1:Message(MT.Yellow,"The Dusty Key must unlock the door to the next room.")
 			end
-			if emote_pc_2.valid then
+			if emote_pc_2.valid and emote_pc_1 ~= emote_pc_2 then
 				emote_pc_2:Message(MT.Yellow,"Amidst the ambient noise of grinding stone, your sharp hearing picks up the sound of several gears rotating into place. The pattern of repetitive clicks suddenly makes sense.")
 				emote_pc_2:Message(MT.Yellow,"It must be either the Polished Key or Dusty Key that unlocks the door to the next room.")
 			end
@@ -49,7 +49,7 @@ function event_timer(e)
 				emote_pc_1:Message(MT.Yellow,"Out of the corner of your eye you perceive movement. Within the recession on the door a mechanical lock rotated counter-clockwise. It was visible for only a fraction of a second, but that was long enough to make an educated guess to which key it now accepts.")
 				emote_pc_1:Message(MT.Yellow,"The Polished Key must unlock the door to the next room.")
 			end
-			if emote_pc_2.valid then
+			if emote_pc_2.valid and emote_pc_1 ~= emote_pc_2 then
 				emote_pc_2:Message(MT.Yellow,"Amidst the ambient noise of grinding stone, your sharp hearing picks up the sound of several gears rotating into place. The pattern of repetitive clicks suddenly makes sense.")
 				emote_pc_2:Message(MT.Yellow,"It must be either the Cracked Key or Jagged Key that unlocks the door to the next room.")
 			end
@@ -59,7 +59,7 @@ function event_timer(e)
 				emote_pc_1:Message(MT.Yellow,"Out of the corner of your eye you perceive movement. Within the recession on the door a mechanical lock rotated counter-clockwise. It was visible for only a fraction of a second, but that was long enough to make an educated guess to which key it now accepts.")
 				emote_pc_1:Message(MT.Yellow,"The Jagged Key must unlock the door to the next room.")
 			end
-			if emote_pc_2.valid then
+			if emote_pc_2.valid and emote_pc_1 ~= emote_pc_2 then
 				emote_pc_2:Message(MT.Yellow,"Amidst the ambient noise of grinding stone, your sharp hearing picks up the sound of several gears rotating into place. The pattern of repetitive clicks suddenly makes sense.")
 				emote_pc_2:Message(MT.Yellow,"It must be either the Cracked Key or Polished Key that unlocks the door to the next room.")
 			end
