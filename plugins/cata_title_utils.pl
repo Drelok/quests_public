@@ -40,6 +40,7 @@ sub EnableTitles {
         # Iterate over the account titles and enable each one
         foreach my $title_id (@account_titles) {
             if (!quest::checktitle($title_id)) {
+                quest::debug("Attempting to enable $title_id for account " . $client->AccountID());
                 quest::enabletitle($title_id);
                 $new_title = "true";
             }

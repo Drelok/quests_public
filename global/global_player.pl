@@ -340,6 +340,10 @@ sub EVENT_COMBINE_SUCCESS {
 }
 
 sub EVENT_ITEM_CLICK_CAST_CLIENT {
+    if ($spell_id == 36878) {
+        plugin::AddTitleFlag($item_id, $client);
+    }
+
     plugin::swap_items($client, $item_id, $slot_id);
 
     if ($spell_id == 36874) {
