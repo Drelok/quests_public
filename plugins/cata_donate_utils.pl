@@ -128,35 +128,60 @@ sub ApplyWorldWideBuff {
 sub UpdateEoMAward {
     my $client = shift;
     my $character_id = $client->CharacterID();
+    my $account_id = $client->AccountID();
 
     my $dbh = plugin::LoadMysqlServer();
 
     # Helper subroutine to fetch bucket value from the database
     sub fetch_bucket {
-        my ($dbh, $character_id, $key) = @_;
-        my $sth = $dbh->prepare("SELECT value FROM data_buckets WHERE character_id = ? AND `key` = ?");
-        $sth->execute($character_id, $key);
+        my ($dbh, $id, $key, $id_type) = @_;
+        my $column = $id_type . "_id";
+        my $sth = $dbh->prepare("SELECT value FROM data_buckets WHERE $column = ? AND `key` = ?");
+        $sth->execute($id, $key);
         my ($value) = $sth->fetchrow_array();
         return $value;
     }
 
-    # EoM-Award handling
-    my $eom_award_value = fetch_bucket($dbh, $character_id, "EoM-Award");
+    # Helper to delete bucket after processing
+    sub delete_bucket {
+        my ($dbh, $id, $key, $id_type) = @_;
+        my $column = $id_type . "_id";
+        $dbh->do("DELETE FROM data_buckets WHERE $column = ? AND `key` = ?", undef, $id, $key);
+    }
+
+    # EoM-Award handling - first check account, then character if not found
+    my $eom_award_value = fetch_bucket($dbh, $account_id, "EoM-Award", "account");
     if ($eom_award_value) {
         plugin::AwardEOM($client, $eom_award_value);
         quest::ding();
-
         # Remove bucket entry after processing
-        $dbh->do("DELETE FROM data_buckets WHERE character_id = ? AND `key` = ?", undef, $character_id, "EoM-Award");
+        delete_bucket($dbh, $account_id, "EoM-Award", "account");
+    } else {
+        # Fall back to character-based bucket
+        $eom_award_value = fetch_bucket($dbh, $character_id, "EoM-Award", "character");
+        if ($eom_award_value) {
+            plugin::AwardEOM($client, $eom_award_value);
+            quest::ding();
+            # Remove bucket entry after processing
+            delete_bucket($dbh, $character_id, "EoM-Award", "character");
+        }
     }
 
-    # EoM-Award-Auto handling
-    my $eom_award_auto_value = fetch_bucket($dbh, $character_id, "EoM-Award-Auto");
+    # EoM-Award-Auto handling - first check account, then character if not found
+    my $eom_award_auto_value = fetch_bucket($dbh, $account_id, "EoM-Award-Auto", "account");
     if ($eom_award_auto_value) {
         plugin::AwardEOMAuto($client, $eom_award_auto_value);
         quest::ding();
-
         # Remove bucket entry after processing
-        $dbh->do("DELETE FROM data_buckets WHERE character_id = ? AND `key` = ?", undef, $character_id, "EoM-Award-Auto");
+        delete_bucket($dbh, $account_id, "EoM-Award-Auto", "account");
+    } else {
+        # Fall back to character-based bucket
+        $eom_award_auto_value = fetch_bucket($dbh, $character_id, "EoM-Award-Auto", "character");
+        if ($eom_award_auto_value) {
+            plugin::AwardEOMAuto($client, $eom_award_auto_value);
+            quest::ding();
+            # Remove bucket entry after processing
+            delete_bucket($dbh, $character_id, "EoM-Award-Auto", "character");
+        }
     }
 }
