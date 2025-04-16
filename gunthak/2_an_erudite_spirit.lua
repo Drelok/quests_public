@@ -36,7 +36,7 @@ end
 -- helper function to reset spawn
 function reset_spawn()
 	-- associating spirit with the spawnpoint seems to prevent the spawn point from repopping after she dies... resetting it explicitly here
-	local spawnpoint = eq.get_entity_list():GetSpawnByID(47209);
+	local spawnpoint = eq.get_entity_list():GetSpawnByID(46892);
 	spawnpoint:Enable();
 	spawnpoint:Reset();
 end
