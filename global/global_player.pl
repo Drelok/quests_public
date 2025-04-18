@@ -340,6 +340,10 @@ sub EVENT_COMBINE_SUCCESS {
 }
 
 sub EVENT_ITEM_CLICK_CAST_CLIENT {
+    if (plugin::CustomEventItemClickCastEntry()) {
+        return;
+    }
+
     if ($spell_id == 36878) {
         plugin::AddTitleFlag($item_id, $client);
     }
@@ -372,13 +376,6 @@ sub EVENT_CAST_ON {
         } elsif ($caster_id == $client->GetID() && $spell->GetBuffDuration() > 0) {
             plugin::dispatch_popup("self_buff", $client);
         }
-    }
-}
-
-sub EVENT_CAST {
-    if (plugin::GetSoulmark($client) && int(rand(100)) == 0) {
-        quest::debug("You seem to have a soulmark.");
-        $client->CastSpell(3087, $client->GetID());
     }
 }
 

@@ -25,3 +25,7 @@ sub CustomEventDestroyEntry {
 sub CustomEventNPCDeathEntry {
     return 0;
 }
+
+sub CustomEventItemClickCastEntry {
+    return 0;
+}
