@@ -51,6 +51,10 @@ sub EVENT_ENTERZONE {
     }
 }
 
+sub EVENT_EXP_GAIN {
+    plugin::CustomEventExpGainEntry();
+}
+
 sub EVENT_EQUIP_ITEM_CLIENT {
     plugin::CustomEventItemEquipEntry();
 

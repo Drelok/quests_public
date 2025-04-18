@@ -29,3 +29,7 @@ sub CustomEventNPCDeathEntry {
 sub CustomEventItemClickCastEntry {
     return 0;
 }
+
+sub CustomEventExpGainEntry {
+    return 0
+}
