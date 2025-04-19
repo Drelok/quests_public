@@ -33,3 +33,7 @@ sub CustomEventItemClickCastEntry {
 sub CustomEventExpGainEntry {
     return 0
 }
+
+sub CustomEventAAExpGainEntry {
+    return 0
+}

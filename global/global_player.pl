@@ -55,6 +55,10 @@ sub EVENT_EXP_GAIN {
     plugin::CustomEventExpGainEntry();
 }
 
+sub EVENT_AA_EXP_GAIN {
+    plugin::CustomEventAAExpGainEntry();
+}
+
 sub EVENT_EQUIP_ITEM_CLIENT {
     plugin::CustomEventItemEquipEntry();
 
