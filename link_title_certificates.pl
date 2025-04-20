@@ -31,6 +31,7 @@ if ($help) {
     exit 0;
 }
 
+
 # ======================= Helper Functions =======================
 sub print_help {
     my $script_name = basename($0);
