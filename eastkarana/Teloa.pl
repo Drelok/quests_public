@@ -2,15 +2,26 @@
 #
 # items: 20451
 
+# zone‐wide progression variable
+my $EPIC_VAR    = "rd_epic_step";
+# NPC Type IDs 
+my $NPC_ALTHELE = 15044;
+my $NPC_SIONAE  = 15178;
+my $NPC_NUIEN   = 15167;
+my $NPC_TELOA   = 15170;
+my $move;
 my $start;
 my $timer;
 my $move;
 
 sub EVENT_ITEM {
-  if (plugin::check_handin(\%itemcount, 20451 => 1)) {
+  my $zone = $entity_list->GetZone();
+  my $step = $zone->GetVariable($EPIC_VAR) || 0;
+  if ( ($step == 3) && plugin::check_handin(\%itemcount, 20451 => 1)) {
     quest::emote("begins walking toward the gathering spot. 'Follow, friend.'");
     $start = $entity_list->GetMobByNpcTypeID(15044);
     $timer = $start->CastToNPC();
+    $zone->SetVariable($EPIC_VAR, 4);
     $timer->SignalNPC(1); # start the timers on althele
   }
   plugin::return_items(\%itemcount);

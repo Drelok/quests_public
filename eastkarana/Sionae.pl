@@ -4,12 +4,22 @@
 
 
 my $move;
+# zone‐wide progression variable
+my $EPIC_VAR    = "rd_epic_step";
+# NPC Type IDs 
+my $NPC_ALTHELE = 15044;
+my $NPC_SIONAE  = 15178;
+my $NPC_NUIEN   = 15167;
+my $NPC_TELOA   = 15170;
 
 sub EVENT_ITEM {
-  if (plugin::check_handin(\%itemcount, 20450 => 1)) {
+my $zone = $entity_list->GetZone();
+my $step = $zone->GetVariable($EPIC_VAR) || 0;
+  if ( ($step == 1) && plugin::check_handin(\%itemcount, 20450 => 1)) {
     quest::say("I see that the time has come. Take the amulet and give it to the third of our kin, Nuien. I will meet you at the gathering.");
     quest::summonfixeditem(20451); # Item: Frayed Braided Grass Amulet
     quest::unique_spawn(15167,0,0,300,-3657,3,366); #spawn nuien
+    $zone->SetVariable($EPIC_VAR, 2);
     quest::signalwith(15044,15178,0); # NPC: Althele
   }
   plugin::return_items(\%itemcount);

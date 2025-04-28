@@ -2,11 +2,6 @@
 #
 # items: 20448, 20450, 62810, 62811, 20452, 18959
 
-my $depop1;
-my $depop2;
-my $depop3;
-my $depop4;
-my $depop5;
 my $entid1;
 my $entid2;
 my $entid3;
@@ -15,11 +10,25 @@ my $mob2;
 my $mob3;
 my $start;
 my $moving;
-my $depopnpc1;
-my $depopnpc2;
-my $depopnpc3;
-my $depopnpc4;
-my $depopnpc5;
+
+# zone‐wide progression variable
+my $EPIC_VAR    = "rd_epic_step";
+# NPC Type IDs 
+my $NPC_ALTHELE = 15044;
+my $NPC_SIONAE  = 15178;
+my $NPC_NUIEN   = 15167;
+my $NPC_TELOA   = 15170;
+my $NPC_THLORIS = 15043;
+my $NPC_FANG    = 15042;
+my $zone = $entity_list->GetZone();
+
+sub EVENT_SPAWN {
+  # on repop of Althene set epic variable to 0
+  my $zone = $entity_list->GetZone();
+  $zone->SetVariable($EPIC_VAR, 0);
+}
+
+
 
 sub EVENT_SAY {
   if ($text=~/hail/i) {
@@ -50,45 +59,36 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  if (plugin::check_handin(\%itemcount, 20448 => 1)) {
+  my $zone = $entity_list->GetZone();
+  my $step = $zone->GetVariable($EPIC_VAR) || 0;
+  if ( ($step == 0) && plugin::check_handin(\%itemcount, 20448 => 1)) {
     quest::emote("looks at the coin and nods gravely at you as she slips it into a fold of her clothing. 'I see. The story of this coin speaks much to me as do the words you have given me. Telin sent word that you would arrive. The tidings you bring are ill indeed. Here, take this amulet and find Sionae. She is nearby. We will speak more on this matter when all are present.'");
     quest::summonfixeditem(20450); # Item: Braided Grass Amulet
     quest::unique_spawn(15178,0,0,-1595,-2595,3.2,254); #spawn sionae
-  }
-  elsif(plugin::check_handin(\%itemcount, 62810 => 1)){ #Sickly Maiden's Hair
-    quest::say("This plant has an illness that I have never sensed before.' Althele pauses in thought for a moment. 'You are a hunter, so I shall put your skills to work. First, take this to Corun in Surefall. He is an expert on animal illnesses. Then put your hunting skills to work and see if you can capture any animals that may have eaten this plant. Corun will want to see them to help him discover what the sickness is.");
-    quest::summonfixeditem(62811); #Tuft of Sickly Maiden's Hair
-  }
+      $zone->SetVariable($EPIC_VAR, 1);
+    }
+  elsif( ($step == 0) && plugin::check_handin(\%itemcount, 20450 => 1)){  #allow players to restart if bugged
+    quest::emote("The tidings you bring are ill indeed, we shall try to gather once more. Find Sionae and make haste this time. She is nearby. We will speak more on this matter when all are present.'");
+    quest::summonfixeditem(20450); # Item: Braided Grass Amulet
+    quest::unique_spawn(15178,0,0,-1595,-2595,3.2,254); #spawn sionae
+      $zone->SetVariable($EPIC_VAR, 1);
+    }
+  elsif( ($step == 0) && plugin::check_handin(\%itemcount, 20451 => 1)){ #allow players to restart if bugged
+    quest::emote("The tidings you bring are ill indeed, we shall try to gather once more. Find Sionae and make haste this time. She is nearby. We will speak more on this matter when all are present.'");
+    quest::summonfixeditem(20450); # Item: Braided Grass Amulet
+    quest::unique_spawn(15178,0,0,-1595,-2595,3.2,254); #spawn sionae
+      $zone->SetVariable($EPIC_VAR, 1);
+    }
   elsif (plugin::check_handin(\%itemcount, 20452 => 1)) {
     quest::emote("hands the book to Tholris who reads through it with lines of concern etched on his face, then whispers into her ear. 'Dire news, indeed. This cannot be allowed. I must keep this book but you, $name, must not allow Innoruuk to seed the land with his hatred and filth. You have only just begun your quest. The path you are guided upon will be difficult, if not impossible, but someone must finish it. Please, take this, read of it, follow its instructions. Tunare bless your path and Karana watch over you.");
     quest::exp(100000);
     quest::summonfixeditem(18959); # Item: Earth Stained Note
-    $depop1 = $entity_list->GetMobByNpcTypeID(15178); #despawn the druids
-    $depop2 = $entity_list->GetMobByNpcTypeID(15167);
-    $depop3 = $entity_list->GetMobByNpcTypeID(15170);
-    $depop4 = $entity_list->GetMobByNpcTypeID(15043);
-    $depop5 = $entity_list->GetMobByNpcTypeID(15042);
-    
-    if ($depop1) {
-      $depopnpc1 = $depop1->CastToNPC();
-      $depopnpc1->Depop();
-    }
-    if ($depop2) {
-      $depopnpc2 = $depop2->CastToNPC();
-      $depopnpc2->Depop();
-    }
-    if ($depop3) {
-      $depopnpc3 = $depop3->CastToNPC();
-      $depopnpc3->Depop();
-    }
-    if ($depop4) {
-      $depopnpc4 = $depop4->CastToNPC();
-      $depopnpc4->Depop();
-    }
-    if ($depop5) {
-      $depopnpc5 = $depop5->CastToNPC();
-      $depopnpc5->Depop();
-    }
+    $zone->SetVariable($EPIC_VAR, 0);
+    quest::depopall($NPC_SIONAE);
+    quest::depopall($NPC_NUIEN);
+    quest::depopall($NPC_TELOA);
+    quest::depopall($NPC_THLORIS);
+    quest::depopall($NPC_FANG);
     quest::depop_withtimer();
   }
   plugin::return_items(\%itemcount);
@@ -146,22 +146,14 @@ sub EVENT_TIMER {
   }
   elsif ($timer eq "depop") { #something might have gone wrong resetting the druids after 10 minutes
     quest::stoptimer("depop");
-    $depop1 = $entity_list->GetMobByNpcTypeID(15178);
-    $depop2 = $entity_list->GetMobByNpcTypeID(15167);
-    $depop3 = $entity_list->GetMobByNpcTypeID(15170);
-    
-    if ($depop1) {
-      $depopnpc1 = $depop1->CastToNPC();
-      $depopnpc1->Depop();
-    }
-    if ($depop2) {
-      $depopnpc2 = $depop2->CastToNPC();
-      $depopnpc2->Depop();
-    }
-    if ($depop3) {
-      $depopnpc3 = $depop3->CastToNPC();
-      $depopnpc3->Depop();
-    }
+    $zone->SetVariable($EPIC_VAR, 0);
+    quest::depopall($NPC_SIONAE);
+    quest::depopall($NPC_NUIEN);
+    quest::depopall($NPC_TELOA);
+    quest::depopall($NPC_THLORIS);
+    quest::depopall(15153);
+    quest::depopall(15150);
+    quest::depop_withtimer();
   }
 }
 
