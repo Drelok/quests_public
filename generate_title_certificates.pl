@@ -47,7 +47,7 @@ my $db_name = "";
 my $db_user = "";
 my $db_pass = "";
 my $use_config = 1;
-my $title_max_length = 32;  # Max length for just the title
+my $title_max_length = 31;  # Max length for just the title
 my $item_max_length = 64;   # Max length for the full item name
 my $flush_certificates = 0; # Option to delete all existing certificates
 
