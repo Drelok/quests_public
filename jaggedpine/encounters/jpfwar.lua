@@ -594,27 +594,27 @@ function FirstTier(e)
 end
 
 function VillageWarSpawn(e)
-	eq.spawn2(VILLAGE_WAR_SPAWN.SHAYNA,0,0,2083,1120,-11,104);		-- NPC: ##Shayna_Thunderhand
-	eq.spawn2(VILLAGE_WAR_SPAWN.KAITHYS,0,0,1895,1007,-11,127);		-- NPC: ##Kaithys_Galestrider
-	eq.spawn2(VILLAGE_WAR_SPAWN.ANNOUS,0,0,2074,1206,-12,208);		-- NPC: ##Annous_Pineshadow
-	eq.spawn2(VILLAGE_WAR_SPAWN.DEIRA,0,0,1970,1233,-11,126);		-- NPC: ##Lady_Deira	
-	eq.spawn2(VILLAGE_WAR_SPAWN.NOLAN,0,0,1820,1064,-10,64);		-- NPC: ##Nolan_Greenwood
-	eq.spawn2(VILLAGE_WAR_SPAWN.CHEYLOH,0,0,1967,1267,-11,126);		-- NPC: ##Cheyloh_Greenwood
-	eq.spawn2(VILLAGE_WAR_SPAWN.FINEWINE,0,0,1931,1225,-11,131);	-- NPC: ##Guard_Finewine
-	eq.spawn2(VILLAGE_WAR_SPAWN.BOSSAMIR,0,0,1856,1000,-10,130);	-- NPC: ##Guard_Bossamir
-	eq.spawn2(VILLAGE_WAR_SPAWN.JEREMY,0,0,1981,957,-13,227);		-- NPC: ##Jeremy_Leafrunner
-	eq.spawn2(VILLAGE_WAR_SPAWN.DERICK,0,0,1953,1329,-11,132);		-- NPC: ##Derick_Goodroot
-	eq.spawn2(VILLAGE_WAR_SPAWN.CATHLEEN,0,0,1919,1259,-11,3);		-- NPC: ##Cathleen_Goodroot
-	eq.spawn2(VILLAGE_WAR_SPAWN.SELIA,0,0,2049,1115,-11,137);		-- NPC: ##Selia_Wetstone
-	eq.spawn2(VILLAGE_WAR_SPAWN.MORGAN,0,0,2020,1108,-11,72);		-- NPC: ##Morgan_Wetstone
-	eq.spawn2(VILLAGE_WAR_SPAWN.TALLIEN,0,0,2020,1090,-11,72);		-- NPC: ##Tallien_Brightflash
-	eq.spawn2(VILLAGE_WAR_SPAWN.NERDALA,0,0,2088,1079,-11,197);		-- NPC: ##Nerdala_Darkcloud
-	eq.spawn2(VILLAGE_WAR_SPAWN.PERGAN,0,0,2088,1072,-11,197);		-- NPC: ##Pergan_Darkcloud
-	eq.spawn2(VILLAGE_WAR_SPAWN.BANKER,0,0,2059,1055,-11,6);		-- NPC: ##Banker_Mardalson
-	eq.spawn2(VILLAGE_WAR_SPAWN.RALLEFORD,0,0,1892,1053,-10,194);	-- NPC: ##Ralleford_Twothorns
-	eq.spawn2(VILLAGE_WAR_SPAWN.DONNA,0,0,1840,1078,-10,10);		-- NPC: ##Donna_Twothorns
-	eq.spawn2(VILLAGE_WAR_SPAWN.DIEDRA,0,0,1878,1086,-10,137);		-- NPC: ##Diedra_Twothorns
-	eq.spawn2(Sergeant_Caelin,0,0,1988,1084,-11,196);				-- NPC: ##Sergeant_Caelin
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.SHAYNA,0,0,2083,1120,-11,104);		-- NPC: ##Shayna_Thunderhand
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.KAITHYS,0,0,1895,1007,-11,127);		-- NPC: ##Kaithys_Galestrider
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.ANNOUS,0,0,2074,1206,-12,208);		-- NPC: ##Annous_Pineshadow
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.DEIRA,0,0,1970,1233,-11,126);		-- NPC: ##Lady_Deira	
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.NOLAN,0,0,1820,1064,-10,64);		-- NPC: ##Nolan_Greenwood
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.CHEYLOH,0,0,1967,1267,-11,126);		-- NPC: ##Cheyloh_Greenwood
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.FINEWINE,0,0,1931,1225,-11,131);	-- NPC: ##Guard_Finewine
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.BOSSAMIR,0,0,1856,1000,-10,130);	-- NPC: ##Guard_Bossamir
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.JEREMY,0,0,1981,957,-13,227);		-- NPC: ##Jeremy_Leafrunner
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.DERICK,0,0,1953,1329,-11,132);		-- NPC: ##Derick_Goodroot
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.CATHLEEN,0,0,1919,1259,-11,3);		-- NPC: ##Cathleen_Goodroot
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.SELIA,0,0,2049,1115,-11,137);		-- NPC: ##Selia_Wetstone
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.MORGAN,0,0,2020,1108,-11,72);		-- NPC: ##Morgan_Wetstone
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.TALLIEN,0,0,2020,1090,-11,72);		-- NPC: ##Tallien_Brightflash
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.NERDALA,0,0,2088,1079,-11,197);		-- NPC: ##Nerdala_Darkcloud
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.PERGAN,0,0,2088,1072,-11,197);		-- NPC: ##Pergan_Darkcloud
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.BANKER,0,0,2059,1055,-11,6);		-- NPC: ##Banker_Mardalson
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.RALLEFORD,0,0,1892,1053,-10,194);	-- NPC: ##Ralleford_Twothorns
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.DONNA,0,0,1840,1078,-10,10);		-- NPC: ##Donna_Twothorns
+	eq.unique_spawn(VILLAGE_WAR_SPAWN.DIEDRA,0,0,1878,1086,-10,137);		-- NPC: ##Diedra_Twothorns
+	eq.unique_spawn(Sergeant_Caelin,0,0,1988,1084,-11,196);				-- NPC: ##Sergeant_Caelin
 end
 
 function StaticVillageDepop(e)
