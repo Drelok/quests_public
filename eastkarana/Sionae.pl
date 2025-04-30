@@ -13,7 +13,6 @@ my $NPC_NUIEN   = 15167;
 my $NPC_TELOA   = 15170;
 
 sub EVENT_ITEM {
-my $zone = $entity_list->GetZone();
 my $step = $zone->GetVariable($EPIC_VAR) || 0;
   if ( ($step == 1) && plugin::check_handin(\%itemcount, 20450 => 1)) {
     quest::say("I see that the time has come. Take the amulet and give it to the third of our kin, Nuien. I will meet you at the gathering.");

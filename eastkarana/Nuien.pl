@@ -12,7 +12,6 @@ my $NPC_TELOA   = 15170;
 my $move;
 
 sub EVENT_ITEM {
-  my $zone = $entity_list->GetZone();
   my $step = $zone->GetVariable($EPIC_VAR) || 0;
   if (($step == 2) && plugin::check_handin(\%itemcount, 20451 => 1)) {
     quest::say("So be it. Do as you have done before and find the next. Teloa is the last.");

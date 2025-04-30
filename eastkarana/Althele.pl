@@ -20,11 +20,9 @@ my $NPC_NUIEN   = 15167;
 my $NPC_TELOA   = 15170;
 my $NPC_THLORIS = 15043;
 my $NPC_FANG    = 15042;
-my $zone = $entity_list->GetZone();
 
 sub EVENT_SPAWN {
   # on repop of Althene set epic variable to 0
-  my $zone = $entity_list->GetZone();
   $zone->SetVariable($EPIC_VAR, 0);
 }
 
@@ -59,7 +57,6 @@ sub EVENT_SAY {
 }
 
 sub EVENT_ITEM {
-  my $zone = $entity_list->GetZone();
   my $step = $zone->GetVariable($EPIC_VAR) || 0;
   if ( ($step == 0) && plugin::check_handin(\%itemcount, 20448 => 1)) {
     quest::emote("looks at the coin and nods gravely at you as she slips it into a fold of her clothing. 'I see. The story of this coin speaks much to me as do the words you have given me. Telin sent word that you would arrive. The tidings you bring are ill indeed. Here, take this amulet and find Sionae. She is nearby. We will speak more on this matter when all are present.'");

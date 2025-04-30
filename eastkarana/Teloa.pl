@@ -15,7 +15,6 @@ my $timer;
 my $move;
 
 sub EVENT_ITEM {
-  my $zone = $entity_list->GetZone();
   my $step = $zone->GetVariable($EPIC_VAR) || 0;
   if ( ($step == 3) && plugin::check_handin(\%itemcount, 20451 => 1)) {
     quest::emote("begins walking toward the gathering spot. 'Follow, friend.'");
