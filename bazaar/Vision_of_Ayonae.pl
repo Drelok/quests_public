@@ -35,7 +35,7 @@ sub EVENT_SAY {
     if ($text=~/blind fate/i) {
         if (plugin::GetClassesCount($client) == 1) {
             plugin::NPCTell("You will be put upon an irrevocable path, impossible to predict. Are you certain that you wish to do this?");
-            plugin::YellowText("WARNING: If you [".quest::saylink('randomize_me_bitch', 1, 'continue')."], you will be assigned two random classes. This decision cannot be reversed.");
+            plugin::YellowText("WARNING: If you [".quest::saylink('randomize_me_bitch', 1, 'continue')."], you will be assigned three random classes. This decision cannot be reversed.");
         } else {
             plugin::NPCTell("Mortal. You are unsuitable, your fate has already been tainted by your pathetic free will. Begone.");
         }
@@ -43,22 +43,48 @@ sub EVENT_SAY {
     }
 
     if ($text=~/randomize_me_bitch/i) {
-       
+        
         if (plugin::GetClassesCount($client) == 1) {
             my @all_classes = (1..16);
-
-            # Continue until the client has 3 unique classes
+            
+            # Store the client's original class
+            my $original_class_id = 0;
+            
+            # Find the original class ID by checking each possible class
+            for my $class_id (1..16) {
+                if (plugin::HasClass($client, $class_id)) {
+                    $original_class_id = $class_id;
+                    last;
+                }
+            }
+            
+            # Add two random classes first
+            my $classes_added = 0;
+            while ($classes_added < 2) {
+                my $random_class = $all_classes[int(rand(@all_classes))];
+                
+                # Make sure we don't add the original class or a class we already added
+                if (!plugin::HasClass($client, $random_class)) {
+                    plugin::AddClass($random_class, $client);
+                    $classes_added++;
+                }
+            }
+            
+            # Now remove the original class
+            plugin::RemoveClass($original_class_id, $client);
+            
+            # Add a third random class
             while (plugin::GetClassesCount($client) < 3) {
                 my $random_class = $all_classes[int(rand(@all_classes))];
                 
-                # Check if the client already has this class
+                # Make sure we don't add a class we already have
                 if (!plugin::HasClass($client, $random_class)) {
                     plugin::AddClass($random_class, $client);
                 }
             }
-
+            
             my $full_class_name = plugin::GetPrettyClassString($client);
-
+            
             plugin::WorldAnnounce("$name has cast themselves upon the whims of blind fate, choosing random classes ($full_class_name).");    
             plugin::NPCTell("Your fate is sealed, go and walk it.");
         } else {
