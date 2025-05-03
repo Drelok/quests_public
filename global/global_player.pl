@@ -246,6 +246,17 @@ sub EVENT_WARP {
     }
 }
 
+sub EVENT_ALT_CURRENCY_MERCHANT_BUY {
+
+    if ($item_id == 24151) {
+        $client->AddAlternateCurrencyValue(1, 10);
+        $client->RemoveAlternateCurrencyValue($currency_id, $item_cost);
+        $client->RemoveItem(24151);
+        plugin::YellowText("You unpack the bundle of Delivery Vouchers");
+        return 1;
+    }
+}
+
 sub EVENT_DISCOVER_ITEM {
     my $name = $client->GetCleanName();
     
