@@ -54,10 +54,13 @@ sub EVENT_SAY {
     }
 
     if ($text =~ /hail/i) {
-        quest::say("Greetings, $name. Do you seek perfection? Are you [". quest::saylink("unhappy with your form", 1) ."]? 
-                    Are you interested in embracing [". quest::saylink($sex_word, 1) ."]? 
-                    Would you like to [".quest::saylink("worship a new deity", 1)."]?
-                    Do you wish to [".quest::saylink("rename your pets", 1)."]?");
+        quest::say("Welcome to my sanctuary of transformation, $name. I am the Polymorphist, keeper of secrets that reshape reality. 
+                    Tell me, are you [". quest::saylink("unhappy with your form", 1) ."]? 
+                    Perhaps you desire to [".quest::saylink("worship a new deity", 1)."]? 
+                    I can grant the power to [".quest::saylink("rename your pets", 1)."]? 
+                    Or even help those who wish to [".quest::saylink("change your name", 1)."]? 
+                    Do you wish to explore the path of [". quest::saylink($sex_word, 1) ."]? 
+                    Speak your desire, for all things can be remade through my arts.");             
     }
     elsif ($text =~ /worship a new deity/i) {
         deity_change_intro();
@@ -92,10 +95,49 @@ sub EVENT_SAY {
     }
     elsif ($text =~ /^confirm_pet_name_change_(\d+)-(\d)$/i) {  
         pet_name_change_confirm($1, $2);  
+    }  
+    elsif ($text =~ /change your name/i) {
+        name_change_intro();
+    }
+    elsif ($text =~ /^confirm_name_change-(\d)$/i) {
+        name_change_confirm($1);
+    }
+}
+
+sub name_change_intro {
+    if ($client->IsNameChangeAllowed()) {
+        plugin::YellowText("You currently have a name change pending. Please complete that with /changename before selecting another name to change.");
+        return;
     }
 
-
+    quest::say("Ah, you wish to change your name. I can assist you with that. For a mere " 
+            . plugin::num2en($name_change_cost) . " [" . plugin::EOMLink() . "], or " 
+            . commaify($platinum_alt_cost * $name_change_cost) . "pp, I can help you claim a new identity.");
+            
+    quest::say("Do you want to [" . quest::saylink("confirm_name_change-1", 1, "pay with Echo of Memory") . "] " 
+            . "or with [" . quest::saylink("confirm_name_change-0", 1, "Platinum") . "]?");
 }
+
+sub name_change_confirm {
+    my ($mode) = @_;
+    
+    if ($client->IsNameChangeAllowed()) {
+        plugin::YellowText("You currently have a name change pending. Please complete that with /changename before selecting another name to change.");
+        return;
+    }
+
+    my $success = $mode
+        ? plugin::SpendEOM($client, $name_change_cost)
+        : $client->TakeMoneyFromPP($platinum_alt_cost * $name_change_cost * 1000, 1);
+        
+    if ($success) {
+        quest::say("The currents of magic shift, and the veil of change is drawn back. Your new name is now ready to be spoken.");
+        $client->GrantNameChange();
+    } else {
+        quest::say("Sadly, $name, you do not have sufficient currency to properly anchor yourself for this change. Perhaps you will return later.");
+    }
+}
+
 sub race_change_intro {
     quest::say("Just so. If you can properly anchor your memories - perhaps with " 
         . plugin::num2en($race_change_cost) . " [" . plugin::EOMLink() . "], or " 
