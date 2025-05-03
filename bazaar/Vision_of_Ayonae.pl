@@ -258,8 +258,7 @@ sub EVENT_SAY {
             if (plugin::GetEOM($client) >= $remove_class_cost) {
                  plugin::YellowText("It will cost $remove_class_cost Echo of Memory in order to remove a class. Additionally, 
                                     there is a $remove_class_lockout-day cooldown after removing a class before you can remove another.
-                                    Each time you do this, your cooldown for this avatar will permanently increase. Would you like to ["
-                                    .quest::saylink("proceed_$class_id", 1, "Proceed")."]?");
+                                    Would you like to [".quest::saylink("proceed_$class_id", 1, "Proceed")."]?");
             
             } else {
                  plugin::YellowText("It costs $remove_class_cost Echo of Memory in order to remove a class. You can obtain
