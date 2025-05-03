@@ -11,6 +11,10 @@ function event_signal(e)
 end
 
 function event_spawn(e)
+	-- Don't mess with the doors in the respawning instance.
+	if eq.is_farming_instance() then
+		return;
+	end
 	local door_ids = {16, 17}
 	for _, door_id in pairs(door_ids) do
 		local door = eq.get_entity_list():FindDoor(door_id)
