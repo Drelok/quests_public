@@ -1,7 +1,8 @@
 # Define dynamic zone coordinate overrides.
 # Format: zone_short_name => [ x, y, z, heading ]
 my %dz_coord_overrides = (
-    'potimeb' => [ -36, 1352, 496, 124 ],
+    #'potimeb' => [ -36, 1352, 496, 124 ],
+    'potimeb' => [ 851.00, -141.00, 396.06, 0 ],
     # Add additional zones and coordinates as needed.
 );
 

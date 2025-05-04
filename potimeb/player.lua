@@ -205,6 +205,7 @@ function ZoneReset(e)	--depops zone and reloads controllers
 		eq.depop_zone(false);
 		eq.get_entity_list():GetSpawnByID(157394):Repop(2);	-- NPC: zone_status
 		eq.get_entity_list():GetSpawnByID(157395):Repop(2); -- NPC: zone_emoter
+		eq.get_entity_list():GetSpawnByID(3388052):Repop(2); -- NPC: Herald_of_Druzzil_Ro
 end
 
 function ResetLockouts(e)	-- Removes all Lockouts
@@ -430,10 +431,10 @@ function event_say(e)
 		elseif e.message:find("tb_p4") then
 			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "3")
-			eq.get_zone():DeleteBucket("Saryrn");
-			eq.get_zone():DeleteBucket("Tallon Zek");
-			eq.get_zone():DeleteBucket("Terris-Thule");
-			eq.get_zone():DeleteBucket("Vallon Zek");
+			eq.get_zone():DeleteVariable("Saryrn");
+			eq.get_zone():DeleteVariable("Tallon");
+			eq.get_zone():DeleteVariable("Terris");
+			eq.get_zone():DeleteVariable("Vallon");
 			ResetLockouts(99);
 			SetLockouts(1);
 			SetLockouts(2);
@@ -443,10 +444,10 @@ function event_say(e)
 		elseif e.message:find("tb_p5") then
 			eq.get_zone():DeleteVariable("p3wave");
 			eq.get_zone():SetVariable("Phase", "4")
-			eq.get_zone():DeleteBucket("Bertoxxulous");
-			eq.get_zone():DeleteBucket("Cazic-Thule");
-			eq.get_zone():DeleteBucket("Innoruuk");
-			eq.get_zone():DeleteBucket("Rallos Zek");
+			eq.get_zone():DeleteVariable("Bertoxxulous");
+			eq.get_zone():DeleteVariable("Cazic-Thule");
+			eq.get_zone():DeleteVariable("Innoruuk");
+			eq.get_zone():DeleteVariable("Rallos Zek");
 			ResetLockouts(99);
 			SetLockouts(1);
 			SetLockouts(2);
