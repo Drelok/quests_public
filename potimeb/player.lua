@@ -205,7 +205,7 @@ function ZoneReset(e)	--depops zone and reloads controllers
 		eq.depop_zone(false);
 		eq.get_entity_list():GetSpawnByID(157394):Repop(2);	-- NPC: zone_status
 		eq.get_entity_list():GetSpawnByID(157395):Repop(2); -- NPC: zone_emoter
-		eq.get_entity_list():GetSpawnByID(3388011):Repop(2); -- NPC: Master_of_Time
+		eq.get_entity_list():GetSpawnByID(3388052):Repop(2); -- NPC: Herald_of_Druzzil_Ro
 end
 
 function ResetLockouts(e)	-- Removes all Lockouts
