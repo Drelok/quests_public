@@ -32,10 +32,14 @@ function evt_add_death(e)
 	if eq.get_entity_list():IsMobSpawnedByNpcTypeID(real_shei) or eq.get_entity_list():IsMobSpawnedByNpcTypeID(fake_shei) then
 		local id = e.self:GetNPCTypeID()
 		local loc = primary_adds[id]
-		local newadd = eq.spawn2(id,0,0,loc[1],loc[2],loc[3],loc[4]);
-		eq.set_timer('depop', 120 * 60 * 1000, newadd);
+		
+		if loc then
+			local newadd = eq.spawn2(id, 0, 0, loc[1], loc[2], loc[3], loc[4])
+			eq.set_timer('depop', 120 * 60 * 1000, newadd)
+		end
 	end
 end
+
 
 function evt_slay(e)
 	if e.other:IsClient() or e.other:IsPet() then -- not sure why this is necessary, but otherwise will occasionally spawn adds when an event mob dies
