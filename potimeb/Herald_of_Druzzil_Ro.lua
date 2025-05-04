@@ -1,4 +1,5 @@
 local quintItemId=56018
+local zoneId = 223
 
 function event_say(e)
 	if (e.message:findi("hail")) then
@@ -47,8 +48,8 @@ function event_trade(e)
 	local item_lib = require("items")
 	if (item_lib.check_turn_in(e.trade, {item1 = quintItemId})) then
 		-- Quintessence has been turned in.  Only progress if we're still in phase 1.  Otherwise, return it
-		currentPhase = eq.get_zone():GetVariable("Phase") or 0
-		if ((tonumber(eq.get_zone():GetVariable("Phase")) or 0) == 0)  then
+		currentPhase = tonumber(eq.get_zone():GetVariable("Phase")) or 0
+		if (currentPhase == 0)  then
 			progressToP4()
 			e.self:Say("The lesser gods await you!  Good luck, hero!")
 		else
@@ -80,11 +81,11 @@ function depopAllP1Mobs()
 end
 
 function movePlayer(e, x, y, z, h)
-	e.other:MovePCInstance(223, eq.get_zone_instance_id(), x, y, z, h);
+	e.other:MovePCInstance(zoneId, eq.get_zone_instance_id(), x, y, z, h);
 end
 
 function generate_locations()
-	locations = {}
+	local locations = {}
 	-- generate the static Phase 1 locations
 	table.insert(locations, "--Phase 1/2--")
 	table.insert(locations, "[Air Trial]")
