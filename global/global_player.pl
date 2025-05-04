@@ -51,6 +51,261 @@ sub EVENT_ENTERZONE {
     }
 }
 
+sub EVENT_DEATH {
+    # Debug info remains unchanged
+    quest::debug("killer_id " . $killer_id);
+    quest::debug("killer_damage " . $killer_damage);
+    quest::debug("killer_spell " . $killer_spell);
+    quest::debug("killer_skill " . $killer_skill);
+    quest::debug("killed_entity_id " . $killed_entity_id);
+    quest::debug("combat_start_time " . $combat_start_time);
+    quest::debug("combat_end_time " . $combat_end_time);
+    quest::debug("damage_received " . $damage_received);
+    quest::debug("healing_received " . $healing_received);
+    quest::debug("killed_corpse_id " . $killed_corpse_id);
+    quest::debug("killed_x " . $killed_x);
+    quest::debug("killed_y " . $killed_y);
+    quest::debug("killed_z " . $killed_z);
+    quest::debug("killed_h " . $killed_h);
+    quest::debug("killed_merc_id " . $killed_merc_id);
+    quest::debug("killed_npc_id " . $killed_npc_id);
+
+    if ($client->IsHardcore()) {
+        my $player_name = $client->GetCleanName();
+        my $player_class = plugin::GetPrettyClassString($client);
+        
+        # Check if player killed themselves
+        if ($killer_id == $client->GetID()) {
+            # Self-death flavor text options
+            my @self_death_flavors = (
+                "succumbed to their own folly",
+                "met an untimely end by their own hand",
+                "fell victim to their own miscalculation",
+                "discovered the hard way that gravity still works",
+                "became their own worst enemy",
+                "made a fatal mistake",
+                "perished from their own recklessness",
+                "found out actions have consequences",
+                "learned a harsh lesson too late",
+                "took a risk that didn't pay off"
+            );
+            
+            # Select random self-death flavor text
+            my $random_index = int(rand(scalar @self_death_flavors));
+            my $self_death_flavor = $self_death_flavors[$random_index];
+            
+            # Announce self-caused death
+            my $announcement = "$player_name ($player_class) has been slain in Hardcore and $self_death_flavor!";
+            plugin::WorldAnnounce($announcement);
+        }
+        else {
+            my $killer_mob = $entity_list->GetMobID($killer_id);
+            my $killer_name = $killer_mob ? $killer_mob->GetCleanName() : "Unknown";
+            
+            # Check if death was caused by a spell
+            if ($killer_spell < 0xFFFF) {
+                # Get the spell name
+                my $spell_name = quest::getspellname($killer_spell);
+                
+                # Properly escape the possessive 's for the killer name
+                $killer_name =~ s/'/'\\'/g; # Escape any single quotes
+                
+                # Announce spell-caused death using the actual spell name
+                my $announcement = "$player_name ($player_class) has been slain in Hardcore by $killer_name\'s $spell_name!";
+                plugin::WorldAnnounce($announcement);
+            }
+            else {
+                # Death was caused by a skill - use existing code
+                # Map skills to arrays of flavorful death descriptions
+                my %death_flavors = (
+                    # 1H Blunt (0)
+                    0 => [
+                        "crushing blow",
+                        "skull-cracking mace",
+                        "bone-shattering club",
+                        "merciless hammer strike",
+                        "brutal cudgel"
+                    ],
+                    
+                    # 1H Slashing (1)
+                    1 => [
+                        "razor-sharp blade",
+                        "deadly sword strike",
+                        "vicious slash",
+                        "precise cut",
+                        "merciless blade"
+                    ],
+                    
+                    # 2H Blunt (2)
+                    2 => [
+                        "mighty war hammer",
+                        "devastating maul",
+                        "earth-shaking smash",
+                        "colossal club",
+                        "bone-crushing staff"
+                    ],
+                    
+                    # 2H Slashing (3)
+                    3 => [
+                        "massive cleaving strike",
+                        "devastating great sword",
+                        "whirling executioner's blade",
+                        "sweeping death blow",
+                        "merciless beheading strike"
+                    ],
+                    
+                    # Archery (7)
+                    7 => [
+                        "perfectly aimed arrow",
+                        "deadly bow shot",
+                        "piercing shaft",
+                        "whistling arrow to the heart",
+                        "long-range precision shot"
+                    ],
+                    
+                    # Backstab (8)
+                    8 => [
+                        "treacherous backstab",
+                        "dagger from the shadows",
+                        "assassin's blade",
+                        "poisoned backstab",
+                        "cowardly strike from behind"
+                    ],
+                    
+                    # Bash (10)
+                    10 => [
+                        "thunderous shield bash",
+                        "staggering blow",
+                        "crushing shield edge",
+                        "mighty slam",
+                        "brutal body check"
+                    ],
+                    
+                    # Dragon Punch (21)
+                    21 => [
+                        "devastating dragon punch",
+                        "mystical fist strike",
+                        "focused chi attack",
+                        "legendary martial technique",
+                        "deadly dragon's claw"
+                    ],
+                    
+                    # Eagle Strike (23)
+                    23 => [
+                        "swift eagle strike",
+                        "soaring talon strike",
+                        "deadly hunting dive",
+                        "piercing eagle claw",
+                        "predator's pounce"
+                    ],
+                    
+                    # Flying Kick (26)
+                    26 => [
+                        "devastating flying kick",
+                        "airborne assault",
+                        "hurricane kick",
+                        "gravity-defying strike",
+                        "leaping death blow"
+                    ],
+                    
+                    # Hand to Hand (28)
+                    28 => [
+                        "fierce bare-handed attack",
+                        "lightning-fast martial arts",
+                        "deadly pressure-point strike",
+                        "bare-knuckled fury",
+                        "expert combat technique"
+                    ],
+                    
+                    # Kick (30)
+                    30 => [
+                        "bone-shattering kick",
+                        "deadly roundhouse",
+                        "brutal stomp",
+                        "crushing leg sweep",
+                        "powerful heel strike"
+                    ],
+                    
+                    # 1H Piercing (36)
+                    36 => [
+                        "precise rapier thrust",
+                        "deadly dagger plunge",
+                        "heart-seeking blade",
+                        "surgical piercing strike",
+                        "deep puncturing wound"
+                    ],
+                    
+                    # Round Kick (38)
+                    38 => [
+                        "spinning round kick",
+                        "whirlwind strike",
+                        "circular death blow",
+                        "tornado kick",
+                        "deadly spinning heel"
+                    ],
+                    
+                    # Throwing (51)
+                    51 => [
+                        "precisely thrown weapon",
+                        "deadly airborne projectile",
+                        "whistling thrown blade",
+                        "expertly hurled dagger",
+                        "fatal flying weapon"
+                    ],
+                    
+                    # Tiger Claw (52)
+                    52 => [
+                        "deadly tiger claw",
+                        "rending strike",
+                        "savage ripping attack",
+                        "ferocious martial technique",
+                        "flesh-tearing claws"
+                    ],
+                    
+                    # 2H Piercing (77)
+                    77 => [
+                        "impaling spear thrust",
+                        "devastating pike charge",
+                        "heart-piercing lance",
+                        "massive puncture wound",
+                        "skewering strike"
+                    ]
+                );
+                
+                # Default flavors for unknown skills
+                my @default_flavors = (
+                    "brutal attack",
+                    "lethal strike",
+                    "vicious assault",
+                    "deadly blow",
+                    "merciless onslaught",
+                    "devastating technique",
+                    "fierce combat prowess",
+                    "relentless aggression",
+                    "savage onslaught",
+                    "overwhelming force"
+                );
+                
+                # Get random flavor text from the appropriate array
+                my $death_flavor;
+                if (exists $death_flavors{$killer_skill}) {
+                    my $flavor_options = $death_flavors{$killer_skill};
+                    my $random_index = int(rand(scalar @$flavor_options));
+                    $death_flavor = $flavor_options->[$random_index];
+                } else {
+                    # Select random default flavor
+                    my $random_index = int(rand(scalar @default_flavors));
+                    $death_flavor = $default_flavors[$random_index];
+                }
+                
+                # Announce skill-caused death
+                my $announcement = "$player_name ($player_class) has been slain in Hardcore by $killer_name using a $death_flavor!";
+                plugin::WorldAnnounce($announcement);
+            }
+        }
+    }
+}
+
 sub EVENT_EXP_GAIN {
     plugin::CustomEventExpGainEntry();
 }
@@ -108,16 +363,7 @@ sub EVENT_CONNECT {
     plugin::OnLoginUpdate($client);
 
     if (!$client->GetBucket("First-Login")) {
-        $client->SetBucket("First-Login", 1);
-		$client->SummonItem(18471); #A Faded Writ
-        $client->Message(263, "You find a small note in your pocket.");
-		$client->SetBucket('FirstLogin', 1);
-
-        my $name = $client->GetCleanName();
-        my $full_class_name = plugin::GetPrettyClassString($client);
-
-        plugin::WorldAnnounce("$name ($full_class_name) has logged in for the first time.");        
-        plugin::AwardSeasonalItems($client);
+        quest::settimer("first-login", 5);
     }
 
     if (plugin::MultiClassingEnabled()) {
@@ -134,6 +380,47 @@ sub EVENT_CONNECT {
 		$client->Message(4, "Your vision blurs. You lose conciousness and wake up in a familiar place.");
 		$client->MovePC(151, 185, -835, 4, 390); # Bazaar Safe Location.
 	}
+}
+
+sub EVENT_TIMER {
+    if (!$client->GetBucket("First-Login")) {
+        quest::settimer("first-login", 10);
+
+        $client->SetBucket("First-Login", 1);
+        $client->SummonItem(18471); #A Faded Writ
+        $client->Message(263, "You find a small note in your pocket.");
+        
+        my $name = $client->GetCleanName();
+        my $full_class_name = plugin::GetPrettyClassString($client);
+
+        my $solo = $client->IsSolo();
+        my $hardcore = $client->IsHardcore();
+        my $self_found = $client->IsSelfFound();
+        
+        # Build the announcement with status flags in a single set of parentheses
+        my $announcement = "$name ($full_class_name) has logged in for the first time!";
+        
+        # Create a status string with all applicable statuses
+        my @statuses;
+        if ($solo) {
+            push(@statuses, "Solo");
+        }
+        if ($self_found) {
+            push(@statuses, "Self Found");
+        }
+        if ($hardcore) {
+            push(@statuses, "Hardcore");
+        }
+        
+        # Only add the status parentheses if there are any statuses to show
+        if (scalar @statuses > 0) {
+            $announcement .= " (" . join(", ", @statuses) . ")";
+        }
+
+        plugin::WorldAnnounce($announcement);
+        plugin::AwardSeasonalItems($client);
+    }
+
 }
 
 sub EVENT_DISCONNECT {
@@ -177,13 +464,11 @@ sub EVENT_LEVEL_UP {
     }
     
     my $new_level = $client->GetLevel();
-    if (($new_level % 10 == 0) || $new_level == 5 || $new_level == $client->GetBucket("CharMaxLevel")) {
+    if ($new_level == $client->GetBucket("CharMaxLevel")) {
         my $name = $client->GetCleanName();
         my $full_class_name = plugin::GetPrettyClassString($client);
 
-        my $capped = ($new_level == ($client->GetBucket("CharMaxLevel") || 0) ? " (Level Cap)" : "");
-
-        plugin::WorldAnnounce("$name ($full_class_name) has reached Level $new_level$capped.");
+        plugin::WorldAnnounce("$name ($full_class_name) has reached Level $new_level!");
     }
 }
 
