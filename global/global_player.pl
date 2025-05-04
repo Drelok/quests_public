@@ -73,10 +73,46 @@ sub EVENT_DEATH {
     if ($client->IsHardcore()) {
         my $player_name = $client->GetCleanName();
         my $player_class = plugin::GetPrettyClassString($client);
+        my $death_zone = $zoneln; # Get the zone name where the player died
+        
+        # Arrays of announcement prefixes for variety in format - now including zone info
+        my @announcement_prefixes = (
+            "The legend of $player_name ($player_class) ends in Hardcore mode within the depths of $death_zone",
+            "$player_name ($player_class) has fallen in Hardcore mode while exploring $death_zone",
+            "$player_name ($player_class) has been defeated in Hardcore mode in the perilous realm of $death_zone",
+            "The saga of $player_name ($player_class) concludes in Hardcore mode amidst the dangers of $death_zone",
+            "$player_name ($player_class) has met their end in Hardcore mode in the wilds of $death_zone",
+            "$player_name ($player_class) has departed the mortal realm in Hardcore mode while venturing through $death_zone",
+            "The journey of $player_name ($player_class) is over in Hardcore mode in the treacherous lands of $death_zone",
+            "$player_name ($player_class) has perished in Hardcore mode within the hostile territory of $death_zone",
+            "$player_name ($player_class) has breathed their last in Hardcore mode while traversing $death_zone",
+            "The tale of $player_name ($player_class) closes in Hardcore mode during their expedition in $death_zone"
+        );
+        
+        # Alternate zone-specific formats that vary the zone placement
+        my @zone_variant_prefixes = (
+            "In the heart of $death_zone, $player_name ($player_class) has met their fate in Hardcore mode",
+            "The dangerous realm of $death_zone claims another as $player_name ($player_class) falls in Hardcore mode",
+            "Among the shadows of $death_zone, $player_name ($player_class) has been vanquished in Hardcore mode",
+            "$death_zone has become the final resting place of $player_name ($player_class) in Hardcore mode",
+            "The chronicles of $death_zone now tell of $player_name ($player_class)'s demise in Hardcore mode",
+            "Within the infamous $death_zone, $player_name ($player_class)'s adventure ends in Hardcore mode",
+            "The treacherous terrain of $death_zone has claimed $player_name ($player_class) in Hardcore mode",
+            "$death_zone will forever remember where $player_name ($player_class) fell in Hardcore mode",
+            "The spirits of $death_zone bear witness as $player_name ($player_class) perishes in Hardcore mode",
+            "Written in the stones of $death_zone is the final chapter of $player_name ($player_class) in Hardcore mode"
+        );
+        
+        # Combine both prefix arrays for more variety
+        push(@announcement_prefixes, @zone_variant_prefixes);
+        
+        # Select a random prefix format
+        my $prefix_index = int(rand(scalar @announcement_prefixes));
+        my $announcement_prefix = $announcement_prefixes[$prefix_index];
         
         # Check if player killed themselves
         if ($killer_id == $client->GetID()) {
-            # Self-death flavor text options
+            # Self-death flavor text options with more variety
             my @self_death_flavors = (
                 "succumbed to their own folly",
                 "met an untimely end by their own hand",
@@ -87,15 +123,25 @@ sub EVENT_DEATH {
                 "perished from their own recklessness",
                 "found out actions have consequences",
                 "learned a harsh lesson too late",
-                "took a risk that didn't pay off"
+                "took a risk that didn't pay off",
+                "achieved a perfect self-defeat",
+                "mastered the art of self-destruction",
+                "accidentally tested their own mortality",
+                "experimented with their own demise",
+                "found an innovative way to perish",
+                "proved that no one is immune to their own mistakes",
+                "has been betrayed by their own tactics",
+                "discovered a new way to fail spectacularly",
+                "contributed to the tome of 'what not to do'",
+                "created a cautionary tale for future adventurers"
             );
             
             # Select random self-death flavor text
             my $random_index = int(rand(scalar @self_death_flavors));
             my $self_death_flavor = $self_death_flavors[$random_index];
             
-            # Announce self-caused death
-            my $announcement = "$player_name ($player_class) has been slain in Hardcore and $self_death_flavor!";
+            # Announce self-caused death with varied formatting
+            my $announcement = "$announcement_prefix, having $self_death_flavor!";
             plugin::WorldAnnounce($announcement);
         }
         else {
@@ -107,183 +153,253 @@ sub EVENT_DEATH {
                 # Get the spell name
                 my $spell_name = quest::getspellname($killer_spell);
                 
-                # Properly escape the possessive 's for the killer name
-                $killer_name =~ s/'/'\\'/g; # Escape any single quotes
+                # Varied spell death descriptions
+                my @spell_death_formats = (
+                    "obliterated by $killer_name\'s $spell_name",
+                    "consumed by the arcane power of $killer_name\'s $spell_name",
+                    "reduced to ashes by $killer_name\'s devastating $spell_name",
+                    "unable to withstand $killer_name\'s potent $spell_name",
+                    "melted away under $killer_name\'s $spell_name",
+                    "vaporized by the sheer force of $killer_name\'s $spell_name",
+                    "torn apart by the energies of $killer_name\'s $spell_name",
+                    "banished from existence by $killer_name\'s $spell_name",
+                    "struck down by $killer_name\'s masterful casting of $spell_name",
+                    "consumed by the eldritch might of $killer_name\'s $spell_name"
+                );
                 
-                # Announce spell-caused death using the actual spell name
-                my $announcement = "$player_name ($player_class) has been slain in Hardcore by $killer_name\'s $spell_name!";
+                # Select a random spell death format
+                my $format_index = int(rand(scalar @spell_death_formats));
+                my $spell_death_format = $spell_death_formats[$format_index];
+                
+                # Announce spell-caused death
+                my $announcement = "$announcement_prefix, $spell_death_format!";
                 plugin::WorldAnnounce($announcement);
             }
             else {
-                # Death was caused by a skill - use existing code
-                # Map skills to arrays of flavorful death descriptions
+                # Death was caused by a skill - use more varied death descriptions
                 my %death_flavors = (
                     # 1H Blunt (0)
                     0 => [
-                        "crushing blow",
-                        "skull-cracking mace",
-                        "bone-shattering club",
-                        "merciless hammer strike",
-                        "brutal cudgel"
+                        "crushing blow that shattered bone",
+                        "skull-cracking mace swing that echoed through the realm",
+                        "bone-shattering club strike that ended all hope",
+                        "merciless hammer blow that crushed their spirit",
+                        "brutal cudgel that found its mark with deadly precision",
+                        "mighty swing that pulverized their defenses",
+                        "thunderous mace impact that silenced their battle cry",
+                        "devastating club strike that left nothing but ruins"
                     ],
                     
                     # 1H Slashing (1)
                     1 => [
-                        "razor-sharp blade",
-                        "deadly sword strike",
-                        "vicious slash",
-                        "precise cut",
-                        "merciless blade"
+                        "razor-sharp blade that cut through armor like paper",
+                        "deadly sword strike that severed life's thread",
+                        "vicious slash that opened their final chapter",
+                        "precise cut that found the gap in their defense",
+                        "merciless blade that drank deeply of their lifeblood",
+                        "swift sword dance that ended with a crimson flourish",
+                        "masterful stroke that proved too quick to counter",
+                        "elegant blade work that wrote their epitaph in red"
                     ],
                     
                     # 2H Blunt (2)
                     2 => [
-                        "mighty war hammer",
-                        "devastating maul",
-                        "earth-shaking smash",
-                        "colossal club",
-                        "bone-crushing staff"
+                        "mighty war hammer that left nothing to bury",
+                        "devastating maul that rewrote the landscape with their remains",
+                        "earth-shaking smash that sent tremors through the realm",
+                        "colossal club that flattened both armor and wearer",
+                        "bone-crushing staff that demonstrated the meaning of force",
+                        "titanic hammer blow that redefined 'pulverized'",
+                        "mountainous maul that created a new crater",
+                        "two-handed masterpiece of destruction"
                     ],
                     
                     # 2H Slashing (3)
                     3 => [
-                        "massive cleaving strike",
-                        "devastating great sword",
-                        "whirling executioner's blade",
-                        "sweeping death blow",
-                        "merciless beheading strike"
+                        "massive cleaving strike that divided both body and soul",
+                        "devastating great sword that carved a path through legend",
+                        "whirling executioner's blade that harvested their final moments",
+                        "sweeping death blow that cleared the field of resistance",
+                        "merciless beheading strike that separated glory from defeat",
+                        "gigantic blade that brought swift judgment",
+                        "cleaving arc that finished what destiny began",
+                        "enormous sword that wrote 'the end' in one stroke"
                     ],
                     
                     # Archery (7)
                     7 => [
-                        "perfectly aimed arrow",
-                        "deadly bow shot",
-                        "piercing shaft",
-                        "whistling arrow to the heart",
-                        "long-range precision shot"
+                        "perfectly aimed arrow that found the heart of the matter",
+                        "deadly bow shot that traveled through legend to find its mark",
+                        "piercing shaft that delivered the message of mortality",
+                        "whistling arrow to the heart that silenced all ambition",
+                        "long-range precision shot that defied both distance and fate",
+                        "arrow's flight that ended faster than prayer",
+                        "master archer's mark that closed their final chapter",
+                        "impossible shot that made history instead of missing it"
                     ],
                     
                     # Backstab (8)
                     8 => [
-                        "treacherous backstab",
-                        "dagger from the shadows",
-                        "assassin's blade",
-                        "poisoned backstab",
-                        "cowardly strike from behind"
+                        "treacherous backstab that wrote betrayal in blood",
+                        "dagger from the shadows that ended what trust began",
+                        "assassin's blade that whispered death's greeting",
+                        "poisoned backstab that worked its treachery through the veins",
+                        "cowardly strike from behind that denied a warrior's death",
+                        "silent blade that spoke volumes in the end",
+                        "shadowy execution that came without warning",
+                        "deadly surprise that proved looking forward wasn't enough"
                     ],
                     
                     # Bash (10)
                     10 => [
-                        "thunderous shield bash",
-                        "staggering blow",
-                        "crushing shield edge",
-                        "mighty slam",
-                        "brutal body check"
+                        "thunderous shield bash that collapsed both guard and guarded",
+                        "staggering blow that knocked them from the world of the living",
+                        "crushing shield edge that created a new definition of impact",
+                        "mighty slam that echoed through the halls of legend",
+                        "brutal body check that sent them on a one-way journey",
+                        "decisive shield strike that ended all debate",
+                        "defensive weapon turned offensive masterpiece",
+                        "protective equipment that delivered terminal protection"
                     ],
                     
                     # Dragon Punch (21)
                     21 => [
-                        "devastating dragon punch",
-                        "mystical fist strike",
-                        "focused chi attack",
-                        "legendary martial technique",
-                        "deadly dragon's claw"
+                        "devastating dragon punch that transcended martial arts",
+                        "mystical fist strike that separated soul from body",
+                        "focused chi attack that disrupted their life force permanently",
+                        "legendary martial technique that wrote their name in history",
+                        "deadly dragon's claw that tore through destiny itself",
+                        "ancient striking art that proved too powerful to survive",
+                        "fist of legend that broke through all defenses",
+                        "spiritual strike that sent their essence to the next plane"
                     ],
                     
                     # Eagle Strike (23)
                     23 => [
-                        "swift eagle strike",
-                        "soaring talon strike",
-                        "deadly hunting dive",
-                        "piercing eagle claw",
-                        "predator's pounce"
+                        "swift eagle strike that descended with predatory precision",
+                        "soaring talon strike that claimed them for the sky",
+                        "deadly hunting dive that made prey of the hunter",
+                        "piercing eagle claw that gripped their soul",
+                        "predator's pounce that left nothing to chance",
+                        "technique mimicking nature's perfect killer",
+                        "strike from above that defied both gravity and hope",
+                        "aerial assault that proved nowhere was safe"
                     ],
                     
                     # Flying Kick (26)
                     26 => [
-                        "devastating flying kick",
-                        "airborne assault",
-                        "hurricane kick",
-                        "gravity-defying strike",
-                        "leaping death blow"
+                        "devastating flying kick that brought finality through the air",
+                        "airborne assault that connected from ground to eternity",
+                        "hurricane kick that swept away all resistance",
+                        "gravity-defying strike that delivered earthly consequences",
+                        "leaping death blow that bridged the gap to the afterlife",
+                        "kick that flew through space to deliver mortality",
+                        "aerial technique that proved too advanced to counter",
+                        "flying finish that ended with both feet and finality"
                     ],
                     
                     # Hand to Hand (28)
                     28 => [
-                        "fierce bare-handed attack",
-                        "lightning-fast martial arts",
-                        "deadly pressure-point strike",
-                        "bare-knuckled fury",
-                        "expert combat technique"
+                        "fierce bare-handed attack that proved weapons optional",
+                        "lightning-fast martial arts that wrote poetry in pain",
+                        "deadly pressure-point strike that stopped more than just chi",
+                        "bare-knuckled fury that pummeled through defense",
+                        "expert combat technique that found every vital weakness",
+                        "empty hand filled with deadly purpose",
+                        "martial mastery that made weapons seem redundant",
+                        "flurry of strikes that left no time for last words"
                     ],
                     
                     # Kick (30)
                     30 => [
-                        "bone-shattering kick",
-                        "deadly roundhouse",
-                        "brutal stomp",
-                        "crushing leg sweep",
-                        "powerful heel strike"
+                        "bone-shattering kick that rearranged their skeletal structure",
+                        "deadly roundhouse that came full circle to mortality",
+                        "brutal stomp that ground ambition into dust",
+                        "crushing leg sweep that took more than just their footing",
+                        "powerful heel strike that stamped 'expired' on their journey",
+                        "lethal kick that stepped over the line between life and death",
+                        "martial footnote that closed their book for good",
+                        "strike that proved legs are weapons too"
                     ],
                     
                     # 1H Piercing (36)
                     36 => [
-                        "precise rapier thrust",
-                        "deadly dagger plunge",
-                        "heart-seeking blade",
-                        "surgical piercing strike",
-                        "deep puncturing wound"
+                        "precise rapier thrust that found the heart of the matter",
+                        "deadly dagger plunge that pierced all pretensions",
+                        "heart-seeking blade that fulfilled its singular purpose",
+                        "surgical piercing strike that operated with terminal success",
+                        "deep puncturing wound that released their spirit to the void",
+                        "slender blade that proved width is no measure of deadliness",
+                        "pinpoint accuracy that found the vital spot",
+                        "needle-like precision that threaded between armor plates"
                     ],
                     
                     # Round Kick (38)
                     38 => [
-                        "spinning round kick",
-                        "whirlwind strike",
-                        "circular death blow",
-                        "tornado kick",
-                        "deadly spinning heel"
+                        "spinning round kick that circled from life to death",
+                        "whirlwind strike that swept them into the beyond",
+                        "circular death blow that completed their final rotation",
+                        "tornado kick that blew away all resistance",
+                        "deadly spinning heel that wrote the final period",
+                        "martial orbit that eclipsed their life force",
+                        "rotating strike that spun them into oblivion",
+                        "circular technique that came all the way around to fatal"
                     ],
                     
                     # Throwing (51)
                     51 => [
-                        "precisely thrown weapon",
-                        "deadly airborne projectile",
-                        "whistling thrown blade",
-                        "expertly hurled dagger",
-                        "fatal flying weapon"
+                        "precisely thrown weapon that delivered death from afar",
+                        "deadly airborne projectile that carried fatal greetings",
+                        "whistling thrown blade that sang their requiem",
+                        "expertly hurled dagger that bridged the distance to destiny",
+                        "fatal flying weapon that proved retreat futile",
+                        "thrown death that arrived faster than regret",
+                        "projectile precision that made distance irrelevant",
+                        "flying blade that delivered its pointed message"
                     ],
                     
                     # Tiger Claw (52)
                     52 => [
-                        "deadly tiger claw",
-                        "rending strike",
-                        "savage ripping attack",
-                        "ferocious martial technique",
-                        "flesh-tearing claws"
+                        "deadly tiger claw that left its mark on body and soul",
+                        "rending strike that tore through armor and ambition",
+                        "savage ripping attack that shredded all defense",
+                        "ferocious martial technique that unleashed bestial fury",
+                        "flesh-tearing claws that wrote their epitaph in flesh",
+                        "primal strike that connected with their mortality",
+                        "bestial technique that proved too wild to survive",
+                        "clawing attack that grasped their spirit"
                     ],
                     
                     # 2H Piercing (77)
                     77 => [
-                        "impaling spear thrust",
-                        "devastating pike charge",
-                        "heart-piercing lance",
-                        "massive puncture wound",
-                        "skewering strike"
+                        "impaling spear thrust that pinned their legend to history",
+                        "devastating pike charge that ran through all resistance",
+                        "heart-piercing lance that skewered dreams and bearer alike",
+                        "massive puncture wound that created a passage for their spirit",
+                        "skewering strike that threaded them into the tapestry of fallen",
+                        "polearm precision that extended the reach of death",
+                        "piercing shaft that created a new opening in their defenses",
+                        "spear point that found the terminal weakness"
                     ]
                 );
                 
-                # Default flavors for unknown skills
+                # Default flavors for unknown skills with more variety
                 my @default_flavors = (
-                    "brutal attack",
-                    "lethal strike",
-                    "vicious assault",
-                    "deadly blow",
-                    "merciless onslaught",
-                    "devastating technique",
-                    "fierce combat prowess",
-                    "relentless aggression",
-                    "savage onslaught",
-                    "overwhelming force"
+                    "brutal attack that brooked no survival",
+                    "lethal strike that settled all accounts",
+                    "vicious assault that left no room for recovery",
+                    "deadly blow that wrote the final chapter",
+                    "merciless onslaught that overwhelmed all defense",
+                    "devastating technique that proved too advanced to counter",
+                    "fierce combat prowess that outmatched all resistance",
+                    "relentless aggression that pursued beyond hope",
+                    "savage onslaught that tore through determination",
+                    "overwhelming force that crushed both body and spirit",
+                    "perfect execution that left nothing to chance",
+                    "combat mastery that transcended their defenses",
+                    "tactical brilliance that found every weakness",
+                    "supreme demonstration of martial superiority",
+                    "unstoppable attack that defied all countermeasures"
                 );
                 
                 # Get random flavor text from the appropriate array
@@ -298,8 +414,8 @@ sub EVENT_DEATH {
                     $death_flavor = $default_flavors[$random_index];
                 }
                 
-                # Announce skill-caused death
-                my $announcement = "$player_name ($player_class) has been slain in Hardcore by $killer_name using a $death_flavor!";
+                # Announce skill-caused death with varied formatting
+                my $announcement = "$announcement_prefix, destroyed by $killer_name\'s $death_flavor!";
                 plugin::WorldAnnounce($announcement);
             }
         }
